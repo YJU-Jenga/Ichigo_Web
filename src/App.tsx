@@ -1,25 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
+import Main from "./Screens/MainScreen";
+import Product from "./Screens/ProductScreen";
+import Itemuse from "./Screens/ItemuseScreen";
+import ProductInquiry from "./Screens/ProductInquiryScreen";
+import Qna from "./Screens/QnaScreen";
+import Login from "./Screens/LoginScreen";
+import Register from "./Screens/RegisterScreen";
+import Custom from "./Screens/CustomScreen";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/product" element={<Product />} />
+          <Route path="/itemuse" element={<Itemuse />} />
+          <Route path="/productinquiry" element={<ProductInquiry />} />
+          <Route path="/qna" element={<Qna />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/custom" element={<Custom />} />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
