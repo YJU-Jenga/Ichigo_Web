@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 const QnaScreen = () => {
   const [boardList, setList] = useState([
@@ -12,9 +13,12 @@ const QnaScreen = () => {
     },
   ]);
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5 h-screen">
+    <section className="bg-gray-50 p-3 sm:p-5 h-screen">
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
-        <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+        <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
+          <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+            Q&A
+          </h1>
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
             <div className="w-full md:w-1/2">
               <form className="flex items-center">
@@ -45,9 +49,9 @@ const QnaScreen = () => {
               </form>
             </div>
             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-              <button
-                type="button"
-                className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+              <NavLink
+                to="/write"
+                className="flex items-center justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
                 <svg
                   className="h-3.5 w-3.5 mr-2"
@@ -62,7 +66,7 @@ const QnaScreen = () => {
                   />
                 </svg>
                 글 쓰기
-              </button>
+              </NavLink>
               <div className="flex items-center space-x-3 w-full md:w-auto">
                 <button
                   id="actionsDropdownButton"
@@ -214,7 +218,7 @@ const QnaScreen = () => {
             </div>
           </div>
           <div className="overflow-x-auto"></div>
-          <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <table className="w-full text-sm text-left">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-4 py-3">
@@ -246,13 +250,9 @@ const QnaScreen = () => {
           >
             <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
               Showing
-              <span className="font-semibold text-gray-900 dark:text-white">
-                1-10
-              </span>
+              <span className="font-semibold text-gray-900"> 1-10 </span>
               of
-              <span className="font-semibold text-gray-900 dark:text-white">
-                1000
-              </span>
+              <span className="font-semibold text-gray-900"> 1000 </span>
             </span>
             <ul className="inline-flex items-stretch -space-x-px">
               <li>

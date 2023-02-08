@@ -9,6 +9,8 @@ import Qna from "./Screens/QnaScreen";
 import Login from "./Screens/LoginScreen";
 import Register from "./Screens/RegisterScreen";
 import Custom from "./Screens/CustomScreen";
+import Write from "./Screens/WriteScreen";
+import Cart from "./Screens/CartScreen";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/custom" element={<Custom />} />
+          <Route path="/write" element={<Write />} />
+          <Route path="/cart" element={<Cart />} />
         </Routes>
       </BrowserRouter>
     </>

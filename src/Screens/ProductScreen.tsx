@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@mui/material";
 import Itemuse from "./ItemuseScreen";
+import { NavLink } from "react-router-dom";
 
 export default function ProductScreen() {
   return (
@@ -37,9 +38,12 @@ export default function ProductScreen() {
               <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
                 구매
               </button>
-              <button className="flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
-                장바구니
-              </button>
+              <NavLink
+                to="/cart"
+                className="flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+              >
+                장바구니 담기
+              </NavLink>
             </div>
           </div>
         </div>
