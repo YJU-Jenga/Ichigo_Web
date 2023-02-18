@@ -2,6 +2,9 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 
 const MainScreen = () => {
+
+  
+
   return (
     <div className="lg:px-20 md:px-6 px-4 md:py-12 py-8">
       <div className="lg:flex items-center justify-between">

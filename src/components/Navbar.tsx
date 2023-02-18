@@ -1,7 +1,98 @@
 import { NavLink } from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
+import { useCookies } from 'react-cookie'
+import jwt_decode from 'jwt-decode';
 
 export function Navbar() {
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [userName, setUserName] = useState();
+  
+  
+  const getUser = async () => {
+    try {
+      const user = JSON.parse(JSON.stringify(jwt_decode(cookies['access-token'])));
+      // console.log(user);
+      
+      await fetch(`http://localhost:5000/user/${user.email}`, {
+        headers: {
+          authorization: `Bearer ${cookies['access-token']}`,
+        }
+      }
+      ).then((res)=>res.json())
+      .then((res) => {
+        console.log(res);
+        setUserName(res.name);
+
+      });
+    } catch (error) {
+    }
+  };
+
+  window.onload = getUser;
+
+  
+
+  const logout = async () => {
+    try {
+      await fetch('http://localhost:5000/auth/logout', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        credentials: 'include',
+      }
+      ).then(() => {
+        removeCookie('access-token');
+        localStorage.removeItem('refresh-token');
+      });
+      window.location.replace("/")
+    } catch (error) {
+    }
+  };
+  let signIn, join, signOut, nickname;
+
+
+  if(!cookies['access-token']) {
+    signIn = (
+      <li>
+        <NavLink
+          to="/login"
+          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+          aria-current="page"
+        >
+          로그인
+        </NavLink>
+      </li>  
+    );
+    join = (
+      <li>
+        <NavLink
+          to="/register"
+          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+          aria-current="page"
+        >
+          회원가입
+        </NavLink>
+      </li>
+    );
+  } else {
+    nickname = (
+      <li className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent">
+        {userName}님
+      </li>)
+    ;
+    signOut = (
+      <li>
+        <NavLink
+          to="/"
+          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+          aria-current="page"
+          onClick={logout}
+        >
+          로그아웃
+        </NavLink>
+      </li>
+    );
+  }
+
   return (
     <nav className="px-2 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="container flex flex-wrap items-center justify-between mx-auto">
@@ -83,24 +174,11 @@ export function Navbar() {
                 커스터마이징
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-              >
-                로그인
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/register"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-              >
-                회원가입
-              </NavLink>
-            </li>
+            { signIn }
+            { join }
+            { nickname }
+            { signOut }
+            
           </ul>
         </div>
       </div>
