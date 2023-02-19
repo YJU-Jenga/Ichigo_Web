@@ -11,6 +11,7 @@ import Register from "./Screens/RegisterScreen";
 import Custom from "./Screens/CustomScreen";
 import Write from "./Screens/WriteScreen";
 import Cart from "./Screens/CartScreen";
+import Purchase from "./Screens/PurchaseScreen";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/custom" element={<Custom />} />
           <Route path="/write" element={<Write />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/purchase" element={<Purchase />} />
         </Routes>
       </BrowserRouter>
     </>

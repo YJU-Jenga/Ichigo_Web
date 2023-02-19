@@ -9,9 +9,8 @@ export default function ProductScreen() {
       <div className="container px-5 py-24 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img
-            alt="ecommerce"
             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-            src="img/erotic.jpg"
+            src="img/sad_gosung.jpg"
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
@@ -35,9 +34,12 @@ export default function ProductScreen() {
               <span className="title-font font-medium text-2xl text-gray-900">
                 300,000 ₩
               </span>
-              <button className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">
+              <NavLink
+                to="/purchase"
+                className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+              >
                 구매
-              </button>
+              </NavLink>
               <NavLink
                 to="/cart"
                 className="flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
