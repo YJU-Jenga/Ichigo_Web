@@ -1,6 +1,7 @@
 import React, {SyntheticEvent, useState} from "react";
 import { NavLink, Navigate } from "react-router-dom";
 import { useCookies } from 'react-cookie'
+import axios, { AxiosError } from "axios";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -10,29 +11,21 @@ export default function LoginScreen() {
   
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    
+    const url = 'http://localhost:5000/auth/local/signin';
+    const headers = {'Content-Type': 'application/json',};
+    const data = {email, password};
     try {
-      await fetch('http://localhost:5000/auth/local/signin', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json',},
-        credentials: 'include',
-        body: JSON.stringify({
-          email,
-          password
-        })
-        ,
-      }).then(res=>res.json())        // 리턴값이 있으면 리턴값에 맞는 req 지정
-      .then(res=> {
-        console.log(res);          // 리턴값에 대한 처리
-        const refreshToken = res['refresh_token'];
-        localStorage.setItem('refresh-token', refreshToken);
-        setCookie('access-token', res['access_token'], {maxAge: 15 * 60});
-
-        if(res['access_token'] != undefined) setFlag(true);
-        else alert(res.message);
-      });
-      
+      const res = await axios.post( url, data, {headers})
+      const {access_token, refresh_token} = res.data;
+        // console.log(res);          // 리턴값에 대한 처리
+        localStorage.setItem('refresh-token', refresh_token);
+        setCookie('access-token', access_token, {maxAge: 15 * 60});
+        if(access_token != null) setFlag(true);
     } catch (error) {
+      // console.log(error);
+      if (error instanceof AxiosError) {
+        alert(error.response?.data.message)
+      }
     }
   };
 
