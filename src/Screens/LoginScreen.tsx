@@ -8,10 +8,9 @@ export default function LoginScreen() {
   const [flag, setFlag] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
   
-
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-  
+    
     try {
       await fetch('http://localhost:5000/auth/local/signin', {
         method: 'POST',
@@ -23,17 +22,15 @@ export default function LoginScreen() {
         })
         ,
       }).then(res=>res.json())        // 리턴값이 있으면 리턴값에 맞는 req 지정
-        .then(res=> {
-          // console.log(res);          // 리턴값에 대한 처리
-          const refreshToken = {
-            value: res['refresh_token'],
-            expire: Date.now() + (7 * 24 * 60 * 60 * 1000),
-          }
-          localStorage.setItem('refresh-token', JSON.stringify(refreshToken));
-          setCookie('access-token', res['access_token'], {maxAge: 15 * 60});
-          if(res['access_token'] != undefined) setFlag(true);
-          else alert(res.message);
-        });
+      .then(res=> {
+        console.log(res);          // 리턴값에 대한 처리
+        const refreshToken = res['refresh_token'];
+        localStorage.setItem('refresh-token', refreshToken);
+        setCookie('access-token', res['access_token'], {maxAge: 15 * 60});
+
+        if(res['access_token'] != undefined) setFlag(true);
+        else alert(res.message);
+      });
       
     } catch (error) {
     }
@@ -43,8 +40,8 @@ export default function LoginScreen() {
     window.location.replace("/")
     // return <Navigate to="/"></Navigate>;
   }
-
-
+  
+  
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
@@ -133,3 +130,5 @@ export default function LoginScreen() {
     </section>
   );
 }
+
+
