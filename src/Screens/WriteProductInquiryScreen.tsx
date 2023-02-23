@@ -1,5 +1,13 @@
 import React from "react";
 
+// {
+//   "writer": 1,
+//   "title": "제목 01",
+//   "password": "0000",
+//   "secret": false,
+//   "content": "내용"
+// }
+
 export default function WriteScreen() {
   return (
     <form>

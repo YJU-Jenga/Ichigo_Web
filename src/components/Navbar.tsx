@@ -1,7 +1,11 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import React from "react";
 
 export function Navbar() {
+  // const location = useLocation();
+  // const userInfo: string = location.state.value;
+  // console.log(userInfo);
+
   return (
     <nav className="px-2 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
       <div className="container flex flex-wrap items-center justify-between mx-auto">

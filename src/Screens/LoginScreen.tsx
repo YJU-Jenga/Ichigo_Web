@@ -13,24 +13,24 @@ export default function LoginScreen() {
 
   // 23.02.19 url 따로 변수로 관리, 로그인 확인, 실패시 메세지 띄우기
   const url = `http://localhost:5000/auth/local/signin`;
+  // 전송할 부분 따로 변수로 관리
+  const body = {
+    email: form.email,
+    password: form.password,
+  };
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    axios
-      .post(url, {
-        email: form.email,
-        password: form.password,
-      })
-      .then((res) => {
-        console.log("로그인 성공! 메인 페이지로 이동합니다!");
-        console.log(res.status);
-        alert("로그인 성공!");
-        if (res.status === 200) {
-          navigate("/");
-        } else {
-          redirect("/login");
-        }
-      });
+    axios.post(url, body).then((res) => {
+      console.log("로그인 성공! 메인 페이지로 이동합니다!");
+      console.log(res.status);
+      alert("로그인 성공!");
+      if (res.status === 200) {
+        navigate("/", { state: { email: form.email } });
+      } else {
+        redirect("/login");
+      }
+    });
   };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

@@ -9,7 +9,7 @@ import Qna from "./Screens/QnaScreen";
 import Login from "./Screens/LoginScreen";
 import Register from "./Screens/RegisterScreen";
 import Custom from "./Screens/CustomScreen";
-import Write from "./Screens/WriteScreen";
+import Write from "./Screens/WriteProductInquiryScreen";
 import Cart from "./Screens/CartScreen";
 import Purchase from "./Screens/PurchaseScreen";
 
