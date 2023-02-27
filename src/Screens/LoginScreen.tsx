@@ -1,6 +1,7 @@
 import React, { useState, SyntheticEvent } from "react";
 import { NavLink, useNavigate, redirect } from "react-router-dom";
-import axios from "axios";
+import { useCookies } from "react-cookie";
+import axios, { AxiosError } from "axios";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
@@ -8,8 +9,17 @@ export default function LoginScreen() {
   const [form, setForm] = useState({
     email: "",
     password: "",
-    flag: false,
   });
+  // 내가 만든 쿸히~
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  // 비밀번호 보기, 숨기기 상태관리
+  const [hidePassword, setHidePassword] = useState(true);
+
+  // 비밀번호 보기, 숨기기 함수
+  const toggleHidePassword = () => {
+    setHidePassword(!hidePassword);
+  };
 
   // 23.02.19 url 따로 변수로 관리, 로그인 확인, 실패시 메세지 띄우기
   const url = `http://localhost:5000/auth/local/signin`;
@@ -21,16 +31,26 @@ export default function LoginScreen() {
 
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    axios.post(url, body).then((res) => {
-      console.log("로그인 성공! 메인 페이지로 이동합니다!");
-      console.log(res.status);
-      alert("로그인 성공!");
-      if (res.status === 200) {
-        navigate("/", { state: { email: form.email } });
-      } else {
-        redirect("/login");
+    const headers = { "Content-Type": "application/json" };
+    try {
+      // 데이터 전송
+      const res = await axios.post(url, body, { headers });
+      // 토큰 저장
+      const { access_token, refresh_token } = res.data;
+      console.log(res.data);
+      // LocalStorage에 RefreshToken 저장
+      localStorage.setItem("refresh-token", refresh_token);
+      // 쿠키에 AccessToken 저장
+      setCookie("access-token", access_token, { maxAge: 15 * 60 });
+      // AccessToken이 있으면 메인 페이지로 이동
+      if (access_token != null) {
+        navigate("/", { state: access_token });
       }
-    });
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error.response?.data.message);
+      }
+    }
   };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">

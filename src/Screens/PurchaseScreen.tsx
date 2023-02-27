@@ -1,23 +1,70 @@
-import React, { useState } from "react";
+import axios, { AxiosError } from "axios";
+import React, { SyntheticEvent, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
+// 테스트 user_id, 우편번호, 주소, 상품아이디, 갯수
 
 const PurchaseScreen = () => {
-  const countries = ["China", "Russia", "UK"];
-  const [menu, setMenu] = useState(false);
-  const [country, setCountry] = useState("United States");
-  const [InputAddressValue, setInputAddressValue] = useState("");
-  const [InputZipCodeValue, setInputZipCodeValue] = useState("");
-  const [ModalState, setModalState] = useState(false);
-
-  const changeText = (e: any) => {
-    setMenu(false);
-    setCountry(e.target.textContent);
-  };
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    address: "",
+    detailAddress: "",
+    postalCode: "",
+    modalstate: false,
+    counts: 1,
+  });
+  const userId = 1;
+  const productIds = 1;
 
   const onCompletePost = (data: any) => {
-    setModalState(false);
-    setInputAddressValue(data.address);
-    setInputZipCodeValue(data.zonecode);
+    setForm({ ...form, address: data.address, postalCode: data.zonecode });
+    console.log(data);
+  };
+
+  // 주소 + 상세주소까지 합치기
+  const full_address = () => {
+    let fullAddress = form.address + form.detailAddress;
+    return setForm({ ...form, address: fullAddress });
+  };
+
+  const url = `http://localhost:5000/order/create`;
+  const body = {
+    userId,
+    postalCode: form.postalCode,
+    address: form.address,
+    productIds,
+    counts: form.counts,
+  };
+
+  const submit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const headers = { "Content-Type": "application/json" };
+    try {
+      const res = await axios.post(url, body, { headers });
+      if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "주문이 완료되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/");
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/");
+      }
+    }
   };
 
   return (
@@ -25,39 +72,6 @@ const PurchaseScreen = () => {
       <div className="py-16 px-4 md:px-6 2xl:px-0 flex justify-center items-center 2xl:mx-auto 2xl:container">
         <div className="flex flex-col justify-start items-start w-full space-y-9">
           <div className="flex justify-start flex-col items-start space-y-2">
-            <button className="flex flex-row items-center text-gray-600 hover:text-gray-500 space-x-1">
-              <svg
-                className="fill-stroke"
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M2.91681 7H11.0835"
-                  stroke="currentColor"
-                  strokeWidth="0.666667"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.91681 7L5.25014 9.33333"
-                  stroke="currentColor"
-                  strokeWidth="0.666667"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M2.91681 7.00002L5.25014 4.66669"
-                  stroke="currentColor"
-                  strokeWidth="0.666667"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <p className="text-sm leading-none">돌아가기</p>
-            </button>
             <p className="text-3xl lg:text-4xl font-bold leading-7 lg:leading-9 text-gray-800">
               주문
             </p>
@@ -77,62 +91,68 @@ const PurchaseScreen = () => {
                 <img src="img/sad_gosung.jpg" alt="headphones" />
               </div>
             </div>
-
-            <div className="p-8 bg-gray-100 flex flex-col lg:w-full xl:w-3/5">
-              <div className="mt-8">
-                <input
-                  className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
-                  type="email"
-                  placeholder="Email"
-                />
+            <form onSubmit={submit}>
+              <div className="p-8 bg-gray-100 flex flex-col lg:w-full xl:w-3/5">
+                <div className="mt-8">
+                  <label className="mt-8 text-base leading-4 text-gray-800">
+                    갯수
+                  </label>
+                  <input
+                    className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
+                    type="number"
+                    placeholder="갯수"
+                    min={1}
+                    onChange={() => {
+                      setForm({ ...form, counts: form.counts + 1 });
+                    }}
+                    required
+                  />
+                </div>
+                <label className="mt-8 text-base leading-4 text-gray-800">
+                  배송지 정보
+                </label>
+                <div className="mt-2 flex-col">
+                  <div className="flex-row flex">
+                    <input
+                      className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
+                      value={form.postalCode}
+                      type="text"
+                      placeholder="우편번호"
+                      readOnly
+                    />
+                  </div>
+                  <div className="flex-row flex">
+                    <input
+                      className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
+                      value={form.address}
+                      type="text"
+                      placeholder="주소"
+                      readOnly
+                    />
+                  </div>
+                  <div>
+                    <input
+                      className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
+                      type="text"
+                      placeholder="상세주소"
+                      onChange={(event) => {
+                        setForm({ ...form, detailAddress: event.target.value });
+                      }}
+                    />
+                  </div>
+                </div>
+                <div className="mt-2 flex-col"></div>
+                <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
+                <button
+                  type="submit"
+                  className="mt-8 border border-transparent hover:border-gray-300 bg-gray-900 hover:bg-white text-white hover:text-gray-900 flex justify-center items-center py-4 rounded w-full"
+                >
+                  <div>
+                    <p className="text-base leading-4">구매하기</p>
+                  </div>
+                </button>
               </div>
-              <label className="mt-8 text-base leading-4 text-gray-800">
-                카드 정보
-              </label>
-              <div className="mt-2 flex-col">
-                <div>
-                  <input
-                    className="border rounded-tl rounded-tr border-gray-300 p-4 w-full text-base leading-4 placeholder-gray-600 text-gray-600"
-                    type="email"
-                    placeholder="0000 1234 6549 15151"
-                  />
-                </div>
-                <div className="flex-row flex">
-                  <input
-                    className="border rounded-bl border-gray-300 p-4 w-full text-base leading-4 placeholder-gray-600 text-gray-600"
-                    type="email"
-                    placeholder="MM/YY"
-                  />
-                  <input
-                    className="border rounded-br border-gray-300 p-4 w-full text-base leading-4 placeholder-gray-600 text-gray-600"
-                    type="email"
-                    placeholder="CVC"
-                  />
-                </div>
-              </div>
-              <label className="mt-8 text-base leading-4 text-gray-800">
-                이름
-              </label>
-              <div className="mt-2 flex-col">
-                <div>
-                  <input
-                    className="border rounded border-gray-300 p-4 w-full text-base leading-4 placeholder-gray-600 text-gray-600"
-                    type="email"
-                    placeholder="Name on card"
-                  />
-                </div>
-              </div>
-              <label className="mt-8 text-base leading-4 text-gray-800">
-                배송지 정보
-              </label>
-              <div className="mt-2 flex-col"></div>
-              <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
-              <button className="mt-8 border border-transparent hover:border-gray-300 bg-gray-900 hover:bg-white text-white hover:text-gray-900 flex justify-center items-center py-4 rounded w-full">
-                <div>
-                  <p className="text-base leading-4">구매하기</p>
-                </div>
-              </button>
-            </div>
+            </form>
           </div>
         </div>
       </div>
