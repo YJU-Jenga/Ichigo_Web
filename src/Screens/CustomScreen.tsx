@@ -1,27 +1,79 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { Canvas, ThreeElements, useFrame } from "@react-three/fiber";
+import React, { Suspense, useEffect, useMemo, useState } from "react";
+import { Group } from "three";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { folder, useControls } from 'leva'
-import { Model } from "./Model";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { GLTFExporter, GLTFExporterOptions } from 'three/examples/jsm/exporters/GLTFExporter';
+import { folder, button, Leva, useControls } from 'leva'
 
-function Box(props: ThreeElements['mesh']) {
-  const mesh = useRef<THREE.Mesh>(null!)
-  const [hovered, setHover] = useState(false);
-  const [clicked, setClick] = useState(false);
-  useFrame((state, delta) => (mesh.current.rotation.x += delta));
+function Model() {
+  // const { scene } = useLoader(GLTFLoader,'models/ted.gltf');
+  const { scene } = useLoader(GLTFLoader,'models/cloth.glb');
+
+  function exportGLTF(scene: Group) {
+    const gltfExporter = new GLTFExporter();
+    const gltfoptions: GLTFExporterOptions = {
+      binary: false,
+      trs: false,
+      onlyVisible: true,
+      maxTextureSize: 4096,
+      includeCustomExtensions: false
+    }
+
+    const link = document.createElement( 'a' );
+			link.style.display = 'none';
+			document.body.appendChild( link );
+
+    function save( blob: Blob | MediaSource, filename: string ) {
+      link.href = URL.createObjectURL( blob );
+      link.download = filename;
+      link.click();
+    }
+
+    function saveString( text: BlobPart, filename: string ) {
+     save( new Blob( [ text ], { type: 'text/plain' } ), filename );
+    }
+
+    function saveArrayBuffer( buffer: BlobPart, filename: string ) {
+      save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
+    }
+    
+    gltfExporter.parse(
+      scene,
+      function ( result ) {
+        if ( result instanceof ArrayBuffer ) {
+          saveArrayBuffer( result, 'scene.glb' );
+        } else {
+          const output = JSON.stringify( result, null, 2 );
+          // console.log( output );
+          saveString( output, 'scene.gltf' );
+        }
+      },
+      function ( error ) {
+        console.log( 'An error happened during parsing', error );
+      },
+      gltfoptions
+    );
+  }
+
+  const { visible, color } = useControls('Teddy', 
+  {
+    cloth1: folder({
+      visible: true,
+      color: { value: 'white' },
+    }),
+    download: button(()=>{exportGLTF(scene)})
+  }
+  );
 
   return (
-    <mesh
-      {...props}
-      ref={mesh}
-      scale={clicked? 1.5 : 1}
-      onClick={(e)=>{setClick(!clicked)}}
-      onPointerOver={(e)=>{setHover(true)}}
-      onPointerOut={(e)=>{setHover(false)}}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial color={hovered? 'hotpink' : 'orange'} />
-    </mesh>
-  )
+    <primitive
+      object={scene}
+      scale={0.5}
+      children-0-visible={visible}
+      children-0-children-0-material-color={color}
+    />
+  );
 }
 
 export default function CustomScreen() {
@@ -29,32 +81,6 @@ export default function CustomScreen() {
     width: window.innerWidth,
     height: window.innerHeight,
   });
-
-  const options = useMemo(() => {
-    return {
-      position: folder({
-        px: {value: 10, min: 0, max: 50, step: 1},
-        py: {value: 10, min: 0, max: 50, step: 1},
-        pz: {value: 10, min: 0, max: 50, step: 1},
-      }),
-      rotation: folder({
-        rx: {value: 0, min: 0, max: Math.PI * 2, step: 0.01},
-        ry: {value: 0, min: 0, max: Math.PI * 2, step: 0.01},
-        rz: {value: 0, min: 0, max: Math.PI * 2, step: 0.01},
-      }),
-      meterial: folder({
-        scale: folder({
-          sx: {value: 1, min: 0.5, max: 2, step: 0.1},
-          sy: {value: 1, min: 0.5, max: 2, step: 0.1},
-          sz: {value: 1, min: 0.5, max: 2, step: 0.1},
-        }),
-        visible: true,
-        color: {value: 'lime'}
-      })
-    }
-  }, [])
-
-  // const BoxControl = useControls('Box', options)
 
   useEffect(()=>{
     const resizeHandler = () => {
@@ -74,9 +100,13 @@ export default function CustomScreen() {
         <ambientLight intensity={0.5}/>
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
         <pointLight position={[-10, -10, -10]} />
-        <Model src="models/ted.gltf" />
+        <Suspense fallback={null}>
+          <Model />
+        </Suspense>
         <OrbitControls />
       </Canvas>
+      <Leva />
     </div>
   );
 }
+

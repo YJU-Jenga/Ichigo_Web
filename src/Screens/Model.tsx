@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useRef, useState } from "react";
+import { ThreeElements, useFrame } from "@react-three/fiber";
 
-import { useLoader } from "@react-three/fiber";
-import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+export function Box(props: ThreeElements['mesh']) {
+  const mesh = useRef<THREE.Mesh>(null!)
+  const [hovered, setHover] = useState(false);
+  const [clicked, setClick] = useState(false);
+  useFrame((state, delta) => (mesh.current.rotation.x += delta));
 
-export function Model(prop: { src: string }) {
-  const gltf = useLoader(GLTFLoader, prop.src);
-  return <primitive object={gltf.scene} scale={0.4} />;
+  return (
+    <mesh
+      {...props}
+      ref={mesh}
+      scale={clicked? 1.5 : 1}
+      onClick={(e)=>{setClick(!clicked)}}
+      onPointerOver={(e)=>{setHover(true)}}
+      onPointerOut={(e)=>{setHover(false)}}>
+        <boxGeometry args={[1, 1, 1]} />
+        <meshStandardMaterial color={hovered? 'hotpink' : 'orange'} />
+    </mesh>
+  )
 }

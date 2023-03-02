@@ -56,7 +56,7 @@ function App() {
           <Route path="/custom" element={<Custom />} />
           <Route path="/write" element={<Write />} />
           <Route path="/cart" element={<Cart />} />
-        </Routes>
+        </Routes> 
       </BrowserRouter>
     </>
   );

@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import { useCookies } from 'react-cookie'
 import jwt_decode from 'jwt-decode';
+import axios, { AxiosError } from "axios";
 
 export function Navbar() {
   const [cookies, setCookie, removeCookie] = useCookies();
@@ -12,19 +13,15 @@ export function Navbar() {
     try {
       const user = JSON.parse(JSON.stringify(jwt_decode(cookies['access-token'])));
       // console.log(user);
-      
-      await fetch(`http://localhost:5000/user/${user.email}`, {
-        headers: {
-          authorization: `Bearer ${cookies['access-token']}`,
-        }
-      }
-      ).then((res)=>res.json())
-      .then((res) => {
-        console.log(res);
-        setUserName(res.name);
-
-      });
+      const url = `http://localhost:5000/user/${user.email}`;
+      const headers = {'Content-Type': 'application/json', authorization: `Bearer ${cookies['access-token']}`,};
+      const res = await axios.get(url, {headers})
+      const { name } = res.data;
+      setUserName(name);
     } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error.response?.data.message)
+      }
     }
   };
 
@@ -130,13 +127,13 @@ export function Navbar() {
         <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
           <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <NavLink
+              {/* <NavLink
                 to="/"
                 className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
                 aria-current="page"
               >
                 Home
-              </NavLink>
+              </NavLink> */}
             </li>
             <li>
               <NavLink

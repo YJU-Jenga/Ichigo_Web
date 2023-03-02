@@ -11,7 +11,8 @@ export default function ProductScreen() {
           <img
             alt="ecommerce"
             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-            src="img/erotic.jpg"
+            src= {`http://localhost:5000/uploads/áâ¸á_1677212662451.gif`}
+            // src= {`http://localhost:5000/${url}`}
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">
