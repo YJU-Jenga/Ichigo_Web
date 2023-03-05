@@ -91,8 +91,11 @@ const PurchaseScreen = () => {
                 <img src="img/sad_gosung.jpg" alt="headphones" />
               </div>
             </div>
-            <form onSubmit={submit}>
-              <div className="p-8 bg-gray-100 flex flex-col lg:w-full xl:w-3/5">
+            <form
+              className="p-8 bg-gray-100 flex flex-col lg:w-full xl:w-3/5"
+              onSubmit={submit}
+            >
+              <div>
                 <div className="mt-8">
                   <label className="mt-8 text-base leading-4 text-gray-800">
                     갯수

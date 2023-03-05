@@ -78,7 +78,13 @@ export default function RegisterScreen(this: any) {
               }
             } catch (error) {
               if (error instanceof AxiosError) {
-                alert(error.response?.data.message);
+                Swal.fire({
+                  icon: "error",
+                  title: error.response?.data.message,
+                  text: "관리자에게 문의해주세요",
+                  showConfirmButton: false,
+                  timer: 1000,
+                });
               }
             }
           } else {

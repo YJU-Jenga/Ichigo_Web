@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 
 export default function WriteScreen() {
+  const navigate = useNavigate();
+
   // 전송할 form데이터
   const [form, setForm] = useState({
     writer: 1,
@@ -13,14 +15,14 @@ export default function WriteScreen() {
     content: "",
   });
 
-  const navigate = useNavigate();
-
   // 체크박스 상태관리 함수
   const checkbox = () => {
     form.secret = !form.secret;
   };
+
   // url 따로 변수로 관리
-  const url = `http://localhost:5000/post/write_product_inquiry`;
+  const url = `http://localhost:5000/post/write_q&a`;
+
   // 전송할 부분 따로 변수로 관리
   const body = {
     writer: form.writer,
@@ -36,6 +38,7 @@ export default function WriteScreen() {
     const headers = { "Content-Type": "application/json" };
     try {
       const res = await axios.post(url, body, { headers });
+      console.log(res);
       Swal.fire({
         position: "center",
         icon: "success",
@@ -64,7 +67,7 @@ export default function WriteScreen() {
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
-            상품문의 쓰기
+            Q&A 쓰기
           </h1>
           <div className="space-y-4">
             <div>
@@ -93,18 +96,6 @@ export default function WriteScreen() {
             <div>
               비밀글
               <input type="checkbox" onChange={checkbox} />
-            </div>
-            <div>
-              <label className="block mb-2 text-lg">비밀번호</label>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                id="password"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                onChange={(event) =>
-                  setForm({ ...form, password: event.target.value })
-                }
-              />
             </div>
             <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">
               글 쓰기

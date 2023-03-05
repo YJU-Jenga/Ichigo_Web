@@ -2,6 +2,7 @@ import React, { useState, SyntheticEvent } from "react";
 import { NavLink, useNavigate, redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios, { AxiosError } from "axios";
+import Swal from "sweetalert2";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
@@ -48,7 +49,13 @@ export default function LoginScreen() {
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        alert(error.response?.data.message);
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     }
   };

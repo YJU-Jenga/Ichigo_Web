@@ -1,10 +1,94 @@
-import { NavLink, useLocation } from "react-router-dom";
-import React from "react";
+import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { useCookies } from "react-cookie";
+import jwtDecode from "jwt-decode";
+import axios, { AxiosError } from "axios";
 
 export function Navbar() {
-  // const location = useLocation();
-  // const userInfo: string = location.state.value;
-  // console.log(userInfo);
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [userName, setUserName] = useState();
+
+  const getUser = async () => {
+    try {
+      const user = JSON.parse(
+        JSON.stringify(jwtDecode(cookies["access-token"]))
+      );
+      console.log(user);
+      const url = `http://localhost:5000/user/${user.email}`;
+      const headers = {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${cookies["access-token"]}`,
+      };
+      const res = await axios.get(url, { headers });
+      const { name } = user.name;
+      console.log(name, "시발");
+      setUserName(name);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        alert(error.response?.data.message);
+      }
+    }
+  };
+
+  window.onload = getUser;
+
+  const logout = async () => {
+    try {
+      await fetch("http://localhost:5000/auth/logout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+      }).then(() => {
+        removeCookie("access-token");
+        localStorage.removeItem("refresh-token");
+      });
+      window.location.replace("/");
+    } catch (error) {}
+  };
+  let signIn, join, signOut, nickname;
+
+  if (!cookies["access-token"]) {
+    signIn = (
+      <li>
+        <NavLink
+          to="/login"
+          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+          aria-current="page"
+        >
+          로그인
+        </NavLink>
+      </li>
+    );
+    join = (
+      <li>
+        <NavLink
+          to="/register"
+          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+          aria-current="page"
+        >
+          회원가입
+        </NavLink>
+      </li>
+    );
+  } else {
+    nickname = (
+      <li className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent">
+        {userName}님
+      </li>
+    );
+    signOut = (
+      <li>
+        <NavLink
+          to="/"
+          className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+          aria-current="page"
+          onClick={logout}
+        >
+          로그아웃
+        </NavLink>
+      </li>
+    );
+  }
 
   return (
     <nav className="px-2 bg-white border-gray-200 dark:bg-gray-900 dark:border-gray-700">
@@ -43,13 +127,13 @@ export function Navbar() {
         <div className="hidden w-full md:block md:w-auto" id="navbar-dropdown">
           <ul className="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
             <li>
-              <NavLink
+              {/* <NavLink
                 to="/"
                 className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
                 aria-current="page"
               >
                 Home
-              </NavLink>
+              </NavLink> */}
             </li>
             <li>
               <NavLink
@@ -87,24 +171,10 @@ export function Navbar() {
                 커스터마이징
               </NavLink>
             </li>
-            <li>
-              <NavLink
-                to="/login"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-              >
-                로그인
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/register"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-              >
-                회원가입
-              </NavLink>
-            </li>
+            {signIn}
+            {join}
+            {nickname}
+            {signOut}
           </ul>
         </div>
       </div>
