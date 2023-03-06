@@ -11,4 +11,5 @@ export interface Board {
   image: string;
   createdAt: string;
   updatedAt: string;
+  user: Object;
 }

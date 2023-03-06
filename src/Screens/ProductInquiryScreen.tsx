@@ -1,6 +1,6 @@
 import React, { SyntheticEvent, useEffect, useState } from "react";
 import axios, { AxiosError } from "axios";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Board } from "../dto/Board";
@@ -35,7 +35,6 @@ const ProductInquiryScreen = () => {
       }
     }
   };
-
   return (
     <section className="bg-gray-50  p-3 sm:p-5 h-screen">
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -74,7 +73,7 @@ const ProductInquiryScreen = () => {
             </div>
             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
               <NavLink
-                to="/write"
+                to="/write_product_inquiury"
                 className="flex items-center justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
               >
                 <svg
@@ -165,7 +164,9 @@ const ProductInquiryScreen = () => {
                 return (
                   <tr key={board.id} className="border-b dark:border-gray-700">
                     <td className="px-4 py-3">{board.id}</td>
-                    <td className="px-4 py-3">{board.title}</td>
+                    <td className="px-4 py-3">
+                      <Link to={`/viewpost/${board.id}`}>{board.title}</Link>
+                    </td>
                     <td className="px-4 py-3">{board.createdAt}</td>
                     <td className="px-4 py-3">{board.hit}</td>
                   </tr>

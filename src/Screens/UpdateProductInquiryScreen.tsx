@@ -1,9 +1,9 @@
 import React, { useState, SyntheticEvent } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import { NavLink, redirect, useNavigate } from "react-router-dom";
+import { NavLink, redirect, useNavigate, useParams } from "react-router-dom";
 
-export default function WriteProductInquiryScreen() {
+export default function UpdatePostScreen() {
   // 전송할 form데이터
   const [form, setForm] = useState({
     writer: 1,
@@ -13,6 +13,9 @@ export default function WriteProductInquiryScreen() {
     content: "",
   });
 
+  let { id } = useParams();
+  console.log(id);
+
   const navigate = useNavigate();
 
   // 체크박스 상태관리 함수
@@ -20,7 +23,7 @@ export default function WriteProductInquiryScreen() {
     form.secret = !form.secret;
   };
   // url 따로 변수로 관리
-  const url = `http://localhost:5000/post/write_q&a`;
+  const url = `http://localhost:5000/post/update/${id}`;
   // 전송할 부분 따로 변수로 관리
   const body = {
     writer: form.writer,
@@ -35,15 +38,15 @@ export default function WriteProductInquiryScreen() {
     e.preventDefault();
     const headers = { "Content-Type": "application/json" };
     try {
-      const res = await axios.post(url, body, { headers });
+      const res = await axios.patch(url, body, { headers });
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "Q & A 작성이 완료되었습니다.",
+        title: "상품문의 수정이 완료되었습니다.",
         showConfirmButton: false,
         timer: 1000,
       });
-      navigate("/qna");
+      navigate("/productinquiry");
       if (res.status === 201) {
       }
     } catch (error) {
@@ -64,7 +67,7 @@ export default function WriteProductInquiryScreen() {
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
-            Q & A 쓰기
+            상품문의 수정
           </h1>
           <div className="space-y-4">
             <div>

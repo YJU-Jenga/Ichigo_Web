@@ -3,7 +3,7 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 
-export default function WriteScreen() {
+export default function WriteProductInquiryScreen() {
   // 전송할 form데이터
   const [form, setForm] = useState({
     writer: 1,

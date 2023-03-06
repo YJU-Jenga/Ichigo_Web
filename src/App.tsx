@@ -9,9 +9,12 @@ import Qna from "./Screens/QnaScreen";
 import Login from "./Screens/LoginScreen";
 import Register from "./Screens/RegisterScreen";
 import Custom from "./Screens/CustomScreen";
-import Write from "./Screens/WriteProductInquiryScreen";
+import WriteProductInquiry from "./Screens/WriteProductInquiryScreen";
+import WriteQna from "./Screens/WriteQnaScreen";
 import Cart from "./Screens/CartScreen";
 import Purchase from "./Screens/PurchaseScreen";
+import ViewPost from "./Screens/ViewPostScreen";
+import UpdateProductInquiryScreen from "./Screens/UpdateProductInquiryScreen";
 
 function App() {
   return (
@@ -27,9 +30,18 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/custom" element={<Custom />} />
-          <Route path="/write" element={<Write />} />
+          <Route
+            path="/write_product_inquiury"
+            element={<WriteProductInquiry />}
+          />
+          <Route path="/write_q&a" element={<WriteQna />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/purchase" element={<Purchase />} />
+          <Route path="/viewpost/:id" element={<ViewPost />} />
+          <Route
+            path="/updateproductinquiry/:id"
+            element={<UpdateProductInquiryScreen />}
+          />
         </Routes>
       </BrowserRouter>
     </>
