@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
-import jwtDecode from "jwt-decode";
+import jwt_decode from "jwt-decode";
 import axios, { AxiosError } from "axios";
 
 export function Navbar() {
@@ -11,17 +11,15 @@ export function Navbar() {
   const getUser = async () => {
     try {
       const user = JSON.parse(
-        JSON.stringify(jwtDecode(cookies["access-token"]))
+        JSON.stringify(jwt_decode(cookies["access-token"]))
       );
-      console.log(user);
       const url = `http://localhost:5000/user/${user.email}`;
       const headers = {
         "Content-Type": "application/json",
         authorization: `Bearer ${cookies["access-token"]}`,
       };
       const res = await axios.get(url, { headers });
-      const { name } = user.name;
-      console.log(name, "시발");
+      const name = res.data.name;
       setUserName(name);
     } catch (error) {
       if (error instanceof AxiosError) {

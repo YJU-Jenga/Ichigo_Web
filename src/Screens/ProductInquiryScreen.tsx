@@ -7,10 +7,33 @@ import { Board } from "../dto/Board";
 
 const ProductInquiryScreen = () => {
   const navigate = useNavigate();
+  // 가져온 게시판 내용을 저장(전체 다 가져옴)
   const [boardList, setBoardList] = useState<Array<Board>>([]);
+  // 페이지네이션 구현용 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // 한 페이지 당 나타낼 데이터의 갯수
+  const size = 10;
+  // 전체 페이지 수
+  const totalPage = Math.ceil(boardList.length / size);
+  // 화면에 나타날 페이지 갯수
+  const pageCount = 5;
+  // 현재 페이지 번호
+  const [curPage, setCurPage] = useState(1);
+  // 지금 속해 있는 페이지가 몇번째 페이지 그룹에 속해있는지 계산한다.
+  const [pageGroup, setPageGroup] = useState(Math.ceil(curPage / pageCount));
+  const offset = (curPage - 1) * size;
+  // 그룹 내 마지막 번호
+  let lastNum = pageGroup * pageCount;
+  if (lastNum > totalPage) {
+    lastNum = totalPage;
+  }
+  // 그룹 내 첫 번호
+  let firstNum = lastNum - (pageCount - 1);
+  if (pageCount > lastNum) {
+    firstNum = 1;
+  }
   // url
   const url = `http://localhost:5000/post/product_inquiry_all`;
-
+  const url_test = `https://jsonplaceholder.typicode.com/posts`;
   // 렌더링 전에 정보를 먼저 가져오기 위함
   useEffect(() => {
     getProductInquiry();
@@ -20,7 +43,7 @@ const ProductInquiryScreen = () => {
   const getProductInquiry = async () => {
     try {
       const res = await axios.get(url);
-      console.log(res);
+      console.log(res.data);
       setBoardList(res.data);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -35,6 +58,25 @@ const ProductInquiryScreen = () => {
       }
     }
   };
+
+  const pagination = () => {
+    let arr = [];
+    for (let i = firstNum; i <= lastNum; i++) {
+      arr.push(
+        <li>
+          <a
+            key={i}
+            onClick={() => setCurPage(i)}
+            className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >
+            {i}
+          </a>
+        </li>
+      );
+    }
+    return arr;
+  };
+  console.log(lastNum, firstNum);
   return (
     <section className="bg-gray-50  p-3 sm:p-5 h-screen">
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -160,14 +202,16 @@ const ProductInquiryScreen = () => {
             </thead>
             {/* 만약 board.secret이 true라면 비밀글입니다 표시하기 */}
             <tbody>
-              {boardList.map((board: Board) => {
+              {boardList.slice(offset, offset + size).map((board: Board) => {
                 return (
                   <tr key={board.id} className="border-b dark:border-gray-700">
                     <td className="px-4 py-3">{board.id}</td>
                     <td className="px-4 py-3">
                       <Link to={`/viewpost/${board.id}`}>{board.title}</Link>
                     </td>
-                    <td className="px-4 py-3">{board.createdAt}</td>
+                    <td className="px-4 py-3">
+                      {board.createdAt.substring(0, 10)}
+                    </td>
                     <td className="px-4 py-3">{board.hit}</td>
                   </tr>
                 );
@@ -178,17 +222,18 @@ const ProductInquiryScreen = () => {
             className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
             aria-label="Table navigation"
           >
-            <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
+            {/* <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
               Showing
               <span className="font-semibold text-gray-900"> 1-10 </span>
               of
               <span className="font-semibold text-gray-900"> 1000 </span>
-            </span>
+            </span> */}
             <ul className="inline-flex items-stretch -space-x-px">
               <li>
-                <a
-                  href="#"
+                <button
                   className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  onClick={() => setPageGroup(pageGroup - 1)}
+                  disabled={firstNum === 1}
                 >
                   <span className="sr-only">Previous</span>
                   <svg
@@ -203,53 +248,14 @@ const ProductInquiryScreen = () => {
                       clip-rule="evenodd"
                     />
                   </svg>
-                </a>
+                </button>
               </li>
+              {pagination()}
               <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  1
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  2
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  aria-current="page"
-                  className="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                >
-                  3
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  ...
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                >
-                  100
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
+                <button
                   className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  onClick={() => setPageGroup(pageGroup + 1)}
+                  disabled={lastNum === totalPage}
                 >
                   <span className="sr-only">Next</span>
                   <svg
@@ -264,7 +270,7 @@ const ProductInquiryScreen = () => {
                       clip-rule="evenodd"
                     />
                   </svg>
-                </a>
+                </button>
               </li>
             </ul>
           </nav>
