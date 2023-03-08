@@ -33,6 +33,7 @@ const ProductInquiryScreen = () => {
   }
   // url
   const url = `http://localhost:5000/post/product_inquiry_all`;
+  // 테스트용 url
   const url_test = `https://jsonplaceholder.typicode.com/posts`;
   // 렌더링 전에 정보를 먼저 가져오기 위함
   useEffect(() => {
