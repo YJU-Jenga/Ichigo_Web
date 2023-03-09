@@ -1,9 +1,49 @@
-import React from "react";
+import React, { SyntheticEvent, useState } from "react";
 import { Button } from "@mui/material";
 import Itemuse from "./ItemuseScreen";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import Swal from "sweetalert2";
 
-export default function ProductScreen() {
+const ProductScreen = () => {
+  const navigate = useNavigate();
+  const [count, setCount] = useState(1);
+  const cartId = 1;
+  const [productId, setProductId] = useState(1);
+  const url = `http://localhost:5000/cart/addProduct`;
+  const body = {
+    count,
+    cartId,
+    productId,
+  };
+  const addToCart = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    const headers = { "Content-Type": "application/json" };
+    try {
+      const res = await axios.post(url, body, { headers });
+      if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "상품이 장바구니에 추가되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/cart");
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
+    }
+  };
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <div className="container px-5 py-24 mx-auto">
@@ -40,12 +80,12 @@ export default function ProductScreen() {
               >
                 구매
               </NavLink>
-              <NavLink
-                to="/cart"
+              <button
+                onClick={addToCart}
                 className="flex ml-3 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
               >
                 장바구니 담기
-              </NavLink>
+              </button>
             </div>
           </div>
         </div>
@@ -56,4 +96,6 @@ export default function ProductScreen() {
       </div>
     </section>
   );
-}
+};
+
+export default ProductScreen;
