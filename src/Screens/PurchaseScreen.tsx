@@ -1,19 +1,22 @@
 import axios, { AxiosError } from "axios";
 import React, { SyntheticEvent, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 // 테스트 user_id, 우편번호, 주소, 상품아이디, 갯수
 
 const PurchaseScreen = () => {
   const navigate = useNavigate();
+  let { count } = useParams();
+  console.log(count);
+
   const [form, setForm] = useState({
     address: "",
     detailAddress: "",
     postalCode: "",
     modalstate: false,
-    counts: 1,
+    counts: count,
   });
   const userId = 1;
   const productIds = 1;
@@ -104,9 +107,10 @@ const PurchaseScreen = () => {
                     className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
                     type="number"
                     placeholder="갯수"
+                    value={form.counts}
                     min={1}
                     onChange={() => {
-                      setForm({ ...form, counts: form.counts + 1 });
+                      // setForm({ ...form, counts: form.counts + 1 });
                     }}
                     required
                   />

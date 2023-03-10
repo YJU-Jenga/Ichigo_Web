@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import Main from "./Screens/MainScreen";
 import Product from "./Screens/ProductScreen";
-import Itemuse from "./Screens/ItemuseScreen";
+// import Itemuse from "./Screens/ItemuseScreen";
 import ProductInquiry from "./Screens/ProductInquiryScreen";
 import Qna from "./Screens/QnaScreen";
 import Login from "./Screens/LoginScreen";
@@ -24,7 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/product" element={<Product />} />
-          <Route path="/itemuse" element={<Itemuse />} />
+          {/* <Route path="/itemuse" element={<Itemuse />} /> */}
           <Route path="/productinquiry" element={<ProductInquiry />} />
           <Route path="/qna" element={<Qna />} />
           <Route path="/login" element={<Login />} />
@@ -36,7 +36,7 @@ function App() {
           />
           <Route path="/write_q&a" element={<WriteQna />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/purchase" element={<Purchase />} />
+          <Route path="/purchase/:count" element={<Purchase />} />
           <Route path="/viewpost/:id" element={<ViewPost />} />
           <Route
             path="/updateproductinquiry/:id"

@@ -1,7 +1,83 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
+import axios, { AxiosError } from "axios";
+import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
+import { useNavigate, NavLink, Link, redirect } from "react-router-dom";
+import { Cart } from "../dto/Cart";
+import { Product } from "../dto/Product";
 
 export default function CartScreen() {
+  const navigate = useNavigate();
+  const id = 1;
+  const [cartList, setCartList] = useState<Array<Cart>>([]);
+  const [productInfo, setProductInfo] = useState<Product>();
+  const [count, setCount] = useState(1);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [productId, setProductId] = useState();
+  const url = `http://localhost:5000/cart/findAllProducts/${id}`;
+  const [price, setPrice] = useState(0);
+  const [state, setState] = useState(0);
+
+  useEffect(() => {
+    getCartList();
+  }, []);
+
+  // 장바구니id로 장바구니 목록 가져오기
+  const getCartList = async () => {
+    try {
+      const res = await axios.get(url);
+      setCartList(res.data);
+      setProductInfo(res.data[0].cartToProducts[0].product);
+      setPrice(res.data[0].cartToProducts[0].product.price);
+      setCount(res.data[0].cartToProducts.length);
+      setTotalPrice(
+        res.data[0].cartToProducts[0].product.price *
+          res.data[0].cartToProducts.length
+      );
+      console.log(res.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
+    }
+  };
+
+  // 상품개수 조절 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  // 갯수+1
+  const plusCount = () => {
+    const plus = count + 1;
+    setCount(plus);
+  };
+  // 갯수-1
+  const minusCount = () => {
+    if (count <= 1) {
+      setCount(1);
+    } else {
+      const minus = count - 1;
+      setCount(minus);
+    }
+  };
+  // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  // 총 금액 구하기
+  const getTotalPrice = () => {
+    setTotalPrice(price * count);
+  };
+
+  useEffect(() => {
+    const calculatedPrice = price * count;
+    setTotalPrice(calculatedPrice);
+  }, [count]);
+
+  if (!productInfo) {
+    return <></>;
+  }
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -9,7 +85,7 @@ export default function CartScreen() {
           <div className="w-3/4 bg-white px-10 py-10">
             <div className="flex justify-between border-b pb-8">
               <h1 className="font-semibold text-2xl">장바구니</h1>
-              <h2 className="font-semibold text-2xl">3 Items</h2>
+              <h2 className="font-semibold text-2xl">총 {count}개 상품</h2>
             </div>
             <div className="flex mt-10 mb-5">
               <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
@@ -28,15 +104,10 @@ export default function CartScreen() {
             <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
               <div className="flex w-2/5">
                 <div className="w-20">
-                  <img
-                    className="h-24"
-                    src="https://drive.google.com/uc?id=18KkAVkGFvaGNqPy2DIvTqmUH_nk39o3z"
-                    alt=""
-                  />
+                  <img className="h-24" src="img/sad_gosung.jpg" />
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
-                  <span className="font-bold text-sm">딸기 노멀 에디션</span>
-                  <span className="text-red-500 text-xs">Ichigo</span>
+                  <span className="font-bold text-sm">{productInfo.name}</span>
                   <a
                     href="#"
                     className="font-semibold hover:text-red-500 text-gray-500 text-xs"
@@ -47,106 +118,9 @@ export default function CartScreen() {
               </div>
               <div className="flex justify-center w-1/5">
                 <svg
-                  className="fill-current text-gray-600 w-3"
-                  viewBox="0 0 448 512"
-                >
-                  <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                </svg>
-
-                <input
-                  className="mx-2 border text-center w-8"
-                  type="text"
-                  value="1"
-                />
-
-                <svg
-                  className="fill-current text-gray-600 w-3"
-                  viewBox="0 0 448 512"
-                >
-                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                </svg>
-              </div>
-              <span className="text-center w-1/5 font-semibold text-sm">
-                200,000 ₩
-              </span>
-              <span className="text-center w-1/5 font-semibold text-sm">
-                200,000 ₩
-              </span>
-            </div>
-
-            <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-              <div className="flex w-2/5">
-                <div className="w-20">
-                  <img
-                    className="h-24"
-                    src="https://drive.google.com/uc?id=10ht6a9IR3K2i1j0rHofp9-Oubl1Chraw"
-                    alt=""
-                  />
-                </div>
-                <div className="flex flex-col justify-between ml-4 flex-grow">
-                  <span className="font-bold text-sm">
-                    딸기 영진 협업 에디션
-                  </span>
-                  <span className="text-red-500 text-xs">영진</span>
-                  <a
-                    href="#"
-                    className="font-semibold hover:text-red-500 text-gray-500 text-xs"
-                  >
-                    삭제
-                  </a>
-                </div>
-              </div>
-              <div className="flex justify-center w-1/5">
-                <svg
-                  className="fill-current text-gray-600 w-3"
-                  viewBox="0 0 448 512"
-                >
-                  <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                </svg>
-
-                <input
-                  className="mx-2 border text-center w-8"
-                  type="text"
-                  value="1"
-                />
-
-                <svg
-                  className="fill-current text-gray-600 w-3"
-                  viewBox="0 0 448 512"
-                >
-                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                </svg>
-              </div>
-              <span className="text-center w-1/5 font-semibold text-sm">
-                300,000 ₩
-              </span>
-              <span className="text-center w-1/5 font-semibold text-sm">
-                300,000 ₩
-              </span>
-            </div>
-
-            <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-              <div className="flex w-2/5">
-                <div className="w-20">
-                  <img
-                    className="h-24"
-                    src="https://drive.google.com/uc?id=1vXhvO9HoljNolvAXLwtw_qX3WNZ0m75v"
-                    alt=""
-                  />
-                </div>
-                <div className="flex flex-col justify-between ml-4 flex-grow">
-                  <span className="font-bold text-sm">수염</span>
-                  <span className="text-red-500 text-xs">Ichigo</span>
-                  <a
-                    href="#"
-                    className="font-semibold hover:text-red-500 text-gray-500 text-xs"
-                  >
-                    삭제
-                  </a>
-                </div>
-              </div>
-              <div className="flex justify-center w-1/5">
-                <svg
+                  onClick={() => {
+                    minusCount();
+                  }}
                   className="fill-current text-gray-600 w-3"
                   viewBox="0 0 448 512"
                 >
@@ -155,10 +129,13 @@ export default function CartScreen() {
                 <input
                   className="mx-2 border text-center w-8"
                   type="text"
-                  value="1"
+                  onChange={getTotalPrice}
+                  value={count}
                 />
-
                 <svg
+                  onClick={() => {
+                    plusCount();
+                  }}
                   className="fill-current text-gray-600 w-3"
                   viewBox="0 0 448 512"
                 >
@@ -166,13 +143,12 @@ export default function CartScreen() {
                 </svg>
               </div>
               <span className="text-center w-1/5 font-semibold text-sm">
-                10,000 ₩
+                {productInfo.price}
               </span>
               <span className="text-center w-1/5 font-semibold text-sm">
-                10,000 ₩
+                {totalPrice}
               </span>
             </div>
-
             <NavLink
               to="/product"
               className="flex font-semibold text-indigo-600 text-sm mt-10"
@@ -190,17 +166,22 @@ export default function CartScreen() {
           <div id="summary" className="w-1/4 px-8 py-10">
             <h1 className="font-semibold text-2xl border-b pb-8">상품 합계</h1>
             <div className="flex justify-between mt-10 mb-5">
-              <span className="font-semibold text-sm uppercase">총 3개</span>
-              <span className="font-semibold text-sm">510,000 ₩</span>
+              <span className="font-semibold text-sm uppercase">
+                총 {count}개
+              </span>
+              <span className="font-semibold text-sm">{totalPrice} ₩</span>
             </div>
             <div className="border-t mt-8">
               <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                 <span>총 가격</span>
-                <span>510,000 ₩</span>
+                <span>{totalPrice} ₩</span>
               </div>
-              <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">
+              <Link
+                to={`/purchase/${count}`}
+                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+              >
                 주문하기
-              </button>
+              </Link>
             </div>
           </div>
         </div>
