@@ -1,19 +1,21 @@
 import axios, { AxiosError } from "axios";
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, NavLink, Link, redirect } from "react-router-dom";
 import { Cart } from "../dto/Cart";
 import { Product } from "../dto/Product";
 
-export default function CartScreen() {
+const CartScreen = () => {
   const navigate = useNavigate();
   const id = 1;
+  const userId = 1;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
   const [productInfo, setProductInfo] = useState<Product>();
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [productId, setProductId] = useState();
   const url = `http://localhost:5000/cart/findAllProducts/${id}`;
+  const purchaseUrl = `http://localhost:5000/order/create`;
   const [price, setPrice] = useState(0);
   const [state, setState] = useState(0);
 
@@ -21,7 +23,7 @@ export default function CartScreen() {
     getCartList();
   }, []);
 
-  // 장바구니id로 장바구니 목록 가져오기
+  // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
     try {
       const res = await axios.get(url);
@@ -33,7 +35,6 @@ export default function CartScreen() {
         res.data[0].cartToProducts[0].product.price *
           res.data[0].cartToProducts.length
       );
-      console.log(res.data);
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({
@@ -47,6 +48,7 @@ export default function CartScreen() {
       }
     }
   };
+  // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // 상품개수 조절 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   // 갯수+1
@@ -78,6 +80,8 @@ export default function CartScreen() {
   if (!productInfo) {
     return <></>;
   }
+
+  console.log(productInfo);
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -104,7 +108,7 @@ export default function CartScreen() {
             <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
               <div className="flex w-2/5">
                 <div className="w-20">
-                  <img className="h-24" src="img/sad_gosung.jpg" />
+                  <img className="h-24" src={productInfo.image} />
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
                   <span className="font-bold text-sm">{productInfo.name}</span>
@@ -177,7 +181,7 @@ export default function CartScreen() {
                 <span>{totalPrice} ₩</span>
               </div>
               <Link
-                to={`/purchase/${count}`}
+                to={`/purchase/${count}/${productInfo.id}`}
                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
@@ -188,4 +192,5 @@ export default function CartScreen() {
       </div>
     </body>
   );
-}
+};
+export default CartScreen;

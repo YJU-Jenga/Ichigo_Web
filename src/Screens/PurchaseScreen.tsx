@@ -8,19 +8,21 @@ import Swal from "sweetalert2";
 
 const PurchaseScreen = () => {
   const navigate = useNavigate();
-  let { count } = useParams();
-  console.log(count);
+  let { count, id } = useParams();
+  const [detailAddress, setDetailAddress] = useState("");
+  console.log(count, id);
+
+  const userId = 1;
+  const counts = [1, 2, 3];
+  const productIds = [1];
 
   const [form, setForm] = useState({
+    userId: userId,
     address: "",
-    detailAddress: "",
     postalCode: "",
-    modalstate: false,
-    counts: count,
+    productIds: productIds,
+    counts: counts,
   });
-  const userId = 1;
-  const productIds = 1;
-
   const onCompletePost = (data: any) => {
     setForm({ ...form, address: data.address, postalCode: data.zonecode });
     console.log(data);
@@ -28,16 +30,17 @@ const PurchaseScreen = () => {
 
   // 주소 + 상세주소까지 합치기
   const full_address = () => {
-    let fullAddress = form.address + form.detailAddress;
+    let fullAddress = form.address + detailAddress;
     return setForm({ ...form, address: fullAddress });
   };
 
   const url = `http://localhost:5000/order/create`;
+  const getProductInfoUrl = `https://localhost:5000/product/getOne/${id}`;
   const body = {
-    userId,
-    postalCode: form.postalCode,
+    userId: form.userId,
     address: form.address,
-    productIds,
+    postalCode: form.postalCode,
+    productIds: form.productIds,
     counts: form.counts,
   };
 
@@ -63,13 +66,13 @@ const PurchaseScreen = () => {
           title: error.response?.data.message,
           text: "관리자에게 문의해주세요",
           showConfirmButton: false,
-          timer: 1000,
+          timer: 10000,
         });
         navigate("/");
       }
     }
   };
-
+  console.log(body);
   return (
     <div className="flex justify-center items-center">
       <div className="py-16 px-4 md:px-6 2xl:px-0 flex justify-center items-center 2xl:mx-auto 2xl:container">
@@ -107,7 +110,7 @@ const PurchaseScreen = () => {
                     className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
                     type="number"
                     placeholder="갯수"
-                    value={form.counts}
+                    value={form.counts[0]}
                     min={1}
                     onChange={() => {
                       // setForm({ ...form, counts: form.counts + 1 });
@@ -143,7 +146,7 @@ const PurchaseScreen = () => {
                       type="text"
                       placeholder="상세주소"
                       onChange={(event) => {
-                        setForm({ ...form, detailAddress: event.target.value });
+                        setDetailAddress(event.target.value);
                       }}
                     />
                   </div>

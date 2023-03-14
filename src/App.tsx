@@ -36,7 +36,7 @@ function App() {
           />
           <Route path="/write_q&a" element={<WriteQna />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/purchase/:count" element={<Purchase />} />
+          <Route path="/purchase/:count/:id" element={<Purchase />} />
           <Route path="/viewpost/:id" element={<ViewPost />} />
           <Route
             path="/updateproductinquiry/:id"
