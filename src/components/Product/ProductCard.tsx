@@ -79,7 +79,10 @@ const ProductCard = () => {
     <div className="py-6">
       {productInfo.map((product: Product) => {
         return (
-          <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-4">
+          <div
+            key={product.id}
+            className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-4"
+          >
             <div className="w-1/3 bg-cover">
               <img src={`http://localhost:5000/${product.image}`} alt="" />
             </div>

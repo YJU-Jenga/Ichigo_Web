@@ -3,6 +3,8 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
+import AddComment from "../components/board/AddComment";
+import Comments from "../components/board/Comments";
 
 const ViewPostScreen = () => {
   const navigate = useNavigate();
@@ -102,6 +104,8 @@ const ViewPostScreen = () => {
           삭제
         </a>
       </div>
+      <AddComment />
+      <Comments />
     </div>
   );
 };
