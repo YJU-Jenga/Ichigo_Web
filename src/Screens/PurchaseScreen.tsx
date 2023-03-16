@@ -57,8 +57,8 @@ const PurchaseScreen = () => {
   };
 
   // 주소 + 상세주소까지 합치기
-  const full_address = () => {
-    let fullAddress = form.address + detailAddress;
+  const full_address = (detailAddress: String) => {
+    let fullAddress = form.address + " " + detailAddress;
     return setForm({ ...form, address: fullAddress });
   };
 
@@ -100,7 +100,7 @@ const PurchaseScreen = () => {
       }
     }
   };
-  console.log(productInfo);
+  console.log(body);
   return (
     <div className="flex justify-center items-center">
       <div className="py-16 px-4 md:px-6 2xl:px-0 flex justify-center items-center 2xl:mx-auto 2xl:container">
@@ -143,9 +143,6 @@ const PurchaseScreen = () => {
                     placeholder="갯수"
                     value={form.counts[0]}
                     min={1}
-                    onChange={() => {
-                      // setForm({ ...form, counts: form.counts + 1 });
-                    }}
                     required
                   />
                 </div>
@@ -176,8 +173,9 @@ const PurchaseScreen = () => {
                       className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
                       type="text"
                       placeholder="상세주소"
-                      onChange={(event) => {
-                        setDetailAddress(event.target.value);
+                      // focus상태였던 커서가 다른 곳으로 옮겨갈때 이벤트 함수 실행 - 상세주소 입력 후 full_address실행
+                      onBlur={(event) => {
+                        full_address(event.target.value);
                       }}
                     />
                   </div>

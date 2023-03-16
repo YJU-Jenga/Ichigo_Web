@@ -8,16 +8,13 @@ import { Product } from "../dto/Product";
 const CartScreen = () => {
   const navigate = useNavigate();
   const id = 1;
-  const userId = 1;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
   const [productInfo, setProductInfo] = useState<Product>();
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-  const [productId, setProductId] = useState();
   const url = `http://localhost:5000/cart/findAllProducts/${id}`;
   const purchaseUrl = `http://localhost:5000/order/create`;
   const [price, setPrice] = useState(0);
-  const [state, setState] = useState(0);
 
   useEffect(() => {
     getCartList();

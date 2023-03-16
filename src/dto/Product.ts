@@ -1,4 +1,5 @@
 export interface Product {
+  [x: string]: any;
   createdAt: String;
   description: String;
   id: number;
