@@ -108,10 +108,13 @@ const CartScreen = () => {
             <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
               <div className="flex w-2/5">
                 <div className="w-20">
-                  <img className="h-24" src={productInfo.image} />
+                  <img
+                    className="h-24"
+                    src={`http://localhost:5000/${productInfo?.image}`}
+                  />
                 </div>
                 <div className="flex flex-col justify-between ml-4 flex-grow">
-                  <span className="font-bold text-sm">{productInfo.name}</span>
+                  <span className="font-bold text-sm">{productInfo?.name}</span>
                   <a
                     href="#"
                     className="font-semibold hover:text-red-500 text-gray-500 text-xs"
@@ -147,7 +150,7 @@ const CartScreen = () => {
                 </svg>
               </div>
               <span className="text-center w-1/5 font-semibold text-sm">
-                {productInfo.price}
+                {productInfo?.price}
               </span>
               <span className="text-center w-1/5 font-semibold text-sm">
                 {totalPrice}
@@ -181,7 +184,7 @@ const CartScreen = () => {
                 <span>{totalPrice} ₩</span>
               </div>
               <Link
-                to={`/purchase/${count}/${productInfo.id}`}
+                to={`/purchase/${count}/${productInfo?.id}`}
                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기

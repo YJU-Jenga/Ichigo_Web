@@ -15,7 +15,7 @@ const ProductScreen = () => {
   const [productId, setProductId] = useState(1);
 
   // 상품정보 가져오기
-  // 렌더링 전에 정보를 먼저 가져오기 위함
+  // 페이지가 나타나기전에 정보를 먼저 가져오기 위함
   useEffect(() => {
     getProductInfo();
   }, []);
@@ -83,7 +83,7 @@ const ProductScreen = () => {
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <img
             className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
-            src={productInfo.image}
+            src={`http://localhost:5000/${productInfo?.image}`}
           />
           <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
             <h2 className="text-sm title-font text-gray-500 tracking-widest">

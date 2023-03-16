@@ -1,20 +1,48 @@
 import axios, { AxiosError } from "axios";
-import React, { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
+import { Product } from "../dto/Product";
 
 // 테스트 user_id, 우편번호, 주소, 상품아이디, 갯수
 
 const PurchaseScreen = () => {
   const navigate = useNavigate();
+  const [productInfo, setProductInfo] = useState<Product>();
   let { count, id } = useParams();
   const [detailAddress, setDetailAddress] = useState("");
   console.log(count, id);
 
   const userId = 1;
-  const counts = [1, 2, 3];
-  const productIds = [1];
+  const counts = [Number(count)];
+  const productIds = [Number(id)];
+
+  // 파라미터로 넘어온 상품Id로 상품 정보 가져오기
+  const getProductUrl = `http://localhost:5000/product/getOne/${id}`;
+
+  // 페이지가 나타나기전에 정보를 먼저 가져오기 위함
+  useEffect(() => {
+    getProductInfo();
+  }, []);
+
+  const getProductInfo = async () => {
+    try {
+      const res = await axios.get(getProductUrl);
+      setProductInfo(res.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
+    }
+  };
 
   const [form, setForm] = useState({
     userId: userId,
@@ -72,7 +100,7 @@ const PurchaseScreen = () => {
       }
     }
   };
-  console.log(body);
+  console.log(productInfo);
   return (
     <div className="flex justify-center items-center">
       <div className="py-16 px-4 md:px-6 2xl:px-0 flex justify-center items-center 2xl:mx-auto 2xl:container">
@@ -87,14 +115,17 @@ const PurchaseScreen = () => {
             <div className="flex flex-col sm:flex-row xl:flex-col justify-center items-center bg-gray-100 py-7 sm:py-0 xl:py-10 px-10 xl:w-full">
               <div className="flex flex-col justify-start items-start w-full space-y-4">
                 <p className="text-xl md:text-2xl leading-normal text-gray-800">
-                  딸기
+                  {productInfo?.name}
                 </p>
                 <p className="text-base font-semibold leading-none text-gray-600">
-                  300,000 ₩
+                  {productInfo?.price}
                 </p>
               </div>
               <div className="mt-6 sm:mt-0 xl:my-10 xl:px-20 w-52 sm:w-96 xl:w-auto">
-                <img src="img/sad_gosung.jpg" alt="headphones" />
+                <img
+                  src={`http://localhost:5000/${productInfo?.image}`}
+                  alt="왜 안되는데 뒤질래?"
+                />
               </div>
             </div>
             <form
