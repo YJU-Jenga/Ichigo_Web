@@ -11,7 +11,6 @@ const PurchaseScreen = () => {
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Product>();
   let { count, id } = useParams();
-  const [detailAddress, setDetailAddress] = useState("");
   console.log(count, id);
 
   const userId = 1;
@@ -51,6 +50,7 @@ const PurchaseScreen = () => {
     productIds: productIds,
     counts: counts,
   });
+
   const onCompletePost = (data: any) => {
     setForm({ ...form, address: data.address, postalCode: data.zonecode });
     console.log(data);
@@ -144,6 +144,7 @@ const PurchaseScreen = () => {
                     value={form.counts[0]}
                     min={1}
                     required
+                    readOnly
                   />
                 </div>
                 <label className="mt-8 text-base leading-4 text-gray-800">

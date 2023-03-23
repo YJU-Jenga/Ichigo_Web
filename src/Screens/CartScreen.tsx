@@ -12,8 +12,9 @@ const CartScreen = () => {
   const [productInfo, setProductInfo] = useState<Product>();
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-  const url = `http://localhost:5000/cart/findAllProducts/${id}`;
+
   const purchaseUrl = `http://localhost:5000/order/create`;
+  const updateCountUrl = `http://localhost:5000/cart/updateAddedProdcut/${id}`;
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
@@ -22,6 +23,7 @@ const CartScreen = () => {
 
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
+    const url = `http://localhost:5000/cart/findAllProducts/${id}`;
     try {
       const res = await axios.get(url);
       setCartList(res.data);
@@ -60,6 +62,26 @@ const CartScreen = () => {
     } else {
       const minus = count - 1;
       setCount(minus);
+    }
+  };
+  const updateProductCount = async (count: number) => {
+    const body = {
+      productId: id,
+      count: count,
+    };
+    try {
+      const res = await axios.patch(updateCountUrl, body);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
     }
   };
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -124,6 +146,7 @@ const CartScreen = () => {
                 <svg
                   onClick={() => {
                     minusCount();
+                    updateProductCount(-1);
                   }}
                   className="fill-current text-gray-600 w-3"
                   viewBox="0 0 448 512"
@@ -139,6 +162,7 @@ const CartScreen = () => {
                 <svg
                   onClick={() => {
                     plusCount();
+                    updateProductCount(1);
                   }}
                   className="fill-current text-gray-600 w-3"
                   viewBox="0 0 448 512"

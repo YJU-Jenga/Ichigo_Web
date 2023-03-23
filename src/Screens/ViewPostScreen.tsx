@@ -3,8 +3,7 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
-import AddComment from "../components/board/AddComment";
-import Comments from "../components/board/Comments";
+import { Comment } from "../dto/Comment";
 
 const ViewPostScreen = () => {
   const navigate = useNavigate();
@@ -12,23 +11,30 @@ const ViewPostScreen = () => {
   let { id } = useParams();
   console.log(id);
   // 상세정보를 가져올 url
-  const url_get = `http://localhost:5000/post/view/${id}`;
+
   // 글 삭제 url
   const url_delete = `http://localhost:5000/post/delete_post?id=${id}`;
   // 글 상세정보를 배열에 저장
   const [boardDetail, setBoardDetail] = useState<Board>();
+  const [comment, setComment] = useState("");
+  const [allComment, setAllComment] = useState<Array<Comment>>([]);
 
   // 렌더링 전에 정보를 먼저 가져오기 위함
   useEffect(() => {
     getPostDetail();
   }, []);
 
-  // 글 상세정보 가져오기 함수
+  // 글 상세정보와 댓글을 가져오기 함수
   const getPostDetail = async () => {
+    const postId = id;
+    const url_get = `http://localhost:5000/post/view/${id}`;
+    const getCommentUrl = `http://localhost:5000/comment/getAll/${postId}`;
     try {
-      const res = await axios.get(url_get);
-      console.log(res.data);
-      setBoardDetail(res.data);
+      const res_post = await axios.get(url_get);
+      const res_comment = await axios.get(getCommentUrl);
+      setBoardDetail(res_post.data);
+      setAllComment(res_comment.data);
+      console.log(res_comment);
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({
@@ -82,46 +88,54 @@ const ViewPostScreen = () => {
     const res = await axios.get(getWritersUrl);
   };
 
+  // 댓글쓰기 함수
+  const writeComment = async () => {
+    const writeCommentUrl = `http://localhost:5000/comment/write`;
+    const headers = { "Content-Type": "application/json" };
+    const body = {
+      writer: 1,
+      postId: id,
+      content: comment,
+    };
+    try {
+      const res = await axios.post(writeCommentUrl, body, { headers });
+      if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "댓글이 작성되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    }
+  };
+
   return (
     <>
-      <div className="max-w-md py-4 px-8 bg-white shadow-lg rounded-lg my-20">
-        <div className="flex justify-center md:justify-end -mt-16">
-          <img
-            className="w-20 h-20 object-cover rounded-full border-2 border-indigo-500"
-            src="https://images.unsplash.com/photo-1499714608240-22fc6ad53fb2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=334&q=80"
-          />
-        </div>
-        <div>
-          <h2 className="text-gray-800 text-3xl font-semibold">
-            {boardDetail.title}
-          </h2>
-          <p className="mt-2 text-gray-600">{boardDetail.content}</p>
-        </div>
-
-        <div className="flex justify-end mt-4">
-          <NavLink
-            to={`/updateproductinquiry/${id}`}
-            className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-          >
-            수정
-          </NavLink>
-          <a
-            onClick={deletePost}
-            className="flex ml-2 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-          >
-            삭제
-          </a>
-        </div>
-        <div className="flex items-center justify-center min-h-screen">
-          {" "}
+      <div className="py-4 px-8 bg-white shadow-lg rounded-lg my-20">
+        <div className="flex items-center justify-center">
           <div className="rounded-xl border p-5 shadow-md w-9/12 bg-white">
             <div className="flex w-full items-center justify-between border-b pb-3">
               <div className="flex items-center space-x-3">
                 <div className="text-lg font-bold text-slate-700">
-                  Joe Smith
+                  {boardDetail.title}
                 </div>
               </div>
               <div className="flex items-center space-x-8">
+                <div className="text-xs text-neutral-500">
+                  {boardDetail.user.name}
+                </div>
                 <div className="text-xs text-neutral-500">
                   {boardDetail.createdAt.substring(0, 10)}
                 </div>
@@ -171,6 +185,20 @@ const ViewPostScreen = () => {
                       />
                     </svg>
                     <span>4</span>
+                    <div className="flex justify-end mt-4">
+                      <NavLink
+                        to={`/updateproductinquiry/${id}`}
+                        className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                      >
+                        수정
+                      </NavLink>
+                      <a
+                        onClick={deletePost}
+                        className="flex ml-2 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                      >
+                        삭제
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -178,8 +206,60 @@ const ViewPostScreen = () => {
           </div>
         </div>
       </div>
-      <AddComment />
-      <Comments />
+      {/* 댓글 쓰기 */}
+      <div className="flex mx-auto items-center justify-center shadow-lg mb-4 max-w-lg">
+        <form className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <h2 className="px-4 pt-3 pb-2 text-gray-800 text-lg">
+              댓글 작성하기
+            </h2>
+            <div className="w-full md:w-full px-3 mb-2 mt-2">
+              <textarea
+                className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                name="body"
+                placeholder="댓글을 입력해 주세요"
+                required
+                onChange={(event) => setComment(event.target.value)}
+              ></textarea>
+            </div>
+            <div className="w-full md:w-full flex items-start px-3">
+              <div className="-mr-1">
+                <input
+                  type="submit"
+                  className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
+                  value="작성"
+                  onClick={writeComment}
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      {/* 댓글 */}
+      {allComment.map((comments: Comment) => {
+        return (
+          <div className="flex justify-center relative top-1/3">
+            <div className="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg w-full max-w-xl">
+              <div className="relative flex gap-4">
+                <div className="flex flex-col w-full">
+                  <div className="flex flex-row justify-between">
+                    <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">
+                      작성자
+                    </p>
+                    <a className="text-gray-500 text-xl" href="#">
+                      <i className="fa-solid fa-trash"></i>
+                    </a>
+                  </div>
+                  <p className="text-gray-400 text-sm">
+                    {comments.createdAt.substring(0, 10)}
+                  </p>
+                </div>
+              </div>
+              <p className="-mt-4 text-gray-500">{comments.content}</p>
+            </div>
+          </div>
+        );
+      })}
     </>
   );
 };

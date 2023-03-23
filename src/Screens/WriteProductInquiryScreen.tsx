@@ -36,15 +36,15 @@ export default function WriteProductInquiryScreen() {
     const headers = { "Content-Type": "application/json" };
     try {
       const res = await axios.post(url, body, { headers });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "상품문의 작성이 완료되었습니다.",
-        showConfirmButton: false,
-        timer: 1000,
-      });
-      navigate("/productinquiry");
       if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "상품문의 작성이 완료되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/productinquiry");
       }
     } catch (error) {
       if (error instanceof AxiosError) {
