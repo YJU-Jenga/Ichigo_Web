@@ -121,6 +121,9 @@ const ViewPostScreen = () => {
     }
   };
 
+  // 댓글 삭제 함수
+  const deleteComment = (id: number) => {};
+
   return (
     <>
       <div className="py-4 px-8 bg-white shadow-lg rounded-lg my-20">
@@ -257,8 +260,12 @@ const ViewPostScreen = () => {
               </div>
               <p className="-mt-4 text-gray-500">{comments.content}</p>
               <div>
-                <button className="mx-4">수정</button>
-                <button>삭제</button>
+                <button className="text-white bg-blue-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-blue-600">
+                  수정
+                </button>
+                <button className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600">
+                  삭제
+                </button>
               </div>
             </div>
           </div>
