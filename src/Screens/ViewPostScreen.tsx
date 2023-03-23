@@ -167,7 +167,7 @@ const ViewPostScreen = () => {
                         d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
                       />
                     </svg>
-                    <span>125</span>
+                    <span>{allComment.length}</span>
                   </div>
                   <div className="flex cursor-pointer items-center transition hover:text-slate-600">
                     <svg
@@ -185,21 +185,21 @@ const ViewPostScreen = () => {
                       />
                     </svg>
                     <span>4</span>
-                    <div className="flex justify-end mt-4">
-                      <NavLink
-                        to={`/updateproductinquiry/${id}`}
-                        className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-                      >
-                        수정
-                      </NavLink>
-                      <a
-                        onClick={deletePost}
-                        className="flex ml-2 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-                      >
-                        삭제
-                      </a>
-                    </div>
                   </div>
+                </div>
+                <div className="flex justify-end mt-4">
+                  <NavLink
+                    to={`/updateproductinquiry/${id}`}
+                    className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                  >
+                    수정
+                  </NavLink>
+                  <a
+                    onClick={deletePost}
+                    className="flex ml-2 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                  >
+                    삭제
+                  </a>
                 </div>
               </div>
             </div>
@@ -256,6 +256,10 @@ const ViewPostScreen = () => {
                 </div>
               </div>
               <p className="-mt-4 text-gray-500">{comments.content}</p>
+              <div>
+                <button className="mx-4">수정</button>
+                <button>삭제</button>
+              </div>
             </div>
           </div>
         );
