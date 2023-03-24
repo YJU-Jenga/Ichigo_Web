@@ -4,16 +4,14 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
+import { url } from "inspector";
 
 const ViewPostScreen = () => {
   const navigate = useNavigate();
-  // 파라미터로 받아온 id값
+  // 파라미터로 받아온 글 id값
   let { id } = useParams();
-  console.log(id);
-  // 상세정보를 가져올 url
+  const postId = id;
 
-  // 글 삭제 url
-  const url_delete = `http://localhost:5000/post/delete_post?id=${id}`;
   // 글 상세정보를 배열에 저장
   const [boardDetail, setBoardDetail] = useState<Board>();
   const [comment, setComment] = useState("");
@@ -26,7 +24,6 @@ const ViewPostScreen = () => {
 
   // 글 상세정보와 댓글을 가져오기 함수
   const getPostDetail = async () => {
-    const postId = id;
     const url_get = `http://localhost:5000/post/view/${id}`;
     const getCommentUrl = `http://localhost:5000/comment/getAll/${postId}`;
     try {
@@ -51,6 +48,8 @@ const ViewPostScreen = () => {
 
   // 글 삭제 함수
   const deletePost = async () => {
+    // 글 삭제 url
+    const url_delete = `http://localhost:5000/post/delete_post?id=${id}`;
     try {
       const res = await axios.delete(url_delete);
       if (res.status === 200) {
@@ -81,12 +80,11 @@ const ViewPostScreen = () => {
     return <></>;
   }
 
-  // const [userInfo, setUserInfo] = useState();
   // 작성자 이름 가져오기
-  const getWritersName = async () => {
-    const getWritersUrl = `http://localhost:5000/user/user/${id}`;
-    const res = await axios.get(getWritersUrl);
-  };
+  // const getWritersName = async () => {
+  //   const getWritersUrl = `http://localhost:5000/user/user/${id}`;
+  //   const res = await axios.get(getWritersUrl);
+  // };
 
   // 댓글쓰기 함수
   const writeComment = async () => {
@@ -122,7 +120,50 @@ const ViewPostScreen = () => {
   };
 
   // 댓글 삭제 함수
-  const deleteComment = (id: number) => {};
+  const deleteComment = async (id: number) => {
+    const deleteUrl = `http://localhost:5000/comment/delete/${id}`;
+    try {
+      const res = await axios.delete(deleteUrl);
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "댓글이 삭제되었습니다.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+      window.location.replace(`/viewpost/${postId}`);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    }
+  };
+
+  // 댓글 수정 함수
+  const updateComment = async (id: number) => {
+    const updateCommentUrl = `http://localhost:5000/comment/update/${id}`;
+    const { value: text } = await Swal.fire({
+      input: "textarea",
+      inputLabel: "Message",
+      inputPlaceholder: "Type your message here...",
+      inputAttributes: {
+        "aria-label": "Type your message here",
+      },
+      showCancelButton: true,
+    });
+
+    if (text) {
+      const res = await axios.patch(updateCommentUrl, text);
+    }
+  };
 
   return (
     <>
@@ -260,10 +301,20 @@ const ViewPostScreen = () => {
               </div>
               <p className="-mt-4 text-gray-500">{comments.content}</p>
               <div>
-                <button className="text-white bg-blue-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-blue-600">
+                <button
+                  className="text-white bg-blue-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-blue-600"
+                  onClick={() => {
+                    updateComment(comments.id);
+                  }}
+                >
                   수정
                 </button>
-                <button className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600">
+                <button
+                  className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600"
+                  onClick={() => {
+                    deleteComment(comments.id);
+                  }}
+                >
                   삭제
                 </button>
               </div>
