@@ -9,7 +9,6 @@ const ProductInquiryScreen = () => {
   const navigate = useNavigate();
   // 가져온 게시판 내용을 저장(전체 다 가져옴)
   const [boardList, setBoardList] = useState<Array<Board>>([]);
-  // 페이지네이션 구현용 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   // 한 페이지 당 나타낼 데이터의 갯수
   const size = 10;
   // 전체 페이지 수
@@ -31,10 +30,7 @@ const ProductInquiryScreen = () => {
   if (pageCount > lastNum) {
     firstNum = 1;
   }
-  // url
-  const url = `http://localhost:5000/post/product_inquiry_all`;
-  // 테스트용 url
-  const test_url = `https://jsonplaceholder.typicode.com/posts`;
+
   // 렌더링 전에 정보를 먼저 가져오기 위함
   useEffect(() => {
     getProductInquiry();
@@ -42,8 +38,9 @@ const ProductInquiryScreen = () => {
 
   // 상품문의 가져오기
   const getProductInquiry = async () => {
+    const getProductInquiryUrl = `http://localhost:5000/post/product_inquiry_all`;
     try {
-      const res = await axios.get(url);
+      const res = await axios.get(getProductInquiryUrl);
       console.log(res.data);
       setBoardList(res.data);
     } catch (error) {
@@ -77,7 +74,7 @@ const ProductInquiryScreen = () => {
     }
     return arr;
   };
-  console.log(lastNum, firstNum);
+
   return (
     <section className="bg-gray-50  p-3 sm:p-5 h-screen">
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12">

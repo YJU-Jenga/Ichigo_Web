@@ -15,6 +15,7 @@ import Cart from "./Screens/CartScreen";
 import Purchase from "./Screens/PurchaseScreen";
 import ViewPost from "./Screens/ViewPostScreen";
 import UpdateProductInquiryScreen from "./Screens/UpdateProductInquiryScreen";
+import AddProductScreen from "./Screens/AddProductScreen";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             path="/updateproductinquiry/:id"
             element={<UpdateProductInquiryScreen />}
           />
+          <Route path="/addproduct" element={<AddProductScreen />} />
         </Routes>
       </BrowserRouter>
     </>

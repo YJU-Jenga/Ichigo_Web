@@ -4,7 +4,6 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
-import { url } from "inspector";
 
 const ViewPostScreen = () => {
   const navigate = useNavigate();
@@ -159,9 +158,24 @@ const ViewPostScreen = () => {
       },
       showCancelButton: true,
     });
+    const body = {
+      writer: 1,
+      postId: postId,
+      content: text,
+    };
 
     if (text) {
-      const res = await axios.patch(updateCommentUrl, text);
+      const res = await axios.patch(updateCommentUrl, body);
+      if (res.status === 200) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "댓글이 수정되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+      window.location.replace(`/viewpost/${postId}`);
     }
   };
 
@@ -282,13 +296,16 @@ const ViewPostScreen = () => {
       {/* 댓글 */}
       {allComment.map((comments: Comment) => {
         return (
-          <div className="flex justify-center relative top-1/3">
+          <div
+            key={comments.id}
+            className="flex justify-center relative top-1/3"
+          >
             <div className="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg w-full max-w-xl">
               <div className="relative flex gap-4">
                 <div className="flex flex-col w-full">
                   <div className="flex flex-row justify-between">
                     <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">
-                      작성자
+                      {comments.content}
                     </p>
                     <a className="text-gray-500 text-xl" href="#">
                       <i className="fa-solid fa-trash"></i>
@@ -299,7 +316,7 @@ const ViewPostScreen = () => {
                   </p>
                 </div>
               </div>
-              <p className="-mt-4 text-gray-500">{comments.content}</p>
+              <p className="-mt-4 text-gray-500">작성자 표시하기</p>
               <div>
                 <button
                   className="text-white bg-blue-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-blue-600"
