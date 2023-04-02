@@ -43,7 +43,7 @@ const AddProductScreen = () => {
       <div className="bg-indigo-50 min-h-screen md:px-20 pt-6">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
-            상품 추가
+            상품 등록
           </h1>
           <div className="space-y-4">
             <div>
@@ -112,9 +112,9 @@ const AddProductScreen = () => {
                 type="file"
                 id="email"
                 className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                onBlur={(event) =>
-                  setForm({ ...form, file: event.target.files })
-                }
+                // onBlur={(event) =>
+                //   // setForm({ ...form, file: event.target.files })
+                // }
               />
             </div>
             <button
