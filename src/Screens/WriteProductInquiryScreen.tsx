@@ -12,28 +12,47 @@ export default function WriteProductInquiryScreen() {
     secret: false,
     content: "",
   });
-
+  const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
-  // 체크박스 상태관리 함수
-  const checkbox = () => {
-    form.secret = !form.secret;
-  };
   // url 따로 변수로 관리
   const url = `http://localhost:5000/post/write_product_inquiry`;
   // 전송할 부분 따로 변수로 관리
-  const body = {
-    writer: form.writer,
-    title: form.title,
-    password: form.password,
-    secret: form.secret,
-    content: form.content,
-  };
+  const body = new FormData();
+  if (file !== null) {
+    body.append("file", file);
+  }
+  body.append("writer", JSON.stringify({ writer: form.writer }));
+  body.append("title", JSON.stringify({ title: form.title }));
+  body.append("secret", JSON.stringify({ secret: form.secret }));
+  body.append("password", JSON.stringify({ password: form.password }));
+  body.append("content", JSON.stringify({ content: form.content }));
+
+  // const body = {
+  //   writer: form.writer,
+  //   title: form.title,
+  //   password: form.password,
+  //   secret: form.secret,
+  //   content: form.content,
+  // };
 
   // 폼 전송 함수
   const submit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const headers = { "Content-Type": "application/json" };
+    if (form.secret) {
+      if (form.password.length != 4) {
+        Swal.fire({
+          icon: "error",
+          title: "비밀번호를 양식에 맞게 입력해주세요.",
+          text: "숫자 4글자",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        return;
+      }
+    }
+
+    const headers = { "Content-Type": "Multipart/form-data" };
     try {
       const res = await axios.post(url, body, { headers });
       if (res.status === 201) {
@@ -91,8 +110,31 @@ export default function WriteProductInquiryScreen() {
               ></textarea>
             </div>
             <div>
+              <label className="text-lx">파일:</label>
+              <input
+                type="file"
+                id="file"
+                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const target = event.currentTarget;
+                  const files = (target.files as FileList)[0];
+
+                  if (files === undefined) {
+                    return;
+                  }
+
+                  setFile(files);
+                }}
+              />
+            </div>
+            <div>
               비밀글
-              <input type="checkbox" onChange={checkbox} />
+              <input
+                type="checkbox"
+                onChange={(event) => {
+                  setForm({ ...form, secret: event.target.checked });
+                }}
+              />
             </div>
             <div>
               <label className="block mb-2 text-lg">비밀번호</label>

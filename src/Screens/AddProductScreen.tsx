@@ -1,31 +1,55 @@
 import axios, { AxiosError } from "axios";
-import { SyntheticEvent, useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddProductScreen = () => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     price: 0,
     description: "",
     stock: 0,
     type: true,
-    file: null,
   });
+
+  const [file, setFile] = useState<File | null>(null);
   // 상품추가 함수
   const AddProduct = async (e: SyntheticEvent) => {
     e.preventDefault();
-    const headers = { "Content-Type": "application/json" };
+    const headers = { "Content-Type": "Multipart/form-data" };
     const AddProductUrl = `http://localhost:5000/product/create`;
-    const body = {
-      name: form.name,
-      price: form.price,
-      description: form.description,
-      stock: form.stock,
-      type: form.type,
-      file: form.file,
-    };
+    const body = new FormData();
+    if (file === null) {
+      Swal.fire({
+        icon: "error",
+        title: "상품이미지 미등록",
+        text: "상품이미지를 등록해주세요",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return;
+    }
+    body.append("file", file);
+    body.append("name", JSON.stringify({ name: form.name }));
+    body.append("price", JSON.stringify({ price: form.price }));
+    body.append(
+      "description",
+      JSON.stringify({ description: form.description })
+    );
+    body.append("stock", JSON.stringify({ stock: form.stock }));
+    body.append("type", JSON.stringify({ type: form.type }));
     try {
       const res = await axios.post(AddProductUrl, body, { headers });
+      if (res.status == 201) {
+        Swal.fire({
+          icon: "success",
+          text: "상품 등록이 완료되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({
@@ -110,11 +134,18 @@ const AddProductScreen = () => {
               <label className="text-lx">파일:</label>
               <input
                 type="file"
-                id="email"
+                id="file"
                 className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                // onBlur={(event) =>
-                //   // setForm({ ...form, file: event.target.files })
-                // }
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                  const target = event.currentTarget;
+                  const files = (target.files as FileList)[0];
+
+                  if (files === undefined) {
+                    return;
+                  }
+
+                  setFile(files);
+                }}
               />
             </div>
             <button
