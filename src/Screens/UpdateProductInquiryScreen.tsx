@@ -19,58 +19,50 @@ export default function UpdatePostScreen() {
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
-  // url 따로 변수로 관리
-  const url = `http://localhost:5000/post/update/${id}`;
-  // 전송할 부분 따로 변수로 관리
-  const body = new FormData();
-
-  if (file !== null) {
-    body.append("file", file);
-  }
-
-  body.append("writer", JSON.stringify({ writer: form.writer }));
-  body.append("title", JSON.stringify({ title: form.title }));
-  body.append("secret", JSON.stringify({ secret: form.secret }));
-  body.append("password", JSON.stringify({ password: form.password }));
-  body.append("content", JSON.stringify({ content: form.content }));
-
-  // const body = {
-  //   writer: form.writer,
-  //   title: form.title,
-  //   password: form.password,
-  //   secret: form.secret,
-  //   content: form.content,
-  // };
-
   // 폼 전송 함수
   const submit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    if (form.secret) {
-      if (form.password.length != 4) {
+    try {
+      e.preventDefault();
+      if (form.secret) {
+        if (form.password.length != 4) {
+          throw new Error("비밀번호를 양식(숫자 4글자)에 맞게 입력해주세요.");
+        }
+      }
+
+      if (form.title.length <= 0) {
+        throw new Error("제목을 입력해주세요.");
+      } else if (form.title.length < 2) {
+        throw new Error("제목은 최소 2글자 이상 입력해주세요.");
+      }
+      if (form.content.length <= 0) {
+        throw new Error("글의 내용을 입력해주세요.");
+      }
+
+      // 전송할 부분 따로 변수로 관리
+      const url = `http://localhost:5000/post/update/${id}`;
+      const body = new FormData();
+      const headers = { "Content-Type": "application/json" };
+
+      if (file !== null) {
+        body.append("file", file);
+      }
+
+      body.append("writer", JSON.stringify({ writer: form.writer }));
+      body.append("title", JSON.stringify({ title: form.title }));
+      body.append("secret", JSON.stringify({ secret: form.secret }));
+      body.append("password", JSON.stringify({ password: form.password }));
+      body.append("content", JSON.stringify({ content: form.content }));
+
+      const res = await axios.patch(url, body, { headers });
+      if (res.status === 201) {
         Swal.fire({
-          icon: "error",
-          title: "비밀번호를 양식에 맞게 입력해주세요.",
-          text: "숫자 4글자",
+          position: "center",
+          icon: "success",
+          title: "상품문의 수정이 완료되었습니다.",
           showConfirmButton: false,
           timer: 1000,
         });
-
-        return;
-      }
-    }
-
-    const headers = { "Content-Type": "application/json" };
-    try {
-      const res = await axios.patch(url, body, { headers });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "상품문의 수정이 완료되었습니다.",
-        showConfirmButton: false,
-        timer: 1000,
-      });
-      navigate("/productinquiry");
-      if (res.status === 201) {
+        navigate("/productinquiry");
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -78,6 +70,14 @@ export default function UpdatePostScreen() {
           icon: "error",
           title: error.response?.data.message,
           text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      } else if (error instanceof Error) {
+        Swal.fire({
+          icon: "error",
+          title: "입력 오류",
+          text: error.message,
           showConfirmButton: false,
           timer: 1000,
         });

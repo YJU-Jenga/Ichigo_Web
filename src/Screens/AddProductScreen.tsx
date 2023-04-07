@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import React, { SyntheticEvent, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const AddProductScreen = () => {
@@ -16,30 +16,46 @@ const AddProductScreen = () => {
   const [file, setFile] = useState<File | null>(null);
   // 상품추가 함수
   const AddProduct = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    const headers = { "Content-Type": "Multipart/form-data" };
-    const AddProductUrl = `http://localhost:5000/product/create`;
-    const body = new FormData();
-    if (file === null) {
-      Swal.fire({
-        icon: "error",
-        title: "상품이미지 미등록",
-        text: "상품이미지를 등록해주세요",
-        showConfirmButton: false,
-        timer: 1000,
-      });
-      return;
-    }
-    body.append("file", file);
-    body.append("name", JSON.stringify({ name: form.name }));
-    body.append("price", JSON.stringify({ price: form.price }));
-    body.append(
-      "description",
-      JSON.stringify({ description: form.description })
-    );
-    body.append("stock", JSON.stringify({ stock: form.stock }));
-    body.append("type", JSON.stringify({ type: form.type }));
     try {
+      e.preventDefault();
+      const headers = { "Content-Type": "Multipart/form-data" };
+      const AddProductUrl = `http://localhost:5000/product/create`;
+      const body = new FormData();
+
+      if (file === null) {
+        Swal.fire({
+          icon: "error",
+          title: "상품이미지 미등록",
+          text: "상품이미지를 등록해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        return;
+      }
+
+      if (form.name.length <= 0) {
+        throw new Error("상품명을 입력해주세요");
+      }
+      if (form.price.toString().length <= 0) {
+        throw new Error("상품가격을 입력해주세요");
+      }
+      if (form.description.length <= 0) {
+        throw new Error("상품설명을 입력해주세요");
+      }
+      if (form.stock.toString().length <= 0) {
+        throw new Error("상품재고를 입력해주세요");
+      }
+
+      body.append("file", file);
+      body.append("name", JSON.stringify({ name: form.name }));
+      body.append("price", JSON.stringify({ price: form.price }));
+      body.append(
+        "description",
+        JSON.stringify({ description: form.description })
+      );
+      body.append("stock", JSON.stringify({ stock: form.stock }));
+      body.append("type", JSON.stringify({ type: form.type }));
+
       const res = await axios.post(AddProductUrl, body, { headers });
       if (res.status == 201) {
         Swal.fire({
@@ -59,9 +75,18 @@ const AddProductScreen = () => {
           showConfirmButton: false,
           timer: 1000,
         });
+      } else if (error instanceof Error) {
+        Swal.fire({
+          icon: "error",
+          title: "입력 오류",
+          text: error.message,
+          showConfirmButton: false,
+          timer: 1000,
+        });
       }
     }
   };
+
   return (
     <form>
       <div className="bg-indigo-50 min-h-screen md:px-20 pt-6">
@@ -126,8 +151,8 @@ const AddProductScreen = () => {
                   }
                 }}
               >
-                <option value="true">True</option>
-                <option value="false">False</option>
+                <option value="true">남아용</option>
+                <option value="false">여아용</option>
               </select>
             </div>
             <div>
