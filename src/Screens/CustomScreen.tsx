@@ -3,87 +3,72 @@ import { Group } from "three";
 import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import {
-  GLTFExporter,
-  GLTFExporterOptions,
-} from "three/examples/jsm/exporters/GLTFExporter";
 import { folder, button, Leva, useControls } from "leva";
+import { positions, width } from "@mui/system";
 
-function Model() {
-  // const { scene } = useLoader(GLTFLoader,'models/ted.gltf');
-  const { scene } = useLoader(GLTFLoader, "models/cloth.glb");
-
-  function exportGLTF(scene: Group) {
-    const gltfExporter = new GLTFExporter();
-    const gltfoptions: GLTFExporterOptions = {
-      binary: false,
-      trs: false,
-      onlyVisible: true,
-      maxTextureSize: 4096,
-      includeCustomExtensions: false,
-    };
-
-    const link = document.createElement("a");
-    link.style.display = "none";
-    document.body.appendChild(link);
-
-    function save(blob: Blob | MediaSource, filename: string) {
-      link.href = URL.createObjectURL(blob);
-      link.download = filename;
-      link.click();
-    }
-
-    function saveString(text: BlobPart, filename: string) {
-      save(new Blob([text], { type: "text/plain" }), filename);
-    }
-
-    function saveArrayBuffer(buffer: BlobPart, filename: string) {
-      save(new Blob([buffer], { type: "application/octet-stream" }), filename);
-    }
-
-    gltfExporter.parse(
-      scene,
-      function (result) {
-        if (result instanceof ArrayBuffer) {
-          saveArrayBuffer(result, "scene.glb");
-        } else {
-          const output = JSON.stringify(result, null, 2);
-          // console.log( output );
-          saveString(output, "scene.gltf");
-        }
-      },
-      function (error) {
-        console.log("An error happened during parsing", error);
-      },
-      gltfoptions
-    );
-  }
-
-  const { visible, color } = useControls("Teddy", {
-    cloth1: folder({
-      visible: true,
-      color: { value: "white" },
-    }),
-    download: button(() => {
-      exportGLTF(scene);
-    }),
-  });
-
-  return (
-    <primitive
-      object={scene}
-      scale={0.5}
-      children-0-visible={visible}
-      children-0-children-0-material-color={color}
-    />
-  );
+interface color {
+  color: string;
 }
+
+const colors: color[] = [
+  {
+    color: "ff4040",
+  },
+  {
+    color: "FF0000",
+  },
+  {
+    color: "FF3366",
+  },
+  {
+    color: "CC33FF",
+  },
+  {
+    color: "0099FF",
+  },
+  {
+    color: "FFCC00",
+  },
+  {
+    color: "66FF33",
+  },
+  {
+    color: "66FFCC",
+  },
+  {
+    color: "FB8114",
+  },
+  {
+    color: "99b899",
+  },
+  {
+    color: "feceab",
+  },
+  {
+    color: "ff847c",
+  },
+  {
+    color: "e84a5f",
+  },
+  {
+    color: "2a363b",
+  },
+];
 
 export default function CustomScreen() {
   const [sizes, setSizes] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
+  const [clothColor1, setColor1] = useState("#ffffff");
+  const [clothColor2, setColor2] = useState("#ffffff");
+  const [clothColor3, setColor3] = useState("#ffffff");
+  const [clothColor4, setColor4] = useState("#ffffff");
+  const [visible1, setVisible1] = useState(false);
+  const [visible2, setVisible2] = useState(false);
+  const [visible3, setVisible3] = useState(false);
+  const [visible4, setVisible4] = useState(false);
+  const [select, SetSelect] = useState("cloth1");
 
   useEffect(() => {
     const resizeHandler = () => {
@@ -98,18 +83,140 @@ export default function CustomScreen() {
     };
   }, []);
 
+  function viewColoth() {
+    return (
+      <div style={{ position: "absolute", padding: 0, margin: 0 }}>
+        <div
+          style={{ border: "solid white 1px" }}
+          onClick={() => {
+            setVisible1(!visible1);
+            setVisible2(false);
+            setVisible3(false);
+            setVisible4(false);
+            SetSelect("cloth1");
+          }}
+        >
+          <img src="img/cloth/QJ.png" width="100" />
+        </div>
+        <div
+          style={{ border: "solid white 1px" }}
+          onClick={() => {
+            setVisible2(!visible2);
+            setVisible1(false);
+            setVisible4(false);
+            SetSelect("cloth2");
+          }}
+        >
+          <img src="img/cloth/T-Shirt.png" width="100" />
+        </div>
+        <div
+          style={{ border: "solid white 1px" }}
+          onClick={() => {
+            setVisible3(!visible3);
+            setVisible1(false);
+            SetSelect("cloth3");
+          }}
+        >
+          <img src="img/cloth/Jean.png" width="100" />
+        </div>
+        <div
+          style={{ border: "solid white 1px" }}
+          onClick={() => {
+            setVisible4(!visible4);
+            setVisible1(false);
+            setVisible2(false);
+            SetSelect("cloth4");
+          }}
+        >
+          <img src="img/cloth/Hoodie.png" width="100" />
+        </div>
+      </div>
+    );
+  }
+
+  function buildColors(cloth: string) {
+    return (
+      <div style={{ position: "absolute", bottom: 0, padding: 0, margin: 0 }}>
+        {colors.map((color) => (
+          <div
+            style={{
+              background: `#${color.color}`,
+              border: "solid 1px white",
+              borderRadius: 25,
+              width: "4vh",
+              height: "4vh",
+              display: "inline-block",
+            }}
+            onClick={() => {
+              switch (cloth) {
+                case "cloth1":
+                  setColor1(`#${color.color}`);
+                  break;
+                case "cloth2":
+                  setColor2(`#${color.color}`);
+                  break;
+                case "cloth3":
+                  setColor3(`#${color.color}`);
+                  break;
+                case "cloth4":
+                  setColor4(`#${color.color}`);
+                  break;
+              }
+            }}
+          ></div>
+        ))}
+      </div>
+    );
+  }
+
+  function Model() {
+    const { scene } = useLoader(GLTFLoader, "models/ted.gltf");
+    // console.log(scene)
+
+    return (
+      <primitive
+        object={scene}
+        scale={0.5}
+        children-5-visible={visible1}
+        children-5-material-color={clothColor1}
+        children-6-visible={visible1}
+        children-6-material-color={clothColor1}
+        children-7-visible={visible2}
+        children-7-children-0-material-color={clothColor2}
+        children-8-visible={visible3}
+        children-8-children-0-material-color={clothColor3}
+        children-9-visible={visible4}
+        children-9-children-0-material-color={clothColor4}
+      />
+    );
+  }
+
+  // 5, 6 깔갈이 상하의
+  // 7 면티
+
   return (
-    <div style={{ height: sizes.height - 60, width: sizes.width }}>
-      <Canvas>
-        <color attach="background" args={["black"]} />
+    <div
+      style={{
+        top: 52,
+        height: sizes.height - 52,
+        width: sizes.width,
+        position: "absolute",
+      }}
+    >
+      <Canvas
+        style={{ zIndex: 0, position: "absolute", padding: 0, margin: 0 }}
+      >
+        <color attach="background" args={["#000000"]} />
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
         <pointLight position={[-10, -10, -10]} />
         <Suspense fallback={null}>
           <Model />
         </Suspense>
-        <OrbitControls />
+        <OrbitControls enablePan={false} enableZoom={false} />
       </Canvas>
+      {viewColoth()}
+      {buildColors(select)}
       <Leva />
     </div>
   );

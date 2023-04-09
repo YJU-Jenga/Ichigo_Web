@@ -83,9 +83,12 @@ const ProductCard = () => {
             key={product.id}
             className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-4"
           >
-            <div className="w-1/3 bg-cover">
+            <NavLink
+              to={`/viewproduct/${product.id}`}
+              className="w-1/3 bg-cover"
+            >
               <img src={`http://localhost:5000/${product.image}`} alt="" />
-            </div>
+            </NavLink>
             <div className="w-2/3 p-4">
               <h1 className="text-gray-900 font-bold text-2xl">
                 {product.name}
