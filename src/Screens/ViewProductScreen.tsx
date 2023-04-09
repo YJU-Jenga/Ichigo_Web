@@ -44,14 +44,20 @@ const ViewProductScreen = () => {
 
   return (
     <>
-      <h1>이름</h1>
-      <h1>{productDetail.name}</h1>
-      <h1>설명</h1>
-      <h1>{productDetail.description}</h1>
-      <h1>가격</h1>
-      <h1>{productDetail.price}</h1>
-      <h1>사진</h1>
       <img src={`http://localhost:5000/${productDetail.image}`} alt="" />
+      <div className="container ">
+        <div className="container mx-auto">
+          <h1 className="py-5 text-3xl font-bold">{productDetail.name}</h1>
+          <div className="flex my-6">
+            <div className="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
+              <h1 className="py-2 text-2xl text-red-400">
+                {productDetail.price} ₩
+              </h1>
+              <h1 className="py-2 text-2xl">{productDetail.description}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };
