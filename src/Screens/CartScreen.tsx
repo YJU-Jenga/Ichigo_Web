@@ -96,11 +96,48 @@ const CartScreen = () => {
     setTotalPrice(calculatedPrice);
   }, [count]);
 
-  if (!productInfo) {
-    return <></>;
-  }
+  // 상품 삭제
+  const deleteProduct = async (id: number) => {
+    const deleteProductUrl = `http://localhost:5000/cart/deleteAddedProdcut`;
+    const config = {
+      data: {
+        cartId: id,
+        productId: id,
+      },
+    };
+    try {
+      const res = await axios.delete(deleteProductUrl, config);
+      if (res.status === 201) {
+        Swal.fire({
+          icon: "success",
+          text: "상품이 장바구니에서 삭제되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/cart");
+      }
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
+    }
+  };
 
-  console.log(productInfo);
+  if (!productInfo) {
+    return (
+      <>
+        <h1>장바구니가 비어있습니다.</h1>
+      </>
+    );
+  }
+  console.log(cartList);
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -124,59 +161,69 @@ const CartScreen = () => {
                 총 가격
               </h3>
             </div>
-            <div className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5">
-              <div className="flex w-2/5">
-                <div className="w-20">
-                  <img
-                    className="h-24"
-                    src={`http://localhost:5000/${productInfo?.image}`}
-                  />
-                </div>
-                <div className="flex flex-col justify-between ml-4 flex-grow">
-                  <span className="font-bold text-sm">{productInfo?.name}</span>
-                  <a
-                    href="#"
-                    className="font-semibold hover:text-red-500 text-gray-500 text-xs"
-                  >
-                    삭제
-                  </a>
-                </div>
-              </div>
-              <div className="flex justify-center w-1/5">
-                <svg
-                  onClick={() => {
-                    minusCount();
-                    updateProductCount(-1);
-                  }}
-                  className="fill-current text-gray-600 w-3"
-                  viewBox="0 0 448 512"
+            {/* tlqkf */}
+            {cartList[0].cartToProducts.map((product: Product) => {
+              return (
+                <div
+                  key={product.product.id}
+                  className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
                 >
-                  <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                </svg>
-                <input
-                  className="mx-2 border text-center w-8"
-                  type="text"
-                  onChange={getTotalPrice}
-                  value={count}
-                />
-                <svg
-                  onClick={() => {
-                    plusCount();
-                    updateProductCount(1);
-                  }}
-                  className="fill-current text-gray-600 w-3"
-                  viewBox="0 0 448 512"
-                >
-                  <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                </svg>
-              </div>
-              <span className="text-center w-1/5 font-semibold text-sm">
-                {productInfo?.price}
-              </span>
-              <span className="text-center w-1/5 font-semibold text-sm">
-                {totalPrice}
-              </span>
-            </div>
+                  <div className="flex w-2/5">
+                    <div className="w-20">
+                      <img
+                        className="h-24"
+                        src={`http://localhost:5000/${product?.product.image}`}
+                      />
+                    </div>
+                    <div className="flex flex-col justify-between ml-4 flex-grow">
+                      <span className="font-bold text-sm">
+                        {product?.product.name}
+                      </span>
+                      <a
+                        className="font-semibold hover:text-red-500 text-gray-500 text-xs"
+                        onClick={() => deleteProduct(product?.product.id)}
+                      >
+                        삭제
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex justify-center w-1/5">
+                    <svg
+                      onClick={() => {
+                        minusCount();
+                        updateProductCount(-1);
+                      }}
+                      className="fill-current text-gray-600 w-3"
+                      viewBox="0 0 448 512"
+                    >
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                    <input
+                      className="mx-2 border text-center w-8"
+                      type="text"
+                      onChange={getTotalPrice}
+                      value={count}
+                    />
+                    <svg
+                      onClick={() => {
+                        plusCount();
+                        updateProductCount(1);
+                      }}
+                      className="fill-current text-gray-600 w-3"
+                      viewBox="0 0 448 512"
+                    >
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                  </div>
+                  <span className="text-center w-1/5 font-semibold text-sm">
+                    {product?.product.price}
+                  </span>
+                  <span className="text-center w-1/5 font-semibold text-sm">
+                    {totalPrice}
+                  </span>
+                </div>
+              );
+            })}
             <NavLink
               to="/product"
               className="flex font-semibold text-indigo-600 text-sm mt-10"
