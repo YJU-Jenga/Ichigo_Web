@@ -29,7 +29,7 @@ const CartScreen = () => {
       setCartList(res.data);
       setProductInfo(res.data[0].cartToProducts[0].product);
       setPrice(res.data[0].cartToProducts[0].product.price);
-      setCount(res.data[0].cartToProducts.length);
+      setCount(res.data[0].cartToProducts[0]?.count);
       setTotalPrice(
         res.data[0].cartToProducts[0].product.price *
           res.data[0].cartToProducts.length
@@ -108,6 +108,7 @@ const CartScreen = () => {
     try {
       const res = await axios.delete(deleteProductUrl, config);
       if (res.status === 201) {
+        console.log(res);
         Swal.fire({
           icon: "success",
           text: "상품이 장바구니에서 삭제되었습니다.",
@@ -191,7 +192,6 @@ const CartScreen = () => {
                     <svg
                       onClick={() => {
                         minusCount();
-                        updateProductCount(-1);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"
@@ -207,7 +207,6 @@ const CartScreen = () => {
                     <svg
                       onClick={() => {
                         plusCount();
-                        updateProductCount(1);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"
