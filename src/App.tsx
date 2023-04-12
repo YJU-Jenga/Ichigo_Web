@@ -19,6 +19,7 @@ import AddProductScreen from "./Screens/AddProductScreen";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import axios, { AxiosError } from "axios";
+import ViewProductScreen from "./Screens/ViewProductScreen";
 
 export interface User {
   id: number;
@@ -95,6 +96,7 @@ function App() {
             path="/addproduct"
             element={<AddProductScreen user={user} />}
           />
+          <Route path="/viewproduct/:id" element={<ViewProductScreen />} />
         </Routes>
       </BrowserRouter>
     </>

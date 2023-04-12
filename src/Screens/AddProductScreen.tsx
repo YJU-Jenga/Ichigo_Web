@@ -2,8 +2,10 @@ import axios, { AxiosError } from "axios";
 import React, { SyntheticEvent, useState } from "react";
 import Swal from "sweetalert2";
 import { UserProps } from "../App";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AddProductScreen = ({ user }: UserProps) => {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     price: 0,
@@ -56,6 +58,15 @@ const AddProductScreen = ({ user }: UserProps) => {
       body.append("type", JSON.stringify({ type: form.type }));
 
       const res = await axios.post(AddProductUrl, body, { headers });
+      if (res.status === 201) {
+        Swal.fire({
+          icon: "success",
+          text: "상품이 추가되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({

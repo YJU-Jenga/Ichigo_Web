@@ -43,6 +43,7 @@ const QnaScreen = ({ user }: UserProps) => {
       const res = await axios.get(getQnaUrl);
       console.log(res);
       setBoardList(res.data);
+      console.log(user);
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({
