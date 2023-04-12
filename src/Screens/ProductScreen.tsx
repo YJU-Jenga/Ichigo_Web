@@ -1,7 +1,8 @@
 import { NavLink } from "react-router-dom";
 import ProductCard from "../components/Product/ProductCard";
+import { UserProps } from "../App";
 
-const ProductScreen = () => {
+const ProductScreen = ({ user }: UserProps) => {
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <h1 className="text-gray-900 font-bold text-2xl">상품</h1>

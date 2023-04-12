@@ -46,6 +46,7 @@ export default function LoginScreen() {
       // AccessToken이 있으면 메인 페이지로 이동
       if (access_token != null) {
         navigate("/", { state: access_token });
+        window.location.reload();
       }
     } catch (error) {
       if (error instanceof AxiosError) {

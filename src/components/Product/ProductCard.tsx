@@ -36,17 +36,17 @@ const ProductCard = () => {
   // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // 장바구니 상품추가 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  const addCartUrl = `http://localhost:5000/cart/addProduct`;
-  const addToCart = async (e: SyntheticEvent, id: number) => {
+  const addToCart = async (id: number) => {
+    const addCartUrl = `http://localhost:5000/cart/addProduct`;
     const body = {
       count,
       cartId,
       productId: id,
     };
-    e.preventDefault();
     const headers = { "Content-Type": "application/json" };
     try {
       const res = await axios.post(addCartUrl, body, { headers });
+      console.log(res);
       if (res.status === 201) {
         Swal.fire({
           position: "center",
@@ -102,8 +102,8 @@ const ProductCard = () => {
                 </h1>
                 <button
                   className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded"
-                  onClick={(event) => {
-                    addToCart(event, product.id);
+                  onClick={() => {
+                    addToCart(product.id);
                   }}
                 >
                   장바구니 담기

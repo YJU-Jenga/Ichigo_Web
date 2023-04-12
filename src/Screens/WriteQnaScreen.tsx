@@ -2,8 +2,9 @@ import React, { useState, SyntheticEvent } from "react";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
+import { UserProps } from "../App";
 
-export default function WriteProductInquiryScreen() {
+export default function WriteProductInquiryScreen({ user }: UserProps) {
   // 전송할 form데이터
   const [form, setForm] = useState({
     writer: 1,
@@ -50,15 +51,15 @@ export default function WriteProductInquiryScreen() {
       body.append("content", JSON.stringify({ content: form.content }));
 
       const res = await axios.post(url, body, { headers });
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Q & A 작성이 완료되었습니다.",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate("/qna");
       if (res.status === 201) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Q & A 작성이 완료되었습니다.",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        navigate("/qna");
       }
     } catch (error) {
       if (error instanceof AxiosError) {

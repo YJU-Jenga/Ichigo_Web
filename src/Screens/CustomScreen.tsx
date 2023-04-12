@@ -5,6 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { folder, button, Leva, useControls } from "leva";
 import { positions, width } from "@mui/system";
+import { UserProps } from "../App";
 
 interface color {
   color: string;
@@ -55,7 +56,7 @@ const colors: color[] = [
   },
 ];
 
-export default function CustomScreen() {
+export default function CustomScreen({ user }: UserProps) {
   const [sizes, setSizes] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -173,7 +174,7 @@ export default function CustomScreen() {
     const { scene } = useLoader(GLTFLoader, "models/ted.gltf");
     // console.log(scene)
 
-    return (
+    return scene ? (
       <primitive
         object={scene}
         scale={0.5}
@@ -188,11 +189,8 @@ export default function CustomScreen() {
         children-9-visible={visible4}
         children-9-children-0-material-color={clothColor4}
       />
-    );
+    ) : null;
   }
-
-  // 5, 6 깔갈이 상하의
-  // 7 면티
 
   return (
     <div

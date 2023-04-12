@@ -4,8 +4,9 @@ import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Board } from "../dto/Board";
+import { UserProps } from "../App";
 
-const QnaScreen = () => {
+const QnaScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [boardList, setBoardList] = useState<Array<Board>>([]);
   // 한 페이지 당 나타낼 데이터의 갯수

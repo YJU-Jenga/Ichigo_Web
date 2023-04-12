@@ -1,34 +1,10 @@
 import { NavLink } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import { useCookies } from "react-cookie";
-import jwt_decode from "jwt-decode";
-import axios, { AxiosError } from "axios";
+import { UserProps } from "../App";
 
-export function Navbar() {
+export function Navbar({ user }: UserProps) {
   const [cookies, setCookie, removeCookie] = useCookies();
-  const [userName, setUserName] = useState();
-
-  const getUser = async () => {
-    try {
-      const user = JSON.parse(
-        JSON.stringify(jwt_decode(cookies["access-token"]))
-      );
-      const url = `http://localhost:5000/user/${user.email}`;
-      const headers = {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${cookies["access-token"]}`,
-      };
-      const res = await axios.get(url, { headers });
-      const name = res.data.name;
-      setUserName(name);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        alert(error.response?.data.message);
-      }
-    }
-  };
-
-  window.onload = getUser;
 
   const logout = async () => {
     try {
@@ -45,7 +21,7 @@ export function Navbar() {
   };
   let signIn, join, signOut, nickname;
 
-  if (!cookies["access-token"]) {
+  if (user == undefined) {
     signIn = (
       <li>
         <NavLink
@@ -71,7 +47,7 @@ export function Navbar() {
   } else {
     nickname = (
       <li className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent">
-        {userName}님
+        {user.name}님
       </li>
     );
     signOut = (
@@ -161,13 +137,26 @@ export function Navbar() {
               </NavLink>
             </li>
             <li>
-              <NavLink
-                to="/custom"
-                className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
-                aria-current="page"
-              >
-                커스터마이징
-              </NavLink>
+              {user !== undefined ? (
+                <NavLink
+                  to="/custom"
+                  className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+                  aria-current="page"
+                >
+                  커스터마이징
+                </NavLink>
+              ) : (
+                <NavLink
+                  onClick={() => {
+                    alert("로그인 해주세요.");
+                  }}
+                  to="/login"
+                  className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+                  aria-current="page"
+                >
+                  커스터마이징
+                </NavLink>
+              )}
             </li>
             {signIn}
             {join}

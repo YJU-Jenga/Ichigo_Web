@@ -4,10 +4,11 @@ import DaumPostcode from "react-daum-postcode";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Product } from "../dto/Product";
+import { UserProps } from "../App";
 
 // 테스트 user_id, 우편번호, 주소, 상품아이디, 갯수
 
-const PurchaseScreen = () => {
+const PurchaseScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Product>();
   let { count, id } = useParams();

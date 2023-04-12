@@ -4,8 +4,9 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
+import { UserProps } from "../App";
 
-const ViewPostScreen = () => {
+const ViewPostScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   // 파라미터로 받아온 글 id값
   let { id } = useParams();

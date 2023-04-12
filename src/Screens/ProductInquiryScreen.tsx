@@ -4,8 +4,9 @@ import { Link, NavLink } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Board } from "../dto/Board";
+import { UserProps } from "../App";
 
-const ProductInquiryScreen = () => {
+const ProductInquiryScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   // 가져온 게시판 내용을 저장(전체 다 가져옴)
   const [boardList, setBoardList] = useState<Array<Board>>([]);

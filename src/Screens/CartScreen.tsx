@@ -1,21 +1,18 @@
 import axios, { AxiosError } from "axios";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate, NavLink, Link, redirect } from "react-router-dom";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import { Cart } from "../dto/Cart";
 import { Product } from "../dto/Product";
+import { UserProps } from "../App";
 
-const CartScreen = () => {
+const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const id = 1;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
-  const [productInfo, setProductInfo] = useState<Product>();
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-
-  const purchaseUrl = `http://localhost:5000/order/create`;
-  const updateCountUrl = `http://localhost:5000/cart/updateAddedProdcut/${id}`;
-  const [price, setPrice] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     getCartList();
@@ -25,15 +22,21 @@ const CartScreen = () => {
   const getCartList = async () => {
     const url = `http://localhost:5000/cart/findAllProducts/${id}`;
     try {
+      let totalP = 0;
+      let totalC = 0;
       const res = await axios.get(url);
+      console.log(res);
       setCartList(res.data);
-      setProductInfo(res.data[0].cartToProducts[0].product);
-      setPrice(res.data[0].cartToProducts[0].product.price);
-      setCount(res.data[0].cartToProducts[0]?.count);
-      setTotalPrice(
-        res.data[0].cartToProducts[0].product.price *
-          res.data[0].cartToProducts.length
-      );
+      for (let i in res.data[0].cartToProducts) {
+        totalC += res.data[0].cartToProducts[i].count;
+      }
+      setTotalCount(totalC);
+      for (let i in res.data[0].cartToProducts) {
+        totalP +=
+          res.data[0].cartToProducts[i].count *
+          res.data[0].cartToProducts[i].product.price;
+      }
+      setTotalPrice(totalP);
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({
@@ -48,54 +51,34 @@ const CartScreen = () => {
     }
   };
   // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
   // 상품개수 조절 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // 갯수+1
-  const plusCount = () => {
-    const plus = count + 1;
-    setCount(plus);
-  };
-  // 갯수-1
-  const minusCount = () => {
-    if (count <= 1) {
-      setCount(1);
-    } else {
-      const minus = count - 1;
-      setCount(minus);
-    }
-  };
-  const updateProductCount = async (count: number) => {
-    const body = {
-      productId: id,
-      count: count,
-    };
-    try {
-      const res = await axios.patch(updateCountUrl, body);
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        Swal.fire({
-          icon: "error",
-          title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
-          showConfirmButton: false,
-          timer: 1000,
-        });
-        navigate("/product");
-      }
-    }
+  const updateProductCount = (count: number) => {
+    // const updateCountUrl = `http://localhost:5000/cart/updateAddedProdcut/${id}`;
+    // const body = {
+    //   productId: id,
+    //   count: count,
+    // };
+    // try {
+    //   const res = await axios.patch(updateCountUrl, body);
+    // } catch (error) {
+    //   if (error instanceof AxiosError) {
+    //     Swal.fire({
+    //       icon: "error",
+    //       title: error.response?.data.message,
+    //       text: "관리자에게 문의해주세요",
+    //       showConfirmButton: false,
+    //       timer: 1000,
+    //     });
+    //     navigate("/product");
+    //   }
+    // }
+    // setCartList([count, ...cartList[0].cartToProducts[0].count]);
   };
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  // 총 금액 구하기
-  const getTotalPrice = () => {
-    setTotalPrice(price * count);
-  };
-
   useEffect(() => {
-    const calculatedPrice = price * count;
-    setTotalPrice(calculatedPrice);
+    updateProductCount(count);
   }, [count]);
-
   // 상품 삭제
   const deleteProduct = async (id: number) => {
     const deleteProductUrl = `http://localhost:5000/cart/deleteAddedProdcut`;
@@ -131,14 +114,13 @@ const CartScreen = () => {
     }
   };
 
-  if (!productInfo) {
+  if (!cartList) {
     return (
       <>
         <h1>장바구니가 비어있습니다.</h1>
       </>
     );
   }
-  console.log(cartList);
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -146,7 +128,7 @@ const CartScreen = () => {
           <div className="w-3/4 bg-white px-10 py-10">
             <div className="flex justify-between border-b pb-8">
               <h1 className="font-semibold text-2xl">장바구니</h1>
-              <h2 className="font-semibold text-2xl">총 {count}개 상품</h2>
+              <h2 className="font-semibold text-2xl">총 {totalCount}개 상품</h2>
             </div>
             <div className="flex mt-10 mb-5">
               <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
@@ -163,7 +145,7 @@ const CartScreen = () => {
               </h3>
             </div>
             {/* tlqkf */}
-            {cartList[0].cartToProducts.map((product: Product) => {
+            {cartList[0]?.cartToProducts.map((product: Product) => {
               return (
                 <div
                   key={product.product.id}
@@ -191,7 +173,7 @@ const CartScreen = () => {
                   <div className="flex justify-center w-1/5">
                     <svg
                       onClick={() => {
-                        minusCount();
+                        updateProductCount(-1);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"
@@ -201,12 +183,11 @@ const CartScreen = () => {
                     <input
                       className="mx-2 border text-center w-8"
                       type="text"
-                      onChange={getTotalPrice}
-                      value={count}
+                      value={product?.count}
                     />
                     <svg
                       onClick={() => {
-                        plusCount();
+                        updateProductCount(1);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"
@@ -218,7 +199,7 @@ const CartScreen = () => {
                     {product?.product.price}
                   </span>
                   <span className="text-center w-1/5 font-semibold text-sm">
-                    {totalPrice}
+                    {product?.product.price * product?.count}
                   </span>
                 </div>
               );
@@ -241,9 +222,9 @@ const CartScreen = () => {
             <h1 className="font-semibold text-2xl border-b pb-8">상품 합계</h1>
             <div className="flex justify-between mt-10 mb-5">
               <span className="font-semibold text-sm uppercase">
-                총 {count}개
+                총 {totalCount}개
               </span>
-              <span className="font-semibold text-sm">{totalPrice} ₩</span>
+              {/* <span className="font-semibold text-sm"> ₩</span> */}
             </div>
             <div className="border-t mt-8">
               <div className="flex font-semibold justify-between py-6 text-sm uppercase">
@@ -251,7 +232,7 @@ const CartScreen = () => {
                 <span>{totalPrice} ₩</span>
               </div>
               <Link
-                to={`/purchase/${count}/${productInfo?.id}`}
+                to={`/`}
                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
