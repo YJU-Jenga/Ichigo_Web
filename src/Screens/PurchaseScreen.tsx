@@ -11,12 +11,9 @@ import { UserProps } from "../App";
 const PurchaseScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Product>();
-  let { count, id } = useParams();
-  console.log(count, id);
+  const id = 1;
 
-  const userId = 1;
-  const counts = [Number(count)];
-  const productIds = [Number(id)];
+  const userId = user?.id;
 
   // 파라미터로 넘어온 상품Id로 상품 정보 가져오기
   const getProductUrl = `http://localhost:5000/product/getOne/${id}`;
@@ -48,8 +45,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
     userId: userId,
     address: "",
     postalCode: "",
-    productIds: productIds,
-    counts: counts,
+    // productIds: productIds,
+    // counts: counts,
   });
 
   const onCompletePost = (data: any) => {
@@ -69,8 +66,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
     userId: form.userId,
     address: form.address,
     postalCode: form.postalCode,
-    productIds: form.productIds,
-    counts: form.counts,
+    // productIds: form.productIds,
+    // counts: form.counts,
   };
 
   const submit = async (e: SyntheticEvent) => {
@@ -142,7 +139,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
                     className="border border-gray-300 p-4 rounded w-full text-base leading-4 placeholder-gray-600 text-gray-600"
                     type="number"
                     placeholder="갯수"
-                    value={form.counts[0]}
+                    // value={form.counts[0]}
                     min={1}
                     required
                     readOnly

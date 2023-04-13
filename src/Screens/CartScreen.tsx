@@ -237,7 +237,8 @@ const CartScreen = ({ user }: UserProps) => {
                 <span>{totalPrice} ₩</span>
               </div>
               <Link
-                to={`/`}
+                to={`/purchase`}
+                state={product}
                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
