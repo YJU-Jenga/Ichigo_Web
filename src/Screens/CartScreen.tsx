@@ -3,13 +3,15 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { useNavigate, NavLink, Link } from "react-router-dom";
 import { Cart } from "../dto/Cart";
-import { Product } from "../dto/Product";
 import { UserProps } from "../App";
+import { CartToProduct } from "../dto/CartToProduct";
+import { Product } from "../dto/Product";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const id = 1;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
+  const [product, setProduct] = useState<Array<CartToProduct>>([]);
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -25,8 +27,8 @@ const CartScreen = ({ user }: UserProps) => {
       let totalP = 0;
       let totalC = 0;
       const res = await axios.get(url);
-      console.log(res);
       setCartList(res.data);
+      setProduct(res.data[0].cartToProducts);
       for (let i in res.data[0].cartToProducts) {
         totalC += res.data[0].cartToProducts[i].count;
       }
@@ -51,34 +53,8 @@ const CartScreen = ({ user }: UserProps) => {
     }
   };
   // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  // 상품개수 조절 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  const updateProductCount = (count: number) => {
-    // const updateCountUrl = `http://localhost:5000/cart/updateAddedProdcut/${id}`;
-    // const body = {
-    //   productId: id,
-    //   count: count,
-    // };
-    // try {
-    //   const res = await axios.patch(updateCountUrl, body);
-    // } catch (error) {
-    //   if (error instanceof AxiosError) {
-    //     Swal.fire({
-    //       icon: "error",
-    //       title: error.response?.data.message,
-    //       text: "관리자에게 문의해주세요",
-    //       showConfirmButton: false,
-    //       timer: 1000,
-    //     });
-    //     navigate("/product");
-    //   }
-    // }
-    // setCartList([count, ...cartList[0].cartToProducts[0].count]);
-  };
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-  useEffect(() => {
-    updateProductCount(count);
-  }, [count]);
   // 상품 삭제
   const deleteProduct = async (id: number) => {
     const deleteProductUrl = `http://localhost:5000/cart/deleteAddedProdcut`;
@@ -114,6 +90,39 @@ const CartScreen = ({ user }: UserProps) => {
     }
   };
 
+  // 상품개수 조절 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  const updateProductCount = (count: number, id: number) => {
+    for (let i in cartList[0]?.cartToProducts) {
+      if (cartList[0]?.cartToProducts[i].productId === id) {
+        setCartList({
+          ...cartList[0]?.cartToProducts[0],
+          count: cartList[0]?.cartToProducts[0].count + count,
+        });
+      }
+    }
+  };
+
+  const handleAdd = (id: number) => {
+    for (let i in product) {
+      if (product[i].productId === id) {
+        setCartList(product[i].count + 1);
+      }
+    }
+  };
+  const handleSub = (id: number) => {
+    for (let i in product) {
+      if (product[i].productId === id) {
+        setCartList(product[i].count - 1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleAdd;
+    handleSub;
+    getCartList();
+  }, [count]);
+
   if (!cartList) {
     return (
       <>
@@ -121,6 +130,8 @@ const CartScreen = ({ user }: UserProps) => {
       </>
     );
   }
+  console.log(product[0].count + 1, "시발");
+  console.log(cartList, "시발2");
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -173,7 +184,7 @@ const CartScreen = ({ user }: UserProps) => {
                   <div className="flex justify-center w-1/5">
                     <svg
                       onClick={() => {
-                        updateProductCount(-1);
+                        handleAdd(product?.id);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"
@@ -183,11 +194,11 @@ const CartScreen = ({ user }: UserProps) => {
                     <input
                       className="mx-2 border text-center w-8"
                       type="text"
-                      value={product?.count}
+                      defaultValue={product?.count}
                     />
                     <svg
                       onClick={() => {
-                        updateProductCount(1);
+                        handleSub(product?.id);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"

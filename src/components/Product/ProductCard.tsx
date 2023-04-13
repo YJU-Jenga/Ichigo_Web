@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Product } from "../../dto/Product";
+import { UserProps } from "../../App";
 
 const ProductCard = () => {
   const navigate = useNavigate();

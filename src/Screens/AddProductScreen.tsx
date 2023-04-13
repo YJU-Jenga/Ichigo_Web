@@ -5,6 +5,10 @@ import { UserProps } from "../App";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const AddProductScreen = ({ user }: UserProps) => {
+  if (user == undefined || !user.permission) {
+    alert("권한이 없습니다.");
+    window.location.replace("/");
+  }
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",

@@ -113,12 +113,24 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
               </form>
             </div>
             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-              <NavLink
-                to="/write_product_inquiury"
-                className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
-              >
-                글 쓰기
-              </NavLink>
+              {user !== undefined ? (
+                <NavLink
+                  to="/write_product_inquiury"
+                  className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                >
+                  글 쓰기
+                </NavLink>
+              ) : (
+                <NavLink
+                  onClick={() => {
+                    alert("로그인 해주세요.");
+                  }}
+                  to="/login"
+                  className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                >
+                  글 쓰기
+                </NavLink>
+              )}
             </div>{" "}
             <div className="flex items-center space-x-3 w-full md:w-auto"></div>
           </div>
