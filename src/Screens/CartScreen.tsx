@@ -11,7 +11,7 @@ const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const id = 1;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
-  const [product, setProduct] = useState<Array<CartToProduct>>([]);
+  const [product, setProduct] = useState<Array<any>>([]);
   const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
@@ -103,25 +103,29 @@ const CartScreen = ({ user }: UserProps) => {
   };
 
   const handleAdd = (id: number) => {
-    for (let i in product) {
-      if (product[i].productId === id) {
-        setCartList(product[i].count + 1);
+    const newProduct = [...product];
+    for (let i in newProduct) {
+      if (newProduct[i].productId === id) {
+        newProduct[i].count++;
       }
     }
+    setProduct(newProduct);
   };
   const handleSub = (id: number) => {
-    for (let i in product) {
-      if (product[i].productId === id) {
-        setCartList(product[i].count - 1);
+    const newProduct = [...product];
+    for (let i in newProduct) {
+      if (newProduct[i].productId === id) {
+        newProduct[i].count--;
       }
     }
+    setProduct(newProduct);
   };
 
   useEffect(() => {
-    handleAdd;
-    handleSub;
+    handleAdd(id);
+    handleSub(id);
     getCartList();
-  }, [count]);
+  }, [product]);
 
   if (!cartList) {
     return (
@@ -130,7 +134,7 @@ const CartScreen = ({ user }: UserProps) => {
       </>
     );
   }
-  console.log(product[0].count + 1, "시발");
+  console.log(...product[0], "시발");
   console.log(cartList, "시발2");
   return (
     <body className="bg-gray-100">
