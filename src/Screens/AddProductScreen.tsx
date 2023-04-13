@@ -3,6 +3,7 @@ import React, { SyntheticEvent, useState } from "react";
 import Swal from "sweetalert2";
 import { UserProps } from "../App";
 import { Navigate, useNavigate } from "react-router-dom";
+import { getCookie } from "../cookie";
 
 const AddProductScreen = ({ user }: UserProps) => {
   if (user == undefined || !user.permission) {
@@ -21,6 +22,10 @@ const AddProductScreen = ({ user }: UserProps) => {
   const [file, setFile] = useState<File | null>(null);
   // 상품추가 함수
   const AddProduct = async (e: SyntheticEvent) => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const Aheaders = {
+      Authorization: `Bearer ${token}`,
+    };
     try {
       e.preventDefault();
       const headers = { "Content-Type": "Multipart/form-data" };

@@ -6,13 +6,13 @@ import { Cart } from "../dto/Cart";
 import { UserProps } from "../App";
 import { CartToProduct } from "../dto/CartToProduct";
 import { Product } from "../dto/Product";
+import { getCookie } from "../cookie";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const id = 1;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
   const [product, setProduct] = useState<Array<any>>([]);
-  const [count, setCount] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
@@ -22,6 +22,10 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
     const url = `http://localhost:5000/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
@@ -91,41 +95,29 @@ const CartScreen = ({ user }: UserProps) => {
   };
 
   // 상품개수 조절 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  const updateProductCount = (count: number, id: number) => {
-    for (let i in cartList[0]?.cartToProducts) {
-      if (cartList[0]?.cartToProducts[i].productId === id) {
-        setCartList({
-          ...cartList[0]?.cartToProducts[0],
-          count: cartList[0]?.cartToProducts[0].count + count,
-        });
-      }
-    }
-  };
-
   const handleAdd = (id: number) => {
     const newProduct = [...product];
     for (let i in newProduct) {
       if (newProduct[i].productId === id) {
         newProduct[i].count++;
-      }
-    }
-    setProduct(newProduct);
-  };
-  const handleSub = (id: number) => {
-    const newProduct = [...product];
-    for (let i in newProduct) {
-      if (newProduct[i].productId === id) {
-        newProduct[i].count--;
+        setTotalCount(totalCount + 1);
+        setTotalPrice(totalPrice + newProduct[i].product.price);
       }
     }
     setProduct(newProduct);
   };
 
-  useEffect(() => {
-    handleAdd(id);
-    handleSub(id);
-    getCartList();
-  }, [product]);
+  const handleSub = (id: number) => {
+    const newProduct = [...product];
+    for (let i in newProduct) {
+      if (newProduct[i].productId === id) {
+        newProduct[i].count--;
+        setTotalCount(totalCount - 1);
+        setTotalPrice(totalPrice - newProduct[i].product.price);
+      }
+    }
+    setProduct(newProduct);
+  };
 
   if (!cartList) {
     return (
@@ -134,8 +126,6 @@ const CartScreen = ({ user }: UserProps) => {
       </>
     );
   }
-  console.log(...product[0], "시발");
-  console.log(cartList, "시발2");
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -188,7 +178,7 @@ const CartScreen = ({ user }: UserProps) => {
                   <div className="flex justify-center w-1/5">
                     <svg
                       onClick={() => {
-                        handleAdd(product?.id);
+                        handleSub(product?.product.id);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"
@@ -198,11 +188,11 @@ const CartScreen = ({ user }: UserProps) => {
                     <input
                       className="mx-2 border text-center w-8"
                       type="text"
-                      defaultValue={product?.count}
+                      value={product?.count}
                     />
                     <svg
                       onClick={() => {
-                        handleSub(product?.id);
+                        handleAdd(product?.product.id);
                       }}
                       className="fill-current text-gray-600 w-3"
                       viewBox="0 0 448 512"

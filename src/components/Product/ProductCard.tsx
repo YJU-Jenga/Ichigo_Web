@@ -4,13 +4,11 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Product } from "../../dto/Product";
 import { UserProps } from "../../App";
-import { useCookies } from "react-cookie";
 import { getCookie } from "../../cookie";
 
 const ProductCard = () => {
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState<Product>();
-  const [cookies, setCookie, removeCookie] = useCookies();
   const cartId = 1;
   const count = 1;
 
@@ -47,6 +45,7 @@ const ProductCard = () => {
       cartId,
       productId: id,
     };
+
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -71,7 +70,7 @@ const ProductCard = () => {
           title: error.response?.data.message,
           text: "관리자에게 문의해주세요",
           showConfirmButton: false,
-          timer: 3000,
+          timer: 1000,
         });
         navigate("/product");
       }
