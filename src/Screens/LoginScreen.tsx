@@ -3,6 +3,7 @@ import { NavLink, useNavigate, redirect } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
+import { API_URL } from "../config";
 
 export default function LoginScreen() {
   const navigate = useNavigate();
@@ -11,7 +12,7 @@ export default function LoginScreen() {
     email: "",
     password: "",
   });
-  // 내가 만든 쿸히~
+
   const [cookies, setCookie, removeCookie] = useCookies();
 
   // 비밀번호 보기, 숨기기 상태관리
@@ -23,7 +24,7 @@ export default function LoginScreen() {
   };
 
   // 23.02.19 url 따로 변수로 관리, 로그인 확인, 실패시 메세지 띄우기
-  const url = `http://localhost:5000/auth/local/signin`;
+  const url = `${API_URL}/auth/local/signin`;
   // 전송할 부분 따로 변수로 관리
   const body = {
     email: form.email,

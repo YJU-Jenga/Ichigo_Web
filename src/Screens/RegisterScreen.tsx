@@ -3,6 +3,7 @@ import { NavLink, redirect, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import axios, { AxiosError } from "axios";
+import { API_URL } from "../config";
 
 export default function RegisterScreen(this: any) {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function RegisterScreen(this: any) {
   };
 
   // 23.02.19 url 따로 변수로 관리
-  const url = `http://localhost:5000/auth/local/signup`;
+  const url = `${API_URL}/auth/local/signup`;
   // 전송할 부분 따로 변수로 관리
   const body = {
     email: form.email,

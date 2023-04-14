@@ -2,13 +2,14 @@ import { NavLink } from "react-router-dom";
 import React from "react";
 import { useCookies } from "react-cookie";
 import { UserProps } from "../App";
+import { API_URL } from "../config";
 
 export function Navbar({ user }: UserProps) {
   const [cookies, setCookie, removeCookie] = useCookies();
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:5000/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

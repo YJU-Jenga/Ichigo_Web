@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Board } from "../dto/Board";
 import { UserProps } from "../App";
+import { API_URL } from "../config";
 
 const ProductInquiryScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
 
   // 상품문의 가져오기
   const getProductInquiry = async () => {
-    const getProductInquiryUrl = `http://localhost:5000/post/product_inquiry_all`;
+    const getProductInquiryUrl = `${API_URL}/post/product_inquiry_all`;
     try {
       const res = await axios.get(getProductInquiryUrl);
       console.log(res.data);

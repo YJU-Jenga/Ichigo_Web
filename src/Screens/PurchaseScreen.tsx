@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Product } from "../dto/Product";
 import { UserProps } from "../App";
+import { API_URL } from "../config";
 
 // 테스트 user_id, 우편번호, 주소, 상품아이디, 갯수
 
@@ -16,7 +17,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
   const userId = user?.id;
 
   // 파라미터로 넘어온 상품Id로 상품 정보 가져오기
-  const getProductUrl = `http://localhost:5000/product/getOne/${id}`;
+  const getProductUrl = `${API_URL}/product/getOne/${id}`;
 
   // 페이지가 나타나기전에 정보를 먼저 가져오기 위함
   useEffect(() => {
@@ -60,8 +61,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
     return setForm({ ...form, address: fullAddress });
   };
 
-  const url = `http://localhost:5000/order/create`;
-  const getProductInfoUrl = `https://localhost:5000/product/getOne/${id}`;
+  const url = `${API_URL}/order/create`;
+  const getProductInfoUrl = `${API_URL}/product/getOne/${id}`;
   const body = {
     userId: form.userId,
     address: form.address,
@@ -121,7 +122,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               </div>
               <div className="mt-6 sm:mt-0 xl:my-10 xl:px-20 w-52 sm:w-96 xl:w-auto">
                 <img
-                  src={`http://localhost:5000/${productInfo?.image}`}
+                  src={`${API_URL}/${productInfo?.image}`}
                   alt="왜 안되는데 뒤질래?"
                 />
               </div>

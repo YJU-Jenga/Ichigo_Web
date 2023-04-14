@@ -3,6 +3,7 @@ import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Product } from "../dto/Product";
+import { API_URL } from "../config";
 
 const ViewProductScreen = () => {
   const navigate = useNavigate();
@@ -21,7 +22,7 @@ const ViewProductScreen = () => {
 
   // 글 상세정보와 댓글을 가져오기 함수
   const getProductDetail = async () => {
-    const url_product = `http://localhost:5000/product/getOne/${productId}`;
+    const url_product = `${API_URL}/product/getOne/${productId}`;
     try {
       const res = await axios.get(url_product);
       setProductDetail(res.data);
@@ -44,7 +45,7 @@ const ViewProductScreen = () => {
 
   return (
     <>
-      <img src={`http://localhost:5000/${productDetail.image}`} alt="" />
+      <img src={`${API_URL}/${productDetail.image}`} alt="" />
       <div className="container ">
         <div className="container mx-auto">
           <h1 className="py-5 text-3xl font-bold">{productDetail.name}</h1>

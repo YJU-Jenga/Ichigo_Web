@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { UserProps } from "../App";
 import { Navigate, useNavigate } from "react-router-dom";
 import { getCookie } from "../cookie";
+import { API_URL } from "../config";
 
 const AddProductScreen = ({ user }: UserProps) => {
   if (user == undefined || !user.permission) {
@@ -23,13 +24,13 @@ const AddProductScreen = ({ user }: UserProps) => {
   // 상품추가 함수
   const AddProduct = async (e: SyntheticEvent) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const Aheaders = {
-      Authorization: `Bearer ${token}`,
-    };
     try {
       e.preventDefault();
-      const headers = { "Content-Type": "Multipart/form-data" };
-      const AddProductUrl = `http://localhost:5000/product/create`;
+      const headers = {
+        "Content-Type": "Multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      };
+      const AddProductUrl = `${API_URL}/product/create`;
       const body = new FormData();
 
       if (file === null) {

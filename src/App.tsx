@@ -19,8 +19,9 @@ import AddProductScreen from "./Screens/AddProductScreen";
 import { useCookies } from "react-cookie";
 import jwt_decode from "jwt-decode";
 import axios, { AxiosError } from "axios";
-import ViewProductScreen from "./Screens/ViewProductScreen";
 import CalendarScreen from "./Screens/CalendarScreen";
+import ErrorScreen from "./Screens/ErrorScreen";
+import { API_URL } from "./config";
 
 export interface User {
   id: number;
@@ -43,7 +44,7 @@ function App() {
       const userCookie = JSON.parse(
         JSON.stringify(jwt_decode(cookies["access-token"]))
       );
-      const url = `http://localhost:5000/user/${userCookie.email}`;
+      const url = `${API_URL}/user/${userCookie.email}`;
       const headers = {
         "Content-Type": "application/json",
         authorization: `Bearer ${cookies["access-token"]}`,
@@ -84,7 +85,10 @@ function App() {
           />
           <Route path="/write_q&a" element={<WriteQna user={user} />} />
           <Route path="/cart" element={<Cart user={user} />} />
-          <Route path="/purchase" element={<Purchase user={user} />} />
+          <Route
+            path="/purchase/:count/:id"
+            element={<Purchase user={user} />}
+          />
           <Route path="/viewpost/:id" element={<ViewPost user={user} />} />
           <Route
             path="/updateproductinquiry/:id"
@@ -94,8 +98,9 @@ function App() {
             path="/addproduct"
             element={<AddProductScreen user={user} />}
           />
-          <Route path="/viewproduct/:id" element={<ViewProductScreen />} />
           <Route path="/calendar" element={<CalendarScreen user={user} />} />
+
+          <Route path="/*" element={<ErrorScreen />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Board } from "../dto/Board";
 import { UserProps } from "../App";
+import { API_URL } from "../config";
 
 const QnaScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const QnaScreen = ({ user }: UserProps) => {
 
   // 상품문의 가져오기
   const getQna = async () => {
-    const getQnaUrl = `http://localhost:5000/post/q&a_all`;
+    const getQnaUrl = `${API_URL}/post/q&a_all`;
     try {
       const res = await axios.get(getQnaUrl);
       console.log(res);

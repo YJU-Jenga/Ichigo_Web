@@ -3,8 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Product } from "../../dto/Product";
-import { UserProps } from "../../App";
-import { getCookie } from "../../cookie";
+import { API_URL } from "../../config";
 
 const ProductCard = () => {
   const navigate = useNavigate();
@@ -17,7 +16,7 @@ const ProductCard = () => {
   useEffect(() => {
     getProductInfo();
   }, []);
-  const getProductUrl = `http://localhost:5000/product/getAll`;
+  const getProductUrl = `${API_URL}/product/getAll`;
   const getProductInfo = async () => {
     try {
       const res = await axios.get(getProductUrl);
@@ -38,21 +37,17 @@ const ProductCard = () => {
   // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // 장바구니 상품추가 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  const addToCart = async (id: number) => {
-    const addCartUrl = `http://localhost:5000/cart/addProduct`;
+  const addCartUrl = `${API_URL}/cart/addProduct`;
+  const addToCart = async (e: SyntheticEvent, id: number) => {
     const body = {
       count,
       cartId,
       productId: id,
     };
-
-    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
+    e.preventDefault();
+    const headers = { "Content-Type": "application/json" };
     try {
       const res = await axios.post(addCartUrl, body, { headers });
-      console.log(res);
       if (res.status === 201) {
         Swal.fire({
           position: "center",
@@ -89,12 +84,9 @@ const ProductCard = () => {
             key={product.id}
             className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-4"
           >
-            <NavLink
-              to={`/viewproduct/${product.id}`}
-              className="w-1/3 bg-cover"
-            >
-              <img src={`http://localhost:5000/${product.image}`} alt="" />
-            </NavLink>
+            <div className="w-1/3 bg-cover">
+              <img src={`${API_URL}/${product.image}`} alt="" />
+            </div>
             <div className="w-2/3 p-4">
               <h1 className="text-gray-900 font-bold text-2xl">
                 {product.name}
@@ -108,8 +100,8 @@ const ProductCard = () => {
                 </h1>
                 <button
                   className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded"
-                  onClick={() => {
-                    addToCart(product.id);
+                  onClick={(event) => {
+                    addToCart(event, product.id);
                   }}
                 >
                   장바구니 담기

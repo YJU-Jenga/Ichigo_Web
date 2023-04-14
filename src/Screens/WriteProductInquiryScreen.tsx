@@ -3,8 +3,10 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 import { UserProps } from "../App";
+import { getCookie } from "../cookie";
+import { API_URL } from "../config";
 
-export default function WriteProductInquiryScreen({user}:UserProps) {
+export default function WriteProductInquiryScreen({ user }: UserProps) {
   // 전송할 form데이터
   const [form, setForm] = useState({
     writer: 1,
@@ -20,34 +22,38 @@ export default function WriteProductInquiryScreen({user}:UserProps) {
   const submit = async (e: SyntheticEvent) => {
     try {
       e.preventDefault();
-      if(form.secret){
-        if(form.password.length != 4) {
+      if (form.secret) {
+        if (form.password.length != 4) {
           throw new Error("비밀번호를 양식(숫자 4글자)에 맞게 입력해주세요.");
         }
       }
-      
-      if(form.title.length <= 0) {
+
+      if (form.title.length <= 0) {
         throw new Error("제목을 입력해주세요.");
       } else if (form.title.length < 2) {
         throw new Error("제목은 최소 2글자 이상 입력해주세요.");
       }
-      if(form.content.length <= 0) {
+      if (form.content.length <= 0) {
         throw new Error("글의 내용을 입력해주세요.");
       }
 
       // 전송할 부분 따로 변수로 관리
-      const url = `http://localhost:5000/post/write_product_inquiry`;
+      const url = `${API_URL}/post/write_product_inquiry`;
       const body = new FormData();
-      const headers = { "Content-Type": "Multipart/form-data" };
+      const token = getCookie("access-token");
+      const headers = {
+        "Content-Type": "Multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      };
 
-      if(file !== null) {
-        body.append('file', file);
+      if (file !== null) {
+        body.append("file", file);
       }
-      body.append('writer', JSON.stringify({'writer': form.writer}));
-      body.append('title', JSON.stringify({'title': form.title}));
-      body.append('secret', JSON.stringify({'secret': form.secret}));
-      body.append('password', JSON.stringify({'password': form.password}));
-      body.append('content', JSON.stringify({'content': form.content}));
+      body.append("writer", JSON.stringify({ writer: form.writer }));
+      body.append("title", JSON.stringify({ title: form.title }));
+      body.append("secret", JSON.stringify({ secret: form.secret }));
+      body.append("password", JSON.stringify({ password: form.password }));
+      body.append("content", JSON.stringify({ content: form.content }));
 
       const res = await axios.post(url, body, { headers });
       if (res.status === 201) {
@@ -69,7 +75,7 @@ export default function WriteProductInquiryScreen({user}:UserProps) {
           showConfirmButton: false,
           timer: 1000,
         });
-      } else if(error instanceof Error) {
+      } else if (error instanceof Error) {
         Swal.fire({
           icon: "error",
           title: "입력 오류",
@@ -118,12 +124,12 @@ export default function WriteProductInquiryScreen({user}:UserProps) {
                 type="file"
                 id="file"
                 className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) =>{
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
                   const files = (target.files as FileList)[0];
 
-                  if(files === undefined) {
-                    return ;
+                  if (files === undefined) {
+                    return;
                   }
 
                   setFile(files);
@@ -132,9 +138,12 @@ export default function WriteProductInquiryScreen({user}:UserProps) {
             </div>
             <div>
               비밀글
-              <input type="checkbox" onChange={(event) =>  {
-                setForm({ ...form, secret: event.target.checked })
-              }} />
+              <input
+                type="checkbox"
+                onChange={(event) => {
+                  setForm({ ...form, secret: event.target.checked });
+                }}
+              />
             </div>
             <div>
               <label className="block mb-2 text-lg">비밀번호</label>

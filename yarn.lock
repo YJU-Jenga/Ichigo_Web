@@ -3003,6 +3003,11 @@
   "resolved" "https://registry.npmjs.org/@types/json5/-/json5-0.0.29.tgz"
   "version" "0.0.29"
 
+"@types/luxon@^3.3.0":
+  "integrity" "sha512-uKRI5QORDnrGFYgcdAVnHvEIvEZ8noTpP/Bg+HeUzZghwinDlIS87DEenV5r1YoOF9G4x600YsUXLWZ19rmTmg=="
+  "resolved" "https://registry.npmjs.org/@types/luxon/-/luxon-3.3.0.tgz"
+  "version" "3.3.0"
+
 "@types/mime@*":
   "integrity" "sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA=="
   "resolved" "https://registry.npmjs.org/@types/mime/-/mime-3.0.1.tgz"
@@ -8511,7 +8516,7 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"luxon@^3.2.1":
+"luxon@^3.2.1", "luxon@^3.3.0":
   "integrity" "sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg=="
   "resolved" "https://registry.npmjs.org/luxon/-/luxon-3.3.0.tgz"
   "version" "3.3.0"

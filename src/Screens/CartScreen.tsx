@@ -7,6 +7,7 @@ import { UserProps } from "../App";
 import { CartToProduct } from "../dto/CartToProduct";
 import { Product } from "../dto/Product";
 import { getCookie } from "../cookie";
+import { API_URL } from "../config";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -23,10 +24,7 @@ const CartScreen = ({ user }: UserProps) => {
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-    const url = `http://localhost:5000/cart/findAllProducts/${id}`;
+    const url = `${API_URL}/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
       let totalC = 0;
@@ -61,7 +59,7 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 상품 삭제
   const deleteProduct = async (id: number) => {
-    const deleteProductUrl = `http://localhost:5000/cart/deleteAddedProdcut`;
+    const deleteProductUrl = `${API_URL}/cart/deleteAddedProdcut`;
     const config = {
       data: {
         cartId: id,
@@ -160,7 +158,7 @@ const CartScreen = ({ user }: UserProps) => {
                     <div className="w-20">
                       <img
                         className="h-24"
-                        src={`http://localhost:5000/${product?.product.image}`}
+                        src={`${API_URL}/${product?.product.image}`}
                       />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">

@@ -3,6 +3,8 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
 import { UserProps } from "../App";
+import { getCookie } from "../cookie";
+import { API_URL } from "../config";
 
 export default function WriteProductInquiryScreen({ user }: UserProps) {
   // 전송할 form데이터
@@ -37,9 +39,13 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
       }
 
       // 전송할 부분 따로 변수로 관리
-      const url = `http://localhost:5000/post/write_q&a`;
+      const url = `${API_URL}/post/write_q&a`;
       const body = new FormData();
-      const headers = { "Content-Type": "application/json" };
+      const token = getCookie("access-token");
+      const headers = {
+        "Content-Type": "Multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      };
 
       if (file !== null) {
         body.append("file", file);
@@ -51,15 +57,15 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
       body.append("content", JSON.stringify({ content: form.content }));
 
       const res = await axios.post(url, body, { headers });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Q & A 작성이 완료되었습니다.",
-        showConfirmButton: false,
-        timer: 1000,
-      });
-      navigate("/qna");
       if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Q & A 작성이 완료되었습니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/qna");
       }
     } catch (error) {
       if (error instanceof AxiosError) {

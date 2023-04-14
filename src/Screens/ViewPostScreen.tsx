@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
 import { UserProps } from "../App";
+import { API_URL } from "../config";
 
 const ViewPostScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -24,8 +25,8 @@ const ViewPostScreen = ({ user }: UserProps) => {
 
   // 글 상세정보와 댓글을 가져오기 함수
   const getPostDetail = async () => {
-    const url_get = `http://localhost:5000/post/view/${id}`;
-    const getCommentUrl = `http://localhost:5000/comment/getAll/${postId}`;
+    const url_get = `${API_URL}/post/view/${id}`;
+    const getCommentUrl = `${API_URL}/comment/getAll/${postId}`;
     try {
       const res_post = await axios.get(url_get);
       const res_comment = await axios.get(getCommentUrl);
@@ -49,7 +50,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
   // 글 삭제 함수
   const deletePost = async () => {
     // 글 삭제 url
-    const url_delete = `http://localhost:5000/post/delete_post?id=${id}`;
+    const url_delete = `${API_URL}/post/delete_post?id=${id}`;
     try {
       const res = await axios.delete(url_delete);
       if (res.status === 200) {
@@ -82,13 +83,13 @@ const ViewPostScreen = ({ user }: UserProps) => {
 
   // 작성자 이름 가져오기
   // const getWritersName = async () => {
-  //   const getWritersUrl = `http://localhost:5000/user/user/${id}`;
+  //   const getWritersUrl = `${API_URL}/user/user/${id}`;
   //   const res = await axios.get(getWritersUrl);
   // };
 
   // 댓글쓰기 함수
   const writeComment = async () => {
-    const writeCommentUrl = `http://localhost:5000/comment/write`;
+    const writeCommentUrl = `${API_URL}/comment/write`;
     const headers = { "Content-Type": "application/json" };
     const body = {
       writer: 1,
@@ -121,7 +122,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
 
   // 댓글 삭제 함수
   const deleteComment = async (id: number) => {
-    const deleteUrl = `http://localhost:5000/comment/delete/${id}`;
+    const deleteUrl = `${API_URL}/comment/delete/${id}`;
     try {
       const res = await axios.delete(deleteUrl);
       if (res.status === 200) {
@@ -149,7 +150,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
 
   // 댓글 수정 함수
   const updateComment = async (id: number) => {
-    const updateCommentUrl = `http://localhost:5000/comment/update/${id}`;
+    const updateCommentUrl = `${API_URL}/comment/update/${id}`;
     const { value: text } = await Swal.fire({
       input: "textarea",
       inputLabel: "Message",
