@@ -130,7 +130,7 @@ const CartScreen = ({ user }: UserProps) => {
         productId: newProduct[0]?.productId,
         count: newProduct[0].count,
       };
-      const res = await axios.post(CartUpdateUrl, body, { headers });
+      const res = await axios.patch(CartUpdateUrl, body, { headers });
       if (res.status === 200) {
         Swal.fire({
           icon: "success",
@@ -146,7 +146,7 @@ const CartScreen = ({ user }: UserProps) => {
           productId: newProduct[i]?.productId,
           count: newProduct[i].count,
         };
-        const res = await axios.post(CartUpdateUrl, body, { headers });
+        const res = await axios.patch(CartUpdateUrl, body, { headers });
         console.log(res);
       }
       Swal.fire({

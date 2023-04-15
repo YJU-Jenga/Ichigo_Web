@@ -45,7 +45,7 @@ const ProductScreen = ({ user }: UserProps) => {
     const addCartUrl = `${API_URL}/cart/addProduct`;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
-      "Content-Type": "Multipart/form-data",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
     const body = {
@@ -56,7 +56,7 @@ const ProductScreen = ({ user }: UserProps) => {
     console.log(body);
     try {
       const res = await axios.post(addCartUrl, body, { headers });
-      console.log(res);
+      console.log(res, "시발");
       if (res.status === 201) {
         Swal.fire({
           position: "center",
@@ -68,6 +68,7 @@ const ProductScreen = ({ user }: UserProps) => {
         navigate("/cart");
       }
     } catch (error) {
+      console.log(error, "시발 왜 안돼");
       if (error instanceof AxiosError) {
         Swal.fire({
           icon: "error",
