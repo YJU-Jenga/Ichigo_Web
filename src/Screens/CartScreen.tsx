@@ -23,7 +23,6 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
-    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const url = `${API_URL}/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
@@ -117,6 +116,49 @@ const CartScreen = ({ user }: UserProps) => {
     setProduct(newProduct);
   };
 
+  // 주문페이지로 넘기기, 반복문으로 상품 아이디랑 갯수 넘겨주기
+  const goToPurchase = async () => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "Multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
+    const CartUpdateUrl = `${API_URL}/cart/updateAddedProdcut/${id}`;
+    const newProduct = [...product];
+    if (newProduct.length === 1) {
+      const body = {
+        productId: newProduct[0]?.productId,
+        count: newProduct[0].count,
+      };
+      const res = await axios.post(CartUpdateUrl, body, { headers });
+      if (res.status === 200) {
+        Swal.fire({
+          icon: "success",
+          text: "주문페이지로 이동합니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/purchase");
+      }
+    } else {
+      for (let i in newProduct) {
+        const body = {
+          productId: newProduct[i]?.productId,
+          count: newProduct[i].count,
+        };
+        const res = await axios.post(CartUpdateUrl, body, { headers });
+        console.log(res);
+      }
+      Swal.fire({
+        icon: "success",
+        text: "주문페이지로 이동합니다.",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate("/purchase");
+    }
+  };
+
   if (!cartList) {
     return (
       <>
@@ -124,6 +166,7 @@ const CartScreen = ({ user }: UserProps) => {
       </>
     );
   }
+  console.log(product);
   return (
     <body className="bg-gray-100">
       <div className="container mx-auto mt-10">
@@ -234,13 +277,12 @@ const CartScreen = ({ user }: UserProps) => {
                 <span>총 가격</span>
                 <span>{totalPrice} ₩</span>
               </div>
-              <Link
-                to={`/purchase`}
-                state={product}
+              <button
+                onClick={goToPurchase}
                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
-              </Link>
+              </button>
             </div>
           </div>
         </div>

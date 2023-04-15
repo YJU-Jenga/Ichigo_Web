@@ -85,10 +85,7 @@ function App() {
           />
           <Route path="/write_q&a" element={<WriteQna user={user} />} />
           <Route path="/cart" element={<Cart user={user} />} />
-          <Route
-            path="/purchase/:count/:id"
-            element={<Purchase user={user} />}
-          />
+          <Route path="/purchase" element={<Purchase user={user} />} />
           <Route path="/viewpost/:id" element={<ViewPost user={user} />} />
           <Route
             path="/updateproductinquiry/:id"
