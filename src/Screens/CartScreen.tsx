@@ -120,7 +120,7 @@ const CartScreen = ({ user }: UserProps) => {
   const goToPurchase = async () => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
-      "Content-Type": "Multipart/form-data",
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
     const CartUpdateUrl = `${API_URL}/cart/updateAddedProdcut/${id}`;
@@ -130,6 +130,7 @@ const CartScreen = ({ user }: UserProps) => {
         productId: newProduct[0]?.productId,
         count: newProduct[0].count,
       };
+      console.log(body);
       const res = await axios.patch(CartUpdateUrl, body, { headers });
       if (res.status === 200) {
         Swal.fire({
@@ -146,6 +147,7 @@ const CartScreen = ({ user }: UserProps) => {
           productId: newProduct[i]?.productId,
           count: newProduct[i].count,
         };
+        console.log(body);
         const res = await axios.patch(CartUpdateUrl, body, { headers });
         console.log(res);
       }
@@ -278,7 +280,9 @@ const CartScreen = ({ user }: UserProps) => {
                 <span>{totalPrice} ₩</span>
               </div>
               <button
-                onClick={goToPurchase}
+                onClick={() => {
+                  goToPurchase();
+                }}
                 className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
