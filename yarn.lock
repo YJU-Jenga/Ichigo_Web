@@ -8516,7 +8516,7 @@
   dependencies:
     "yallist" "^4.0.0"
 
-"luxon@^3.2.1", "luxon@^3.3.0":
+"luxon@^3.2.1":
   "integrity" "sha512-An0UCfG/rSiqtAIiBPO0Y9/zAnHUZxAMiCpTd5h2smgsj7GGmcenvrvww2cqNA8/4A5ZrD1gJpHN2mIHZQF+Mg=="
   "resolved" "https://registry.npmjs.org/luxon/-/luxon-3.3.0.tgz"
   "version" "3.3.0"
