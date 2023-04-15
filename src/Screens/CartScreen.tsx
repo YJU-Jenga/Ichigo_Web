@@ -125,6 +125,7 @@ const CartScreen = ({ user }: UserProps) => {
     };
     const CartUpdateUrl = `${API_URL}/cart/updateAddedProdcut/${id}`;
     const newProduct = [...product];
+    console.log(newProduct);
     if (newProduct.length === 1) {
       const body = {
         productId: newProduct[0]?.productId,
