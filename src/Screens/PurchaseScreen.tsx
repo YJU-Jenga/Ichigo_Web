@@ -3,27 +3,19 @@ import React, { SyntheticEvent, useEffect, useState } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import { Product } from "../dto/Product";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
-
-// 테스트 user_id, 우편번호, 주소, 상품아이디, 갯수
 
 const PurchaseScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
   const id = 1;
 
-  const userId = user?.id;
-
-  // 파라미터로 넘어온 상품Id로 상품 정보 가져오기
-
-  // 페이지가 나타나기전에 정보를 먼저 가져오기 위함
   useEffect(() => {
-    getProductInfo();
+    getTotalPrice();
   }, []);
 
-  const getProductInfo = async () => {
+  const getTotalPrice = async () => {
     const url = `${API_URL}/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
@@ -49,7 +41,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
   };
 
   const [form, setForm] = useState({
-    userId: userId,
+    userId: user?.id,
     address: "",
     postalCode: "",
   });
@@ -65,7 +57,6 @@ const PurchaseScreen = ({ user }: UserProps) => {
     return setForm({ ...form, address: fullAddress });
   };
 
-  const url = `${API_URL}/order/create`;
   const body = {
     userId: form.userId,
     address: form.address,
@@ -73,6 +64,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
   };
 
   const submit = async (e: SyntheticEvent) => {
+    const url = `${API_URL}/order/create`;
     e.preventDefault();
     const headers = { "Content-Type": "application/json" };
     try {
@@ -211,7 +203,9 @@ const PurchaseScreen = ({ user }: UserProps) => {
                 className="mt-8 border border-transparent hover:border-gray-300 bg-gray-900 hover:bg-white text-white hover:text-gray-900 flex justify-center items-center py-4 rounded w-full"
               >
                 <div>
-                  <p className="text-base leading-4">구매하기</p>
+                  <p className="text-base leading-4 font-semibold">
+                    총 {totalPrice}원 결제하기
+                  </p>
                 </div>
               </button>
             </div>
