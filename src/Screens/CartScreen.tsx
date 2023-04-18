@@ -58,6 +58,11 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 상품 삭제
   const deleteProduct = async (id: number) => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
     const deleteProductUrl = `${API_URL}/cart/deleteAddedProdcut`;
     const config = {
       data: {
@@ -66,7 +71,17 @@ const CartScreen = ({ user }: UserProps) => {
       },
     };
     try {
-      const res = await axios.delete(deleteProductUrl, config);
+      // const res = await axios.delete(deleteProductUrl, config);
+      const res = await axios.delete(deleteProductUrl, {
+        data: {
+          cartId: id,
+          productId: id,
+        },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.status === 201) {
         console.log(res);
         Swal.fire({

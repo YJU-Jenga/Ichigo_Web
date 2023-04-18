@@ -21,6 +21,7 @@ import jwt_decode from "jwt-decode";
 import axios, { AxiosError } from "axios";
 import CalendarScreen from "./Screens/CalendarScreen";
 import ErrorScreen from "./Screens/ErrorScreen";
+import ManigingScreen from "./Screens/ManigingScreen";
 import { API_URL } from "./config";
 
 export interface User {
@@ -96,7 +97,7 @@ function App() {
             element={<AddProductScreen user={user} />}
           />
           <Route path="/calendar" element={<CalendarScreen user={user} />} />
-
+          <Route path="/maniging" element={<ManigingScreen user={user} />} />
           <Route path="/*" element={<ErrorScreen />} />
         </Routes>
       </BrowserRouter>

@@ -5,11 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
-import { Button } from "@material-tailwind/react";
+import { getCookie } from "../cookie";
 
 const PurchaseScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
+  const productId: any[] = [];
+  const productCount: any[] = [];
   const id = 1;
 
   useEffect(() => {
@@ -66,8 +68,12 @@ const PurchaseScreen = ({ user }: UserProps) => {
 
   const submit = async (e: SyntheticEvent) => {
     const url = `${API_URL}/order/create`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
     e.preventDefault();
-    const headers = { "Content-Type": "application/json" };
     try {
       const res = await axios.post(url, body, { headers });
       if (res.status === 201) {
@@ -99,7 +105,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
       onSubmit={submit}
     >
       <section className="flex flex-col gap-10">
-        <label className="w-fit">
+        {/* <label className="w-fit">
           <h3 className="text-xl font-semibold">* 주문자</h3>
           <input
             type="text"
@@ -140,7 +146,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
             }}
             className="mt-2 h-8 px-2 pt-1 pb-1"
           />
-        </label>
+        </label> */}
         <div className="mt-2 flex-col">
           <label className="w-fit">
             <h3 className="text-xl font-semibold">우편번호</h3>

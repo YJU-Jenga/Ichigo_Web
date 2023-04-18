@@ -168,6 +168,17 @@ export function Navbar({ user }: UserProps) {
                 </NavLink>
               )}
             </li>
+            <li>
+              {user?.permission ? (
+                <NavLink
+                  to="/maniging"
+                  className="block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-white dark:bg-blue-600 md:dark:bg-transparent"
+                  aria-current="page"
+                >
+                  주문관리
+                </NavLink>
+              ) : null}
+            </li>
             {signIn}
             {join}
             {nickname}
