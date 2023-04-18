@@ -23,12 +23,17 @@ const PurchaseScreen = ({ user }: UserProps) => {
     try {
       let totalP = 0;
       const res = await axios.get(url);
+      console.log(res);
       for (let i in res.data[0].cartToProducts) {
         totalP +=
           res.data[0].cartToProducts[i].count *
           res.data[0].cartToProducts[i].product.price;
       }
       setTotalPrice(totalP);
+      for (let i in res.data[0].cartToProducts) {
+        productCount.push(res.data[0].cartToProducts[i].count);
+        productId.push(res.data[0].cartToProducts[i].productId);
+      }
     } catch (error) {
       if (error instanceof AxiosError) {
         Swal.fire({
@@ -64,10 +69,12 @@ const PurchaseScreen = ({ user }: UserProps) => {
     userId: form.userId,
     address: form.address,
     postalCode: form.postalCode,
+    productIds: productId,
+    counts: productCount,
   };
 
   const submit = async (e: SyntheticEvent) => {
-    const url = `${API_URL}/order/create`;
+    const purchase_url = `${API_URL}/order/create`;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
       "Content-Type": "application/json",
@@ -75,7 +82,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
     };
     e.preventDefault();
     try {
-      const res = await axios.post(url, body, { headers });
+      const res = await axios.post(purchase_url, body, { headers });
       if (res.status === 201) {
         Swal.fire({
           position: "center",
