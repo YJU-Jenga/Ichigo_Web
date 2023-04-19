@@ -98,15 +98,6 @@ const ManigingScreen = ({ user }: UserProps) => {
       <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
         주문 관리
       </h1>
-      {/* address
-createdAt
-id
-orderToProducts
-postalCode
-state
-updatedAt
-userId
-*/}
       <table className="min-w-full border-collapse block md:table">
         <thead className="block md:table-header-group">
           <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">

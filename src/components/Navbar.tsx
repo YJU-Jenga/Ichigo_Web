@@ -177,6 +177,17 @@ export function Navbar({ user }: UserProps) {
                     </NavLink>
                   ) : null}
                 </li>
+                <li>
+                  {user ? (
+                    <NavLink
+                      to="/cart"
+                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      aria-current="page"
+                    >
+                      장바구니
+                    </NavLink>
+                  ) : null}
+                </li>
                 {signIn}
                 {join}
                 {nickname}

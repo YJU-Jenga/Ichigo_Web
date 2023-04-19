@@ -11,7 +11,7 @@ import { API_URL } from "../config";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
-  const id = 1;
+  const id = user?.id;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
   const [product, setProduct] = useState<Array<any>>([]);
   const [totalPrice, setTotalPrice] = useState(0);
