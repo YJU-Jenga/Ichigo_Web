@@ -22,6 +22,7 @@ import axios, { AxiosError } from "axios";
 import CalendarScreen from "./Screens/CalendarScreen";
 import ErrorScreen from "./Screens/ErrorScreen";
 import ManigingScreen from "./Screens/ManigingScreen";
+import MyPageScreen from "./Screens/MyPageScreen";
 import { API_URL } from "./config";
 
 export interface User {
@@ -98,6 +99,7 @@ function App() {
           />
           <Route path="/calendar" element={<CalendarScreen user={user} />} />
           <Route path="/maniging" element={<ManigingScreen user={user} />} />
+          <Route path="/mypage" element={<MyPageScreen user={user} />} />
           <Route path="/*" element={<ErrorScreen />} />
         </Routes>
       </BrowserRouter>
