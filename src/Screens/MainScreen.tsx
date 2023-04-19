@@ -10,9 +10,8 @@ const MainScreen = () => {
             딸기
           </h1>
           <p className="text-base leading-6 mt-4 text-gray-600">
-            Get inspired by our curated selection of luxiwood interiors. We hope
-            get inspired to have luxiwood interior yourself. You’ll find tips
-            here where you can buy a lot of cool furniture.
+            맞벌이 부부라서 아이가 걱정되십니까? 이제 걱정하지 마십시오...
+            저희가 아이의 놀이, 학습을 책임지겠습니다. 이름하여 딸기....
           </p>
           <NavLink
             to="/product"
@@ -52,23 +51,19 @@ const MainScreen = () => {
         <div className="lg:w-7/12 lg:mt-0 mt-8">
           <div className="w-full h-full bg-red-200">
             <img
-              src="img/sorry_gosung.jpg"
+              src="img/nude_ted.jpeg"
               alt="apartment design"
               className="w-full sm:block hidden"
             />
             <img
-              src="img/sugoi_gosung.jpg"
+              src="img/ted.jpeg"
               alt="apartment design"
               className="sm:hidden block w-full"
             />
           </div>
           <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 lg:gap-8 gap-6 lg:mt-8 md:mt-6 mt-4">
-            <img src="img/sugoi_gosung.jpg" className="w-full" alt="kitchen" />
-            <img
-              src="img/sugoi_gosung.jpg"
-              className="w-full"
-              alt="sitting room"
-            />
+            <img src="img/ted.jpeg" className="w-full" alt="kitchen" />
+            <img src="img/ted.jpeg" className="w-full" alt="sitting room" />
           </div>
         </div>
       </div>
