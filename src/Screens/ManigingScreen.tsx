@@ -4,8 +4,10 @@ import axios, { AxiosError } from "axios";
 import { API_URL } from "../config";
 import { useEffect, useState } from "react";
 import { getCookie } from "../cookie";
+import { useNavigate } from "react-router-dom";
 
 const ManigingScreen = ({ user }: UserProps) => {
+  const navigate = useNavigate();
   const [purchaseList, setPurchaseList] = useState<Array<any>>([]);
   const [updateAddress, setUpdateAddress] = useState("");
   const [updatePostalCode, setUpdatePostalCode] = useState("");
@@ -75,6 +77,7 @@ const ManigingScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
+        window.location.reload();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
