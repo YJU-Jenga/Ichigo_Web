@@ -2,9 +2,11 @@ import { NavLink } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
+import { useState } from "react";
 
 export function Navbar({ user }: UserProps) {
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [checked, setChecked] = useState(true);
 
   const logout = async () => {
     try {
@@ -28,6 +30,7 @@ export function Navbar({ user }: UserProps) {
           to="/login"
           className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
           aria-current="page"
+          onClick={() => setChecked(!checked)}
         >
           로그인
         </NavLink>
@@ -39,6 +42,7 @@ export function Navbar({ user }: UserProps) {
           to="/register"
           className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
           aria-current="page"
+          onClick={() => setChecked(!checked)}
         >
           회원가입
         </NavLink>
@@ -66,6 +70,11 @@ export function Navbar({ user }: UserProps) {
 
   return (
     <>
+      {/* <style>
+ #menu-toggle:checked + #menu {
+        display: block;
+      }
+</style> */}
       <div className="antialiased bg-gray-400">
         <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
           <label className="pointer-cursor lg:hidden block">
@@ -79,10 +88,17 @@ export function Navbar({ user }: UserProps) {
               <title>menu</title>
               <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
             </svg>
+            <input
+              checked={checked}
+              onChange={() => setChecked(!checked)}
+              className="hidden"
+              type="checkbox"
+              id="menu-toggle"
+            />
           </label>
-          <input className="hidden" type="checkbox" id="menu-toggle" />
 
           <div
+            style={{ display: checked ? "none" : "block" }}
             className="hidden lg:flex lg:items-center lg:w-auto w-full"
             id="menu"
           >
@@ -93,6 +109,7 @@ export function Navbar({ user }: UserProps) {
                     to="/"
                     className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
+                    onClick={() => setChecked(!checked)}
                   >
                     Home
                   </NavLink>
@@ -102,6 +119,7 @@ export function Navbar({ user }: UserProps) {
                     to="/product"
                     className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
+                    onClick={() => setChecked(!checked)}
                   >
                     상품
                   </NavLink>
@@ -111,6 +129,7 @@ export function Navbar({ user }: UserProps) {
                     to="/productinquiry"
                     className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
+                    onClick={() => setChecked(!checked)}
                   >
                     상품 문의
                   </NavLink>
@@ -120,18 +139,22 @@ export function Navbar({ user }: UserProps) {
                     to="/qna"
                     className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
+                    onClick={() => setChecked(!checked)}
                   >
                     Q&A
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to="/calendar"
-                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-                    aria-current="page"
-                  >
-                    캘린더
-                  </NavLink>
+                  {user ? (
+                    <NavLink
+                      to="/calendar"
+                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      aria-current="page"
+                      onClick={() => setChecked(!checked)}
+                    >
+                      캘린더
+                    </NavLink>
+                  ) : null}
                 </li>
                 <li>
                   {user !== undefined ? (
@@ -139,12 +162,14 @@ export function Navbar({ user }: UserProps) {
                       to="/custom"
                       className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
+                      onClick={() => setChecked(!checked)}
                     >
                       커스터마이징
                     </NavLink>
                   ) : (
                     <NavLink
                       onClick={() => {
+                        setChecked(!checked);
                         alert("로그인 해주세요.");
                       }}
                       to="/login"
@@ -161,6 +186,7 @@ export function Navbar({ user }: UserProps) {
                       to="/maniging"
                       className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
+                      onClick={() => setChecked(!checked)}
                     >
                       주문관리
                     </NavLink>
@@ -172,6 +198,7 @@ export function Navbar({ user }: UserProps) {
                       to="/mypage"
                       className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
+                      onClick={() => setChecked(!checked)}
                     >
                       마이페이지
                     </NavLink>
@@ -183,6 +210,7 @@ export function Navbar({ user }: UserProps) {
                       to="/cart"
                       className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
+                      onClick={() => setChecked(!checked)}
                     >
                       장바구니
                     </NavLink>

@@ -32,14 +32,14 @@ const CalendarScreen = ({ user }: UserProps) => {
     {
       id: 1,
       title: "Test Event 1",
-      start: new Date("2023-04-10T10:00:00Z"),
-      end: new Date("2023-04-10T11:30:00Z"),
+      start: new Date("2023-04-20T10:00:00Z"),
+      end: new Date("2023-04-20T11:30:00Z"),
     },
     {
       id: 2,
       title: "Test Event 2",
-      start: new Date("2023-04-12T14:00:00Z"),
-      end: new Date("2023-04-12T15:30:00Z"),
+      start: new Date("2023-04-22T14:00:00Z"),
+      end: new Date("2023-04-25T15:30:00Z"),
     },
   ];
 
