@@ -49,22 +49,17 @@ const MainScreen = () => {
           </NavLink>
         </div>
         <div className="lg:w-7/12 lg:mt-0 mt-8">
-          <div className="w-full h-full bg-red-200">
+          <div className="w-full h-full">
             <img
               src="img/nude_ted.jpeg"
               alt="apartment design"
-              className="w-full sm:block hidden"
-            />
-            <img
-              src="img/ted.jpeg"
-              alt="apartment design"
-              className="sm:hidden block w-full"
+              className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 lg:gap-8 gap-6 lg:mt-8 md:mt-6 mt-4"
             />
           </div>
-          <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 lg:gap-8 gap-6 lg:mt-8 md:mt-6 mt-4">
+          {/* <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 lg:gap-8 gap-6 lg:mt-8 md:mt-6 mt-4">
             <img src="img/ted.jpeg" className="w-full" alt="kitchen" />
             <img src="img/ted.jpeg" className="w-full" alt="sitting room" />
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
