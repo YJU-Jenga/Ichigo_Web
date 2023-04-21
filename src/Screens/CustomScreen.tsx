@@ -198,7 +198,6 @@ export default function CustomScreen({ user }: UserProps) {
         top: 52,
         height: sizes.height - 52,
         width: sizes.width,
-        position: "absolute",
       }}
     >
       <Canvas

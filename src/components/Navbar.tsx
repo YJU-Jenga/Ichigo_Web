@@ -28,7 +28,7 @@ export function Navbar({ user }: UserProps) {
       <li>
         <NavLink
           to="/login"
-          className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
+          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
           aria-current="page"
           onClick={() => setChecked(!checked)}
         >
@@ -40,7 +40,7 @@ export function Navbar({ user }: UserProps) {
       <li>
         <NavLink
           to="/register"
-          className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
+          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
           aria-current="page"
           onClick={() => setChecked(!checked)}
         >
@@ -50,7 +50,7 @@ export function Navbar({ user }: UserProps) {
     );
   } else {
     nickname = (
-      <li className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold">
+      <li className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold">
         {user.name}님
       </li>
     );
@@ -58,7 +58,7 @@ export function Navbar({ user }: UserProps) {
       <li>
         <NavLink
           to="/"
-          className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
+          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
           aria-current="page"
           onClick={logout}
         >
@@ -70,7 +70,7 @@ export function Navbar({ user }: UserProps) {
 
   return (
     <>
-      <div className="antialiased bg-gray-400">
+      <div className="zIndex:1 antialiased bg-gray-400">
         <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
           <label className="pointer-cursor lg:hidden block">
             <svg
@@ -102,7 +102,7 @@ export function Navbar({ user }: UserProps) {
                 <li>
                   <NavLink
                     to="/"
-                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                    className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
                     onClick={() => setChecked(!checked)}
                   >
@@ -112,7 +112,7 @@ export function Navbar({ user }: UserProps) {
                 <li>
                   <NavLink
                     to="/product"
-                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                    className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
                     onClick={() => setChecked(!checked)}
                   >
@@ -122,7 +122,7 @@ export function Navbar({ user }: UserProps) {
                 <li>
                   <NavLink
                     to="/productinquiry"
-                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                    className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
                     onClick={() => setChecked(!checked)}
                   >
@@ -132,7 +132,7 @@ export function Navbar({ user }: UserProps) {
                 <li>
                   <NavLink
                     to="/qna"
-                    className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                    className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                     aria-current="page"
                     onClick={() => setChecked(!checked)}
                   >
@@ -143,7 +143,7 @@ export function Navbar({ user }: UserProps) {
                   {user ? (
                     <NavLink
                       to="/calendar"
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
                       onClick={() => setChecked(!checked)}
                     >
@@ -155,7 +155,7 @@ export function Navbar({ user }: UserProps) {
                   {user !== undefined ? (
                     <NavLink
                       to="/custom"
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
                       onClick={() => setChecked(!checked)}
                     >
@@ -168,7 +168,7 @@ export function Navbar({ user }: UserProps) {
                         alert("로그인 해주세요.");
                       }}
                       to="/login"
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
                     >
                       커스터마이징
@@ -179,7 +179,7 @@ export function Navbar({ user }: UserProps) {
                   {user?.permission ? (
                     <NavLink
                       to="/maniging"
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
                       onClick={() => setChecked(!checked)}
                     >
@@ -191,7 +191,7 @@ export function Navbar({ user }: UserProps) {
                   {user ? (
                     <NavLink
                       to="/mypage"
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
                       onClick={() => setChecked(!checked)}
                     >
@@ -203,7 +203,7 @@ export function Navbar({ user }: UserProps) {
                   {user ? (
                     <NavLink
                       to="/cart"
-                      className="lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                      className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
                       aria-current="page"
                       onClick={() => setChecked(!checked)}
                     >
