@@ -70,11 +70,6 @@ export function Navbar({ user }: UserProps) {
 
   return (
     <>
-      {/* <style>
- #menu-toggle:checked + #menu {
-        display: block;
-      }
-</style> */}
       <div className="antialiased bg-gray-400">
         <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
           <label className="pointer-cursor lg:hidden block">

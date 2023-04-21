@@ -1,7 +1,7 @@
 import axios, { AxiosError } from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
-import { useNavigate, NavLink, Link } from "react-router-dom";
+import { useNavigate, NavLink, Link, useLocation } from "react-router-dom";
 import { Cart } from "../dto/Cart";
 import { UserProps } from "../App";
 import { CartToProduct } from "../dto/CartToProduct";
@@ -20,6 +20,15 @@ const CartScreen = ({ user }: UserProps) => {
   useEffect(() => {
     getCartList();
   }, []);
+
+  let currentPath = "";
+  let location = useLocation();
+
+  useEffect(() => {
+    if (currentPath === location.pathname) window.location.reload();
+
+    currentPath = location.pathname;
+  }, [location]);
 
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
@@ -59,22 +68,12 @@ const CartScreen = ({ user }: UserProps) => {
   // 상품 삭제
   const deleteProduct = async (id: number) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
     const deleteProductUrl = `${API_URL}/cart/deleteAddedProdcut`;
-    const config = {
-      data: {
-        cartId: id,
-        productId: id,
-      },
-    };
+    const cartId = user?.id;
     try {
-      // const res = await axios.delete(deleteProductUrl, config);
       const res = await axios.delete(deleteProductUrl, {
         data: {
-          cartId: id,
+          cartId: cartId,
           productId: id,
         },
         headers: {
@@ -82,7 +81,7 @@ const CartScreen = ({ user }: UserProps) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      if (res.status === 201) {
+      if (res.status === 200) {
         console.log(res);
         Swal.fire({
           icon: "success",
@@ -90,6 +89,17 @@ const CartScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
+        setCartList([]);
+        const newProduct = [...product];
+        for (let i in newProduct) {
+          if (newProduct[i].productId === id) {
+            setTotalCount(totalCount - newProduct[i].count);
+            setTotalPrice(
+              totalPrice - newProduct[i].product.price * newProduct[i].count
+            );
+          }
+        }
+        setProduct([]);
         navigate("/cart");
       }
     } catch (error) {
@@ -248,6 +258,7 @@ const CartScreen = ({ user }: UserProps) => {
                       className="mx-2 border text-center w-8"
                       type="text"
                       value={product?.count}
+                      readOnly
                     />
                     <svg
                       onClick={() => {
