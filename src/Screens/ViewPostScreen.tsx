@@ -165,7 +165,6 @@ const ViewPostScreen = ({ user }: UserProps) => {
       postId: postId,
       content: text,
     };
-
     if (text) {
       const res = await axios.patch(updateCommentUrl, body);
       if (res.status === 200) {
