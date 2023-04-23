@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -7,8 +7,9 @@ import "./CalendarMonth.css";
 import { NavLink } from "react-router-dom";
 import { API_URL } from "../config";
 import Swal from "sweetalert2";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { getCookie } from "../cookie";
+import { useNavigate } from "react-router-dom";
 
 moment.locale("ko-KR");
 const localizer = momentLocalizer(moment);
@@ -34,6 +35,8 @@ const CalendarScreen = ({ user }: UserProps) => {
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
   let now = new Date().toISOString().slice(0, 16);
+  const navigate = useNavigate();
+  const [schedule, setSchedule] = useState<Array<EventData>>([]);
 
   const handleViewChange = (newView: string) => {
     setView(newView as CalendarView);
@@ -53,6 +56,40 @@ const CalendarScreen = ({ user }: UserProps) => {
       end: new Date("2023-04-25T15:30:00Z"),
     },
   ];
+
+  // 렌더링 전에 정보를 먼저 가져오기 위함
+  useEffect(() => {
+    getSchedule();
+  }, []);
+
+  // 글 상세정보와 댓글을 가져오기 함수
+  const getSchedule = async () => {
+    const getScheduleUrl = `${API_URL}/calendar/all`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const body = {
+      userId: user?.id,
+    };
+    try {
+      const res = await axios.post(getScheduleUrl, body, { headers });
+      console.log(res.data);
+      setSchedule(res.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/productinquiry");
+      }
+    }
+  };
 
   const createSchedule = async () => {
     const createScheduleUrl = `${API_URL}/calendar/create`;
@@ -106,6 +143,7 @@ const CalendarScreen = ({ user }: UserProps) => {
       console.log(res);
     }
   };
+  console.log(schedule);
   return (
     <>
       <button
@@ -116,7 +154,7 @@ const CalendarScreen = ({ user }: UserProps) => {
       </button>
       <Calendar
         localizer={localizer}
-        events={events}
+        events={schedule}
         startAccessor="start"
         endAccessor="end"
         view={view}
