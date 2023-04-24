@@ -435,6 +435,12 @@ export function Navbar({ user }: UserProps) {
           </NavLink>
         ) : null}
       </div>
+      <div className={classNames("md:hidden", { hidden: !menuToggle })}>
+        {signIn}
+        {join}
+        {nickname}
+        {signOut}
+      </div>
     </nav>
   );
 }
