@@ -34,28 +34,19 @@ const CalendarScreen = ({ user }: UserProps) => {
   const [end, setEnd] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-  let now = new Date().toISOString().slice(0, 16);
+  const TIME_ZONE = 9 * 60 * 60 * 1000;
+  let now = new Date();
   const navigate = useNavigate();
+  const [preSchedule, setPreSchedule] = useState<Array<EventData>>([]);
   const [schedule, setSchedule] = useState<Array<EventData>>([]);
+  const clientUtcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
+  const clientDate = new Date().toUTCString();
 
   const handleViewChange = (newView: string) => {
     setView(newView as CalendarView);
   };
 
-  const events: EventData[] = [
-    {
-      id: 1,
-      title: "Test Event 1",
-      start: new Date("2023-04-20T10:00:00Z"),
-      end: new Date("2023-04-20T11:30:00Z"),
-    },
-    {
-      id: 2,
-      title: "Test Event 2",
-      start: new Date("2023-04-22T14:00:00Z"),
-      end: new Date("2023-04-25T15:30:00Z"),
-    },
-  ];
+  const events: EventData[] = [];
 
   // 렌더링 전에 정보를 먼저 가져오기 위함
   useEffect(() => {
@@ -75,7 +66,7 @@ const CalendarScreen = ({ user }: UserProps) => {
     };
     try {
       const res = await axios.post(getScheduleUrl, body, { headers });
-      console.log(res.data);
+      console.log(res);
       setSchedule(res.data);
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -95,8 +86,8 @@ const CalendarScreen = ({ user }: UserProps) => {
     const createScheduleUrl = `${API_URL}/calendar/create`;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
-      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
+      "utc-offset": clientUtcOffset,
     };
     const { value: formValues } = await Swal.fire({
       title: "스케줄 입력",
@@ -131,11 +122,12 @@ const CalendarScreen = ({ user }: UserProps) => {
     });
 
     if (formValues) {
+      console.log(formValues);
       const body = {
         userId: user?.id,
         title: title,
-        start: start,
-        end: end,
+        start: new Date(start),
+        end: new Date(end),
         location: location,
         description: description,
       };
@@ -143,7 +135,15 @@ const CalendarScreen = ({ user }: UserProps) => {
       console.log(res);
     }
   };
-  console.log(schedule);
+  console.log(typeof schedule[0]?.start);
+  for (let i in schedule) {
+    events.push({
+      id: schedule[i]?.id,
+      title: schedule[i].title,
+      start: new Date(schedule[i].start),
+      end: new Date(schedule[i].end),
+    });
+  }
   return (
     <>
       <button
@@ -154,7 +154,7 @@ const CalendarScreen = ({ user }: UserProps) => {
       </button>
       <Calendar
         localizer={localizer}
-        events={schedule}
+        events={events}
         startAccessor="start"
         endAccessor="end"
         view={view}

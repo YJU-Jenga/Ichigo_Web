@@ -271,10 +271,16 @@ const CartScreen = ({ user }: UserProps) => {
                     </svg>
                   </div>
                   <span className="text-center w-1/5 font-semibold text-sm">
-                    {product?.product.price}
+                    ₩{" "}
+                    {product?.product.price
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
                   <span className="text-center w-1/5 font-semibold text-sm">
-                    {product?.product.price * product?.count}
+                    ₩{" "}
+                    {(product?.product.price * product?.count)
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
                 </div>
               );
@@ -304,7 +310,10 @@ const CartScreen = ({ user }: UserProps) => {
             <div className="border-t mt-8">
               <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                 <span>총 가격</span>
-                <span>{totalPrice} ₩</span>
+                <span>
+                  ₩{" "}
+                  {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                </span>
               </div>
               <button
                 onClick={() => {

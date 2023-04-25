@@ -30,7 +30,7 @@ export function Navbar({ user }: UserProps) {
       <div>
         <NavLink
           to="/login"
-          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
+          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold"
           aria-current="page"
         >
           로그인
@@ -41,7 +41,7 @@ export function Navbar({ user }: UserProps) {
       <div>
         <NavLink
           to="/register"
-          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
+          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold"
           aria-current="page"
         >
           회원가입
@@ -50,7 +50,7 @@ export function Navbar({ user }: UserProps) {
     );
   } else {
     nickname = (
-      <div className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold">
+      <div className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold">
         {user.name}님
       </div>
     );
@@ -58,7 +58,7 @@ export function Navbar({ user }: UserProps) {
       <div>
         <NavLink
           to="/"
-          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400 font-bold"
+          className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold"
           aria-current="page"
           onClick={logout}
         >
@@ -69,158 +69,6 @@ export function Navbar({ user }: UserProps) {
   }
 
   return (
-    // <>
-    //   <div className="zIndex:1 antialiased bg-gray-400">
-    //     <header className="lg:px-16 px-6 bg-white flex flex-wrap items-center lg:py-0 py-2">
-    //       <label className="pointer-cursor lg:hidden block">
-    //         <svg
-    //           className="fill-current text-gray-900"
-    //           xmlns="http://www.w3.org/2000/svg"
-    //           width="20"
-    //           height="20"
-    //           viewBox="0 0 20 20"
-    //         >
-    //           <title>menu</title>
-    //           <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
-    //         </svg>
-    //         <input
-    //           checked={checked}
-    //           onChange={() => setChecked(!checked)}
-    //           className="hidden"
-    //           type="checkbox"
-    //           id="menu-toggle"
-    //         />
-    //       </label>
-
-    //       <div
-    //         style={{ display: checked ? "none" : "block" }}
-    //         className=" sm:bg-red-400 hidden lg:flex lg:items-center lg:w-auto w-full"
-    //         id="menu"
-    //       >
-    //         <nav>
-    //           <ul className="lg:flex items-center justify-between text-base text-gray-700 pt-4 lg:pt-0">
-    //             <li>
-    //               <NavLink
-    //                 to="/"
-    //                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                 aria-current="page"
-    //                 onClick={() => setChecked(!checked)}
-    //               >
-    //                 Home
-    //               </NavLink>
-    //             </li>
-    //             <li>
-    //               <NavLink
-    //                 to="/product"
-    //                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                 aria-current="page"
-    //                 onClick={() => setChecked(!checked)}
-    //               >
-    //                 상품
-    //               </NavLink>
-    //             </li>
-    //             <li>
-    //               <NavLink
-    //                 to="/productinquiry"
-    //                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                 aria-current="page"
-    //                 onClick={() => setChecked(!checked)}
-    //               >
-    //                 상품 문의
-    //               </NavLink>
-    //             </li>
-    //             <li>
-    //               <NavLink
-    //                 to="/qna"
-    //                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                 aria-current="page"
-    //                 onClick={() => setChecked(!checked)}
-    //               >
-    //                 Q&A
-    //               </NavLink>
-    //             </li>
-    //             <li>
-    //               {user ? (
-    //                 <NavLink
-    //                   to="/calendar"
-    //                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                   aria-current="page"
-    //                   onClick={() => setChecked(!checked)}
-    //                 >
-    //                   캘린더
-    //                 </NavLink>
-    //               ) : null}
-    //             </li>
-    //             <li>
-    //               {user !== undefined ? (
-    //                 <NavLink
-    //                   to="/custom"
-    //                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                   aria-current="page"
-    //                   onClick={() => setChecked(!checked)}
-    //                 >
-    //                   커스터마이징
-    //                 </NavLink>
-    //               ) : (
-    //                 <NavLink
-    //                   onClick={() => {
-    //                     setChecked(!checked);
-    //                     alert("로그인 해주세요.");
-    //                   }}
-    //                   to="/login"
-    //                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                   aria-current="page"
-    //                 >
-    //                   커스터마이징
-    //                 </NavLink>
-    //               )}
-    //             </li>
-    //             <li>
-    //               {user?.permission ? (
-    //                 <NavLink
-    //                   to="/maniging"
-    //                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                   aria-current="page"
-    //                   onClick={() => setChecked(!checked)}
-    //                 >
-    //                   주문관리
-    //                 </NavLink>
-    //               ) : null}
-    //             </li>
-    //             <li>
-    //               {user ? (
-    //                 <NavLink
-    //                   to="/mypage"
-    //                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                   aria-current="page"
-    //                   onClick={() => setChecked(!checked)}
-    //                 >
-    //                   마이페이지
-    //                 </NavLink>
-    //               ) : null}
-    //             </li>
-    //             <li>
-    //               {user ? (
-    //                 <NavLink
-    //                   to="/cart"
-    //                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
-    //                   aria-current="page"
-    //                   onClick={() => setChecked(!checked)}
-    //                 >
-    //                   장바구니
-    //                 </NavLink>
-    //               ) : null}
-    //             </li>
-    //             {signIn}
-    //             {join}
-    //             {nickname}
-    //             {signOut}
-    //           </ul>
-    //         </nav>
-    //       </div>
-    //     </header>
-    //   </div>
-    // </>
     <nav>
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
@@ -229,28 +77,28 @@ export function Navbar({ user }: UserProps) {
             <div className="hidden md:flex items-center space-x-1">
               <NavLink
                 to="/"
-                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                 aria-current="page"
               >
                 Home
               </NavLink>
               <NavLink
                 to="/product"
-                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                 aria-current="page"
               >
                 상품
               </NavLink>
               <NavLink
                 to="/productinquiry"
-                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                 aria-current="page"
               >
                 상품 문의
               </NavLink>
               <NavLink
                 to="/qna"
-                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                 aria-current="page"
               >
                 Q&A
@@ -258,7 +106,7 @@ export function Navbar({ user }: UserProps) {
               {user ? (
                 <NavLink
                   to="/calendar"
-                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
                   캘린더
@@ -267,7 +115,7 @@ export function Navbar({ user }: UserProps) {
               {user !== undefined ? (
                 <NavLink
                   to="/custom"
-                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
                   커스터마이징
@@ -276,7 +124,7 @@ export function Navbar({ user }: UserProps) {
               {user?.permission ? (
                 <NavLink
                   to="/maniging"
-                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
                   주문관리
@@ -285,7 +133,7 @@ export function Navbar({ user }: UserProps) {
               {user ? (
                 <NavLink
                   to="/mypage"
-                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
                   마이페이지
@@ -294,7 +142,7 @@ export function Navbar({ user }: UserProps) {
               {user ? (
                 <NavLink
                   to="/cart"
-                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-indigo-400"
+                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
                   장바구니
@@ -317,7 +165,7 @@ export function Navbar({ user }: UserProps) {
               {menuToggle ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
+                  className="h-8 w-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -332,7 +180,7 @@ export function Navbar({ user }: UserProps) {
               ) : (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
+                  className="h-8 w-8"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -354,7 +202,7 @@ export function Navbar({ user }: UserProps) {
       <div className={classNames("md:hidden", { hidden: !menuToggle })}>
         <NavLink
           to="/"
-          className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+          className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
           aria-current="page"
           onClick={() => setMenuToggle(!menuToggle)}
         >
@@ -362,7 +210,7 @@ export function Navbar({ user }: UserProps) {
         </NavLink>
         <NavLink
           to="/product"
-          className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+          className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
           aria-current="page"
           onClick={() => setMenuToggle(!menuToggle)}
         >
@@ -370,7 +218,7 @@ export function Navbar({ user }: UserProps) {
         </NavLink>
         <NavLink
           to="/productinquiry"
-          className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+          className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
           aria-current="page"
           onClick={() => setMenuToggle(!menuToggle)}
         >
@@ -378,7 +226,7 @@ export function Navbar({ user }: UserProps) {
         </NavLink>
         <NavLink
           to="/qna"
-          className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+          className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
           aria-current="page"
           onClick={() => setMenuToggle(!menuToggle)}
         >
@@ -387,7 +235,7 @@ export function Navbar({ user }: UserProps) {
         {user ? (
           <NavLink
             to="/calendar"
-            className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+            className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
@@ -397,7 +245,7 @@ export function Navbar({ user }: UserProps) {
         {user !== undefined ? (
           <NavLink
             to="/custom"
-            className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+            className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
@@ -407,7 +255,7 @@ export function Navbar({ user }: UserProps) {
         {user?.permission ? (
           <NavLink
             to="/maniging"
-            className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+            className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
@@ -417,7 +265,7 @@ export function Navbar({ user }: UserProps) {
         {user ? (
           <NavLink
             to="/mypage"
-            className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+            className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
@@ -427,7 +275,7 @@ export function Navbar({ user }: UserProps) {
         {user ? (
           <NavLink
             to="/cart"
-            className="zIndex:1 border-b-2 border-transparent hover:border-indigo-400 block py-2 px-4 text-sm"
+            className="zIndex:1 border-b-2 border-transparent hover:border-red-300 block py-2 px-4"
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >

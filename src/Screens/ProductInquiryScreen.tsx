@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Board } from "../dto/Board";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
+import { getCookie } from "../cookie";
 
 const ProductInquiryScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
             상품 문의
           </h1>
           <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-            <div className="w-full md:w-1/2">
+            {/* <div className="w-full md:w-1/2">
               <form className="flex items-center">
                 <label className="sr-only">Search</label>
                 <div className="relative w-full">
@@ -112,7 +113,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                   />
                 </div>
               </form>
-            </div>
+            </div> */}
             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
               {user !== undefined ? (
                 <NavLink
@@ -137,7 +138,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
           </div>
           <div className="overflow-x-auto"></div>
           <table className="w-full text-sm text-left">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <thead className=" text-white uppercase bg-red-300 dark:bg-red-300 dark:text-white">
               <tr>
                 <th scope="col" className="px-4 py-3">
                   제목
@@ -148,11 +149,21 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                 <th scope="col" className="px-4 py-3">
                   조회수
                 </th>
+                <th scope="col" className="px-4 py-3">
+                  작성자
+                </th>
               </tr>
             </thead>
             {/* 만약 board.secret이 true라면 비밀글입니다 표시하기 */}
             <tbody>
               {boardList.slice(offset, offset + size).map((board: Board) => {
+                // const getUserUrl = `${API_URL}/user/user/${board.writer}`;
+                // const token = getCookie("access-token");
+                // const headers = {
+                //   "Content-Type": "application/json",
+                //   Authorization: `Bearer ${token}`,
+                // };
+                // const res = axios.get(getUserUrl, { headers });
                 return (
                   <tr key={board.id} className="border-b dark:border-gray-700">
                     <td className="px-4 py-3">
@@ -161,6 +172,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                     <td className="px-4 py-3">
                       {board.createdAt.substring(0, 10)}
                     </td>
+                    <td className="px-4 py-3">{}</td>
                     <td className="px-4 py-3">{board.hit}</td>
                   </tr>
                 );
