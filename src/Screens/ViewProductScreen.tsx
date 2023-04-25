@@ -4,8 +4,9 @@ import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Product } from "../dto/Product";
 import { API_URL } from "../config";
+import { UserProps } from "../App";
 
-const ViewProductScreen = () => {
+const ViewProductScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
 
   let { id } = useParams();
@@ -52,7 +53,10 @@ const ViewProductScreen = () => {
           <div className="flex my-6">
             <div className="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
               <h1 className="py-2 text-2xl text-red-400">
-                {productDetail.price} ₩
+                ₩{" "}
+                {productDetail.price
+                  .toString()
+                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               </h1>
               <h1 className="py-2 text-2xl">{productDetail.description}</h1>
             </div>

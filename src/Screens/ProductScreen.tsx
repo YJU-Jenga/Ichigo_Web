@@ -101,8 +101,9 @@ const ProductScreen = ({ user }: UserProps) => {
         <div className="py-6">
           {productInfo.map((product: Product) => {
             return (
-              <div
+              <NavLink
                 key={product.id}
+                to={`/viewproduct/${product.id}`}
                 className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-4"
               >
                 <div className="w-1/3 bg-cover">
@@ -132,7 +133,7 @@ const ProductScreen = ({ user }: UserProps) => {
                     </button>
                   </div>
                 </div>
-              </div>
+              </NavLink>
             );
           })}
         </div>
