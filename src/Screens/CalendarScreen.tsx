@@ -77,7 +77,7 @@ const CalendarScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
-        navigate("/productinquiry");
+        navigate("/error");
       }
     }
   };
