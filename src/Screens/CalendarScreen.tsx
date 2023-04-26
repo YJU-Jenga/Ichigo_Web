@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import axios, { AxiosError } from "axios";
 import { getCookie } from "../cookie";
 import { useNavigate } from "react-router-dom";
+import { ClientRequest } from "http";
 
 moment.locale("ko-KR");
 const localizer = momentLocalizer(moment);
@@ -37,7 +38,7 @@ const CalendarScreen = ({ user }: UserProps) => {
   let now = new Date();
   const navigate = useNavigate();
   const [schedule, setSchedule] = useState<Array<EventData>>([]);
-  const clientUtcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
+  const utcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
   const [modalOpen, setModalOpen] = useState(false);
   const [hihi, setHihi] = useState(false);
 
@@ -98,7 +99,7 @@ const CalendarScreen = ({ user }: UserProps) => {
       end: new Date(end),
       location: location,
       description: description,
-      utcOffset: clientUtcOffset,
+      utcOffset: utcOffset,
     };
     const res = await axios.post(createScheduleUrl, body, { headers });
     console.log(res);
@@ -111,8 +112,10 @@ const CalendarScreen = ({ user }: UserProps) => {
     events.push({
       id: schedule[i]?.id,
       title: schedule[i].title,
-      start: new Date(schedule[i].start),
-      end: new Date(schedule[i].end),
+      start: new Date(
+        new Date(schedule[i].start).getTime() - utcOffset * 60000
+      ),
+      end: new Date(new Date(schedule[i].end).getTime() - utcOffset * 60000),
     });
   }
   return (
