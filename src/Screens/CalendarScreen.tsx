@@ -90,7 +90,6 @@ const CalendarScreen = ({ user }: UserProps) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
       Authorization: `Bearer ${token}`,
-      "utc-offset": clientUtcOffset,
     };
     const body = {
       userId: user?.id,
@@ -99,6 +98,7 @@ const CalendarScreen = ({ user }: UserProps) => {
       end: new Date(end),
       location: location,
       description: description,
+      utcOffset: clientUtcOffset,
     };
     const res = await axios.post(createScheduleUrl, body, { headers });
     console.log(res);
