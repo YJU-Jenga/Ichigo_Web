@@ -39,6 +39,7 @@ const CalendarScreen = ({ user }: UserProps) => {
   const [schedule, setSchedule] = useState<Array<EventData>>([]);
   const clientUtcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
   const [modalOpen, setModalOpen] = useState(false);
+  const [hihi, setHihi] = useState(false);
 
   const handleViewChange = (newView: string) => {
     setView(newView as CalendarView);
@@ -50,6 +51,10 @@ const CalendarScreen = ({ user }: UserProps) => {
   useEffect(() => {
     getSchedule();
   }, []);
+
+  useEffect(() => {
+    getSchedule();
+  }, [hihi]);
 
   // 글 상세정보와 댓글을 가져오기 함수
   const getSchedule = async () => {
@@ -97,6 +102,9 @@ const CalendarScreen = ({ user }: UserProps) => {
     };
     const res = await axios.post(createScheduleUrl, body, { headers });
     console.log(res);
+    if (res.status === 201) {
+      setHihi(!hihi);
+    }
   };
 
   for (let i in schedule) {
