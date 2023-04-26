@@ -34,13 +34,11 @@ const CalendarScreen = ({ user }: UserProps) => {
   const [end, setEnd] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-  const TIME_ZONE = 9 * 60 * 60 * 1000;
   let now = new Date();
   const navigate = useNavigate();
-  const [preSchedule, setPreSchedule] = useState<Array<EventData>>([]);
   const [schedule, setSchedule] = useState<Array<EventData>>([]);
   const clientUtcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
-  const clientDate = new Date().toUTCString();
+  const [modalOpen, setModalOpen] = useState(false);
 
   const handleViewChange = (newView: string) => {
     setView(newView as CalendarView);
@@ -89,53 +87,18 @@ const CalendarScreen = ({ user }: UserProps) => {
       Authorization: `Bearer ${token}`,
       "utc-offset": clientUtcOffset,
     };
-    const { value: formValues } = await Swal.fire({
-      title: "스케줄 입력",
-      html:
-        '<input id="title" class="swal2-input" placeholder="제목">' +
-        '<input id="description" class="swal2-input" placeholder="설명">' +
-        '<input id="location" class="swal2-input" placeholder="위치">' +
-        "<br/>" +
-        '<label for="start" class="font-bold">시작 : </label>' +
-        `<input id="start" type="datetime-local" name="start" value=${now} />` +
-        "<br/>" +
-        '<label for="end" class="font-bold">끝 : </label>' +
-        `<input id="end" type="datetime-local" name="start" value=${now} />`,
-      focusConfirm: false,
-      preConfirm: () => {
-        return [
-          setTitle(
-            (document.getElementById("title") as HTMLInputElement)?.value
-          ),
-          setDescription(
-            (document.getElementById("description") as HTMLInputElement)?.value
-          ),
-          setLocation(
-            (document.getElementById("location") as HTMLInputElement)?.value
-          ),
-          setStart(
-            (document.getElementById("start") as HTMLInputElement)?.value
-          ),
-          setEnd((document.getElementById("end") as HTMLInputElement)?.value),
-        ];
-      },
-    });
-
-    if (formValues) {
-      console.log(formValues);
-      const body = {
-        userId: user?.id,
-        title: title,
-        start: new Date(start),
-        end: new Date(end),
-        location: location,
-        description: description,
-      };
-      const res = await axios.post(createScheduleUrl, body, { headers });
-      console.log(res);
-    }
+    const body = {
+      userId: user?.id,
+      title: title,
+      start: new Date(start),
+      end: new Date(end),
+      location: location,
+      description: description,
+    };
+    const res = await axios.post(createScheduleUrl, body, { headers });
+    console.log(res);
   };
-  console.log(typeof schedule[0]?.start);
+
   for (let i in schedule) {
     events.push({
       id: schedule[i]?.id,
@@ -147,11 +110,93 @@ const CalendarScreen = ({ user }: UserProps) => {
   return (
     <>
       <button
-        onClick={createSchedule}
         className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600"
+        type="button"
+        onClick={() => setModalOpen(true)}
       >
         일정 추가
       </button>
+      {modalOpen ? (
+        <>
+          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+            <div className="relative w-auto my-6 mx-auto max-w-3xl">
+              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
+                  <h3 className="text-3xl font=semibold">일정추가</h3>
+                  <button
+                    className="bg-transparent border-0 text-black float-right"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full">
+                      x
+                    </span>
+                  </button>
+                </div>
+                <div className="relative p-6 flex-auto">
+                  <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
+                    <label className="block text-black text-sm font-bold mb-1">
+                      제목
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      onChange={(event) => setTitle(event.target.value)}
+                    />
+                    <label className="block text-black text-sm font-bold mb-1">
+                      설명
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      onChange={(event) => setDescription(event.target.value)}
+                    />
+                    <label className="block text-black text-sm font-bold mb-1">
+                      장소
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      onChange={(event) => setLocation(event.target.value)}
+                    />
+                    <label className="block text-black text-sm font-bold mb-1">
+                      시작
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      type="datetime-local"
+                      onBlur={(event) => setStart(event.target.value)}
+                    />
+                    <label className="block text-black text-sm font-bold mb-1">
+                      끝
+                    </label>
+                    <input
+                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      type="datetime-local"
+                      onBlur={(event) => setEnd(event.target.value)}
+                    />
+                  </form>
+                </div>
+                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                  <button
+                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    onClick={() => {
+                      createSchedule();
+                      setModalOpen(false);
+                    }}
+                  >
+                    일정 추가
+                  </button>
+                  <button
+                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
       <Calendar
         localizer={localizer}
         events={events}
