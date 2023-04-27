@@ -119,7 +119,7 @@ const CalendarScreen = ({ user }: UserProps) => {
     });
   }
   return (
-    <>
+    <div>
       <button
         className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600"
         type="button"
@@ -133,7 +133,7 @@ const CalendarScreen = ({ user }: UserProps) => {
             <div className="relative w-auto my-6 mx-auto max-w-3xl">
               <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                 <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font=semibold">일정추가</h3>
+                  <h3 className="text-3xl font-bold">일정추가</h3>
                   <button
                     className="bg-transparent border-0 text-black float-right"
                     onClick={() => setModalOpen(false)}
@@ -217,7 +217,11 @@ const CalendarScreen = ({ user }: UserProps) => {
         onView={handleViewChange}
         views={[CalendarView.DAY, CalendarView.WEEK, CalendarView.MONTH]}
       />
-    </>
+    </div>
   );
 };
 export default CalendarScreen;
+
+// className={
+//   modalOpen ? `z-10 fixed top-0 left-0 w-full bg-black opacity-70` : ""
+// }

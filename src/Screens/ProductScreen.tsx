@@ -101,39 +101,44 @@ const ProductScreen = ({ user }: UserProps) => {
         <div className="py-6">
           {productInfo.map((product: Product) => {
             return (
-              <NavLink
-                key={product.id}
-                to={`/viewproduct/${product.id}`}
-                className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden m-4"
-              >
-                <div className="w-1/3 bg-cover">
-                  <img src={`${API_URL}/${product.image}`} alt="" />
-                </div>
-                <div className="w-2/3 p-4">
-                  <h1 className="text-gray-900 font-bold text-2xl">
-                    {product.name}
-                  </h1>
-                  <p className="mt-2 text-gray-600 text-sm">
-                    {product.description}
-                  </p>
-                  <div className="flex item-center justify-between mt-3">
-                    <h1 className="text-gray-700 font-bold text-xl">
-                      ₩{" "}
-                      {product.price
-                        .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                    </h1>
-                    <button
-                      className="px-3 py-2 bg-gray-800 text-white text-xs font-bold uppercase rounded"
-                      onClick={(event) => {
-                        addToCart(event, product.id);
-                      }}
-                    >
-                      장바구니 담기
-                    </button>
+              // w - 300px, h - 500px
+              <>
+                <NavLink
+                  key={product.id}
+                  to={`/viewproduct/${product.id}`}
+                  className="w-full max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden"
+                >
+                  <div className="max-w-md mx-auto">
+                    <div className="h-90">
+                      <img src={`${API_URL}/${product.image}`} alt="" />
+                    </div>
+                    <div className="p-4 sm:p-6">
+                      <p className="font-bold text-gray-700 text-[22px] leading-7 mb-1">
+                        {product.name}
+                      </p>
+                      <div className="flex flex-row">
+                        <p className="text-[17px] font-bold text-[#0FB478]">
+                          ₩{" "}
+                          {product.price
+                            .toString()
+                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </p>
+                      </div>
+                      <p className="text-[#7C7C80] font-[15px] mt-6">
+                        {product.description}
+                      </p>
+                      <button
+                        className="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                        onClick={(event) => {
+                          addToCart(event, product.id);
+                        }}
+                      >
+                        장바구니 담기
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </NavLink>
+                </NavLink>
+              </>
             );
           })}
         </div>
