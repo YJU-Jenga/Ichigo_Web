@@ -10,9 +10,11 @@ import { getCookie } from "../cookie";
 const ViewProductScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
 
+  const userId = user?.id;
+
   let { id } = useParams();
-  const productId = id;
-  console.log(productId);
+  const productId = Number(id);
+  console.log(typeof productId);
 
   // 글 상세정보를 배열에 저장
   const [productDetail, setProductDetail] = useState<Product>();
@@ -84,6 +86,29 @@ const ViewProductScreen = ({ user }: UserProps) => {
     }
   };
 
+  const goToPurchase = async () => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const CartUpdateUrl = `${API_URL}/cart/updateAddedProdcut/${userId}`;
+    const body = {
+      productId: productId,
+      count: 1,
+    };
+    const res = await axios.patch(CartUpdateUrl, body, { headers });
+    if (res.status === 200) {
+      Swal.fire({
+        icon: "success",
+        text: "주문페이지로 이동합니다.",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate("/purchase");
+    }
+  };
+
   if (!productDetail) {
     return <></>;
   }
@@ -123,9 +148,9 @@ const ViewProductScreen = ({ user }: UserProps) => {
                 </button>
                 <button
                   className="block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
-                  // onClick={(event) => {
-                  //   addToCart(event, product.id);
-                  // }}
+                  onClick={() => {
+                    goToPurchase();
+                  }}
                 >
                   구매하기
                 </button>
