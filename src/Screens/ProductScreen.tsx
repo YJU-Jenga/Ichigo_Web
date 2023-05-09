@@ -88,7 +88,7 @@ const ProductScreen = ({ user }: UserProps) => {
   }
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
-      <h1 className="text-gray-900 font-bold text-2xl">상품</h1>
+      <h1 className="font-bold text-2xl px-8">상품</h1>
       {user?.permission ? (
         <NavLink
           to={"/addproduct"}
@@ -97,50 +97,54 @@ const ProductScreen = ({ user }: UserProps) => {
           상품추가
         </NavLink>
       ) : null}
-      <div className="container px-5 py-24 mx-auto">
-        <div className="py-6">
-          {productInfo.map((product: Product) => {
-            return (
-              // w - 300px, h - 500px
-              <>
-                <NavLink
-                  key={product.id}
-                  to={`/viewproduct/${product.id}`}
-                  className="w-full max-w-md  mx-auto bg-white rounded-3xl shadow-xl overflow-hidden"
-                >
-                  <div className="max-w-md mx-auto">
-                    <div className="h-90">
-                      <img src={`${API_URL}/${product.image}`} alt="" />
-                    </div>
-                    <div className="p-4 sm:p-6">
-                      <p className="font-bold text-gray-700 text-[22px] leading-7 mb-1">
-                        {product.name}
-                      </p>
-                      <div className="flex flex-row">
+      <div>
+        <div className="p-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
+            {productInfo.map((product: Product) => {
+              return (
+                <>
+                  <div className="p-2 bg-white rounded-md flex items-center justify-center">
+                    <div
+                      key={product.id}
+                      className=" bg-white border border-gray-200 rounded-lg shadow m-2 h-auto max-w-full "
+                    >
+                      <a href="#">
+                        <img
+                          className="rounded-t-lg"
+                          src={`${API_URL}/${product.image}`}
+                          alt=""
+                        />
+                      </a>
+                      <div className="p-5">
+                        <a href="#">
+                          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                            {product.name}
+                          </h5>
+                        </a>
+                        <p className="mb-3 font-normal text-gray-700">
+                          {product.description}
+                        </p>
                         <p className="text-[17px] font-bold text-[#0FB478]">
-                          ₩{" "}
                           {product.price
                             .toString()
                             .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                          원
                         </p>
+                        <button
+                          className="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
+                          onClick={(event) => {
+                            addToCart(event, product.id);
+                          }}
+                        >
+                          장바구니 담기
+                        </button>
                       </div>
-                      <p className="text-[#7C7C80] font-[15px] mt-6">
-                        {product.description}
-                      </p>
-                      <button
-                        className="block mt-10 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#FFC933] rounded-[14px] hover:bg-[#FFC933DD] focus:outline-none focus:ring focus:ring-teal-300 focus:ring-opacity-80"
-                        onClick={(event) => {
-                          addToCart(event, product.id);
-                        }}
-                      >
-                        장바구니 담기
-                      </button>
                     </div>
                   </div>
-                </NavLink>
-              </>
-            );
-          })}
+                </>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
