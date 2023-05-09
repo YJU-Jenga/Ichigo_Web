@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { Product } from "../dto/Product";
 import { API_URL } from "../config";
 import { UserProps } from "../App";
+import { getCookie } from "../cookie";
 
 const ViewProductScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -40,29 +41,99 @@ const ViewProductScreen = ({ user }: UserProps) => {
       }
     }
   };
+
+  const addToCart = async (e: SyntheticEvent, id: number) => {
+    e.preventDefault();
+    const addCartUrl = `${API_URL}/cart/addProduct`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const body = {
+      cartId: 1,
+      productId: id,
+      count: 1,
+    };
+    console.log(body);
+    try {
+      const res = await axios.post(addCartUrl, body, { headers });
+      console.log(res, "시발");
+      if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "장바구니로 이동합니다.",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/cart");
+      }
+    } catch (error) {
+      console.log(error, "시발 왜 안돼");
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/product");
+      }
+    }
+  };
+
   if (!productDetail) {
     return <></>;
   }
 
   return (
     <>
-      <img src={`${API_URL}/${productDetail.image}`} alt="" />
-      <div className="container ">
-        <div className="container mx-auto">
-          <h1 className="py-5 text-3xl font-bold">{productDetail.name}</h1>
-          <div className="flex my-6">
-            <div className="flex flex-col w-full p-8 text-gray-800 bg-white shadow-lg pin-r pin-y md:w-4/5 lg:w-4/5">
-              <h1 className="py-2 text-2xl text-red-400">
-                ₩{" "}
+      <section className="bg-white">
+        <div className="container px-6 py-10 mx-auto">
+          <div className="mt-8 lg:-mx-6 lg:flex lg:items-center">
+            <img
+              className="object-cover w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96"
+              src={`${API_URL}/${productDetail.image}`}
+              alt=""
+            />
+            <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6 ">
+              <p className="block mt-4 text-2xl font-semibold text-gray-800">
+                {productDetail.name}
+              </p>
+
+              <p className="mt-3 text-sm text-gray-500 md:text-sm">
+                {productDetail.description}
+              </p>
+              <h1 className="py-2 text-2xl text-red-400 font-bold">
                 {productDetail.price
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                원
               </h1>
-              <h1 className="py-2 text-2xl">{productDetail.description}</h1>
+              <div className="flex">
+                <button
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#41B979] rounded-[14px]"
+                  onClick={(event) => {
+                    addToCart(event, productDetail.id);
+                  }}
+                >
+                  장바구니 담기
+                </button>
+                <button
+                  className="block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
+                  // onClick={(event) => {
+                  //   addToCart(event, product.id);
+                  // }}
+                >
+                  구매하기
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 };
