@@ -6,6 +6,7 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { folder, button, Leva, useControls } from "leva";
 import { positions, width } from "@mui/system";
 import { UserProps } from "../App";
+import { useParams } from "react-router-dom";
 
 interface color {
   color: string;
@@ -57,6 +58,8 @@ const colors: color[] = [
 ];
 
 export default function CustomScreen({ user }: UserProps) {
+  // 상품아이디 - 장바구니에 넘겨줘야댐
+  let { productId } = useParams();
   const [sizes, setSizes] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
