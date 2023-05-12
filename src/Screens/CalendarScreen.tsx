@@ -8,6 +8,7 @@ import { getCookie } from "../cookie";
 import { useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import timeGridPlugin from "@fullcalendar/timegrid";
 
 interface EventData {
   id: string;
@@ -249,10 +250,15 @@ const CalendarScreen = ({ user }: UserProps) => {
           </div>
         </>
       ) : null}
-      <div className="App">
+      <div className="App mt-5 z-40">
         <FullCalendar
           initialView="dayGridMonth"
-          plugins={[dayGridPlugin]}
+          plugins={[dayGridPlugin, timeGridPlugin]}
+          headerToolbar={{
+            left: "prev,next",
+            center: "title",
+            right: "dayGridMonth,timeGridWeek,timeGridDay",
+          }}
           events={events}
           eventClick={handleEventClick}
           locale={"ko"}
