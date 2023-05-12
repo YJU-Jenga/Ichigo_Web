@@ -42,14 +42,6 @@ const ProductScreen = ({ user }: UserProps) => {
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <h1 className="font-bold text-2xl px-8">상품</h1>
-      {user?.permission ? (
-        <NavLink
-          to={"/addproduct"}
-          className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600"
-        >
-          상품추가
-        </NavLink>
-      ) : null}
       <div>
         <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8">
@@ -91,6 +83,29 @@ const ProductScreen = ({ user }: UserProps) => {
           </div>
         </div>
       </div>
+      {user?.permission ? (
+        <div className="group fixed bottom-0 right-0 p-2  flex items-end justify-end">
+          <div className="flex items-center justify-center p-3 rounded-full z-50 absolute">
+            <NavLink
+              to={"/addproduct"}
+              className="grid place-items-center p-0 w-16 h-16 bg-red-300 rounded-full hover:bg-red-100 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+            >
+              <svg
+                viewBox="0 0 20 20"
+                enable-background="new 0 0 20 20"
+                className="w-6 h-6 inline-block"
+              >
+                <path
+                  fill="#FFFFFF"
+                  d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
+                                  C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                                  C15.952,9,16,9.447,16,10z"
+                />
+              </svg>
+            </NavLink>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 };
