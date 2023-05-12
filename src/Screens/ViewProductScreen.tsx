@@ -119,7 +119,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
         <div className="container px-6 py-10 mx-auto">
           <div className="mt-8 lg:-mx-6 lg:flex lg:items-center">
             <img
-              className="object-cover w-full lg:mx-6 lg:w-1/2 rounded-xl h-72 lg:h-96"
+              className="object-cover w-full lg:mx-6 lg:w-1/2 rounded-xl h-1/2 lg:h-1/2"
               src={`${API_URL}/${productDetail.image}`}
               alt=""
             />

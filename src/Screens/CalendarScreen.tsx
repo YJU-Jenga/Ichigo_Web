@@ -1,50 +1,33 @@
 import React, { useEffect, useState } from "react";
-import moment from "moment";
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import "react-big-calendar/lib/css/react-big-calendar.css";
 import { UserProps } from "../App";
 import "./CalendarMonth.css";
-import { NavLink } from "react-router-dom";
 import { API_URL } from "../config";
 import Swal from "sweetalert2";
 import axios, { AxiosError } from "axios";
 import { getCookie } from "../cookie";
 import { useNavigate } from "react-router-dom";
-import { ClientRequest } from "http";
-
-moment.locale("ko-KR");
-const localizer = momentLocalizer(moment);
+import FullCalendar from "@fullcalendar/react";
+import dayGridPlugin from "@fullcalendar/daygrid";
+import { click } from "@testing-library/user-event/dist/click";
 
 interface EventData {
-  id: number;
+  id: string;
   title: string;
   start: Date;
   end: Date;
 }
 
-enum CalendarView {
-  DAY = "day",
-  WEEK = "week",
-  MONTH = "month",
-}
-
 const CalendarScreen = ({ user }: UserProps) => {
-  const [view, setView] = useState<CalendarView>(CalendarView.MONTH);
   const [title, setTitle] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
-  let now = new Date();
   const navigate = useNavigate();
   const [schedule, setSchedule] = useState<Array<EventData>>([]);
   const utcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
   const [modalOpen, setModalOpen] = useState(false);
   const [hihi, setHihi] = useState(false);
-
-  const handleViewChange = (newView: string) => {
-    setView(newView as CalendarView);
-  };
 
   const events: EventData[] = [];
 
@@ -57,7 +40,6 @@ const CalendarScreen = ({ user }: UserProps) => {
     getSchedule();
   }, [hihi]);
 
-  // 글 상세정보와 댓글을 가져오기 함수
   const getSchedule = async () => {
     const getScheduleUrl = `${API_URL}/calendar/all`;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
@@ -110,14 +92,81 @@ const CalendarScreen = ({ user }: UserProps) => {
 
   for (let i in schedule) {
     events.push({
-      id: schedule[i]?.id,
-      title: schedule[i].title,
+      id: String(schedule[i]?.id),
+      title: schedule[i]?.title,
       start: new Date(
-        new Date(schedule[i].start).getTime() - utcOffset * 60000
+        new Date(schedule[i]?.start).getTime() - utcOffset * 60000
       ),
-      end: new Date(new Date(schedule[i].end).getTime() - utcOffset * 60000),
+      end: new Date(new Date(schedule[i]?.end).getTime() - utcOffset * 60000),
     });
   }
+
+  const deleteSchedule = async (id: number) => {
+    const deleteScheduleUrl = `${API_URL}/calendar/delete_calendar/${id}`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const res = await axios.delete(deleteScheduleUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setHihi(!hihi);
+    return res.status;
+  };
+
+  const updateSchedule = async (id: number, title: string) => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const updateScheduleUrl = `${API_URL}/calendar/update_calendar/${id}`;
+    const body = {
+      title: title,
+      start: "2023-05-11T09:00:00.000Z",
+      end: "2023-05-11T11:00:00.000Z",
+      utcOffset: "-540",
+    };
+    const res = await axios.patch(updateScheduleUrl, body, { headers });
+    setHihi(!hihi);
+    return res.status;
+  };
+
+  const handleEventClick = (clickInfo: any) => {
+    console.log(clickInfo.event);
+    Swal.fire({
+      title: `${clickInfo.event.title}`,
+      text: `${clickInfo.event.title}`,
+      showConfirmButton: true,
+    });
+    Swal.fire({
+      title: `${clickInfo.event.title}`,
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `수정`,
+      denyButtonText: `삭제`,
+      cancelButtonText: `취소`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        (async () => {
+          const { value: title } = await Swal.fire({
+            title: "스케줄명을 수정해주세요",
+            input: "text",
+          });
+
+          // 이후 처리되는 내용.
+          if (title) {
+            updateSchedule(Number(clickInfo.event._def.publicId), title);
+            Swal.fire(`수정되었습니다`, "", "success");
+          }
+        })();
+      } else if (result.isDenied) {
+        deleteSchedule(Number(clickInfo.event._def.publicId));
+        Swal.fire("삭제되었습니다", "", "success");
+      }
+    });
+  };
+
   return (
     <div>
       <button
@@ -208,20 +257,15 @@ const CalendarScreen = ({ user }: UserProps) => {
           </div>
         </>
       ) : null}
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        view={view}
-        onView={handleViewChange}
-        views={[CalendarView.DAY, CalendarView.WEEK, CalendarView.MONTH]}
-      />
+      <div className="App">
+        <FullCalendar
+          initialView="dayGridMonth"
+          plugins={[dayGridPlugin]}
+          events={events}
+          eventClick={handleEventClick}
+        />
+      </div>
     </div>
   );
 };
 export default CalendarScreen;
-
-// className={
-//   modalOpen ? `z-10 fixed top-0 left-0 w-full bg-black opacity-70` : ""
-// }
