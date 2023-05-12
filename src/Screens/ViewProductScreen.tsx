@@ -125,11 +125,11 @@ const ViewProductScreen = ({ user }: UserProps) => {
               alt=""
             />
             <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6 ">
-              <p className="block mt-4 text-2xl font-semibold text-gray-800">
+              <p className="block mt-4 text-4xl font-bold text-gray-800">
                 {productDetail.name}
               </p>
 
-              <p className="mt-3 text-sm text-gray-500 md:text-sm">
+              <p className="mt-3 text-gray-500 text-xl">
                 {productDetail.description}
               </p>
               <h1 className="py-2 text-2xl text-red-400 font-bold">
@@ -168,8 +168,9 @@ const ViewProductScreen = ({ user }: UserProps) => {
           </div>
         </div>
       </section>
-      <section>
-        <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+      <hr className="mb-10" />
+      <section className="grid place-items-center">
+        <h1 className="text-gray-900 text-3xl title-font font-bold mb-1 mx-10 underline decoration-red-300">
           상품 후기
         </h1>
         <ItemUseScreen user={undefined} />

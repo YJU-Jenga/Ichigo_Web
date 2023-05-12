@@ -46,7 +46,9 @@ const ItemUseScreen = ({ user }: UserProps) => {
                   <div className="text-grey-500 flex flex-row space-x-1  my-4">
                     <p>{board.createdOn}</p>
                   </div>
-                  <div className="flex flex-row space-x-1">{board.user}</div>
+                  <div className="flex flex-row space-x-1 font-semibold">
+                    {board.user}
+                  </div>
                 </div>
               </div>
             </div>
