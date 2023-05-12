@@ -6,6 +6,7 @@ import { Product } from "../dto/Product";
 import { API_URL } from "../config";
 import { UserProps } from "../App";
 import { getCookie } from "../cookie";
+import ItemUseScreen from "./ItemUseScreen";
 
 const ViewProductScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -147,6 +148,14 @@ const ViewProductScreen = ({ user }: UserProps) => {
                   장바구니 담기
                 </button>
                 <button
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
+                  onClick={(event) => {
+                    addToCart(event, productDetail.id);
+                  }}
+                >
+                  커스텀
+                </button>
+                <button
                   className="block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
                   onClick={() => {
                     goToPurchase();
@@ -158,6 +167,12 @@ const ViewProductScreen = ({ user }: UserProps) => {
             </div>
           </div>
         </div>
+      </section>
+      <section>
+        <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
+          상품 후기
+        </h1>
+        <ItemUseScreen user={undefined} />
       </section>
     </>
   );

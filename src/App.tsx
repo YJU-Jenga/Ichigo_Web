@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import Main from "./Screens/MainScreen";
 import Product from "./Screens/ProductScreen";
-// import Itemuse from "./Screens/ItemuseScreen";
+import ItemUse from "./Screens/ItemUseScreen";
 import ProductInquiry from "./Screens/ProductInquiryScreen";
 import Qna from "./Screens/QnaScreen";
 import Login from "./Screens/LoginScreen";
@@ -74,7 +74,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/product" element={<Product user={user} />} />
-          {/* <Route path="/itemuse" element={<Itemuse />} /> */}
+          <Route path="/itemuse" element={<ItemUse user={user} />} />
           <Route
             path="/productinquiry"
             element={<ProductInquiry user={user} />}
