@@ -9,10 +9,13 @@ import { useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import dayjs from "dayjs";
 
 interface EventData {
   id: string;
   title: string;
+  location: string;
+  description: string;
   start: Date;
   end: Date;
 }
@@ -27,7 +30,11 @@ const CalendarScreen = ({ user }: UserProps) => {
   const [schedule, setSchedule] = useState<Array<EventData>>([]);
   const utcOffset = new Date().getTimezoneOffset() * -1; // 클라이언트의 UTC offset
   const [modalOpen, setModalOpen] = useState(false);
+  const [updateModalOpen, setUpdateModalOpen] = useState(false);
   const [hihi, setHihi] = useState(false);
+  const [eventDetail, setEventDetail] = useState<EventData>();
+  let now = new Date();
+  const eventInfo: EventData[] = [];
 
   const events: EventData[] = [];
 
@@ -94,6 +101,8 @@ const CalendarScreen = ({ user }: UserProps) => {
     events.push({
       id: String(schedule[i]?.id),
       title: schedule[i]?.title,
+      location: schedule[i]?.location,
+      description: schedule[i]?.description,
       start: new Date(
         new Date(schedule[i]?.start).getTime() - utcOffset * 60000
       ),
@@ -114,7 +123,7 @@ const CalendarScreen = ({ user }: UserProps) => {
     return res.status;
   };
 
-  const updateSchedule = async (id: number, title: string) => {
+  const updateSchedule = async (id: number) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
       "Content-Type": "application/json",
@@ -123,9 +132,11 @@ const CalendarScreen = ({ user }: UserProps) => {
     const updateScheduleUrl = `${API_URL}/calendar/update_calendar/${id}`;
     const body = {
       title: title,
-      start: "2023-05-11T09:00:00.000Z",
-      end: "2023-05-11T11:00:00.000Z",
-      utcOffset: "-540",
+      start: new Date(start),
+      end: new Date(end),
+      location: location,
+      description: description,
+      utcOffset: utcOffset,
     };
     const res = await axios.patch(updateScheduleUrl, body, { headers });
     setHihi(!hihi);
@@ -141,6 +152,7 @@ const CalendarScreen = ({ user }: UserProps) => {
     });
     Swal.fire({
       title: `${clickInfo.event.title}`,
+      text: `시작 : ${clickInfo.event.start.toLocaleString()}`,
       showDenyButton: true,
       showCancelButton: true,
       confirmButtonText: `수정`,
@@ -149,16 +161,14 @@ const CalendarScreen = ({ user }: UserProps) => {
     }).then((result) => {
       if (result.isConfirmed) {
         (async () => {
-          const { value: title } = await Swal.fire({
-            title: "스케줄명을 수정해주세요",
-            input: "text",
-          });
-
-          // 이후 처리되는 내용.
-          if (title) {
-            updateSchedule(Number(clickInfo.event._def.publicId), title);
-            Swal.fire(`수정되었습니다`, "", "success");
+          for (let i in events) {
+            if (
+              Number(clickInfo.event._def.publicId) === Number(events[i]?.id)
+            ) {
+              setEventDetail(events[i]);
+            }
           }
+          setUpdateModalOpen(true);
         })();
       } else if (result.isDenied) {
         deleteSchedule(Number(clickInfo.event._def.publicId));
@@ -171,64 +181,89 @@ const CalendarScreen = ({ user }: UserProps) => {
     <div>
       {modalOpen ? (
         <>
-          <div className="flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <div className="relative w-auto my-6 mx-auto max-w-3xl">
-              <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                <div className="flex items-start justify-between p-5 border-b border-solid border-gray-300 rounded-t ">
-                  <h3 className="text-3xl font-bold">일정추가</h3>
-                  <button
-                    className="bg-transparent border-0 text-black float-right"
-                    onClick={() => setModalOpen(false)}
-                  >
-                    <span className="text-black opacity-7 h-6 w-6 text-xl block bg-gray-400 py-0 rounded-full">
-                      x
-                    </span>
+          <div className="fixed inset-0 bg-black/70 z-10">
+            <div className="flex justify-center h-screen w-full items-center z-50 fixed bg-black-100">
+              <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
+                <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
+                  <p className="font-semibold text-gray-800">일정 추가</p>
+                  <button onClick={() => setModalOpen(false)}>
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
                   </button>
                 </div>
-                <div className="relative p-6 flex-auto">
-                  <form className="bg-gray-200 shadow-md rounded px-8 pt-6 pb-8 w-full">
-                    <label className="block text-black text-sm font-bold mb-1">
+                <div className="flex flex-col px-6 py-5 bg-gray-50">
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
                       제목
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      type="text"
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                       onChange={(event) => setTitle(event.target.value)}
                     />
-                    <label className="block text-black text-sm font-bold mb-1">
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
                       설명
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      type="text"
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                       onChange={(event) => setDescription(event.target.value)}
                     />
-                    <label className="block text-black text-sm font-bold mb-1">
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
                       장소
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
+                      type="text"
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                       onChange={(event) => setLocation(event.target.value)}
                     />
-                    <label className="block text-black text-sm font-bold mb-1">
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
                       시작
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
                       type="datetime-local"
+                      defaultValue={dayjs(now)
+                        .add(1, "day")
+                        .format("YYYY-MM-DDThh:mm")}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                       onBlur={(event) => setStart(event.target.value)}
                     />
-                    <label className="block text-black text-sm font-bold mb-1">
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
                       끝
                     </label>
                     <input
-                      className="shadow appearance-none border rounded w-full py-2 px-1 text-black"
                       type="datetime-local"
+                      defaultValue={dayjs(now)
+                        .add(1, "day")
+                        .format("YYYY-MM-DDThh:mm")}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                       onBlur={(event) => setEnd(event.target.value)}
                     />
-                  </form>
+                  </div>
                 </div>
-                <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                <div className="flex flex-row items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
                   <button
-                    className="text-white bg-yellow-500 active:bg-yellow-700 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    className="text-white bg-yellow-500 active:bg-yellow-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     onClick={() => {
                       createSchedule();
@@ -238,7 +273,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                     일정 추가
                   </button>
                   <button
-                    className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1"
+                    className="text-white bg-red-500 active:bg-red-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     onClick={() => setModalOpen(false)}
                   >
@@ -250,7 +285,116 @@ const CalendarScreen = ({ user }: UserProps) => {
           </div>
         </>
       ) : null}
-      <div className="App mt-5 z-40">
+      {updateModalOpen ? (
+        <>
+          <div className="fixed inset-0 bg-black/70 z-10">
+            <div className="flex justify-center h-screen w-full items-center z-50 fixed bg-black-100">
+              <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
+                <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
+                  <p className="font-semibold text-gray-800">일정 수정</p>
+                  <button onClick={() => setUpdateModalOpen(false)}>
+                    <svg
+                      className="w-6 h-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"
+                      ></path>
+                    </svg>
+                  </button>
+                </div>
+                <div className="flex flex-col px-6 py-5 bg-gray-50">
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
+                      제목
+                    </label>
+                    <input
+                      type="text"
+                      defaultValue={eventDetail?.title}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                      onChange={(event) => setTitle(event.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
+                      설명
+                    </label>
+                    <input
+                      type="text"
+                      defaultValue={eventDetail?.description}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                      onChange={(event) => setDescription(event.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
+                      장소
+                    </label>
+                    <input
+                      type="text"
+                      defaultValue={eventDetail?.location}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                      onChange={(event) => setLocation(event.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
+                      시작
+                    </label>
+                    <input
+                      type="datetime-local"
+                      defaultValue={dayjs(eventDetail?.start)
+                        // .add(1, "day")
+                        .format("YYYY-MM-DDThh:mm")}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                      onBlur={(event) => setStart(event.target.value)}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="mb-2 font-semibold text-gray-700">
+                      끝
+                    </label>
+                    <input
+                      type="datetime-local"
+                      defaultValue={dayjs(eventDetail?.end)
+                        // .add(1, "day")
+                        .format("YYYY-MM-DDThh:mm")}
+                      className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                      onBlur={(event) => setEnd(event.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-row items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
+                  <button
+                    className="text-white bg-yellow-500 active:bg-yellow-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    onClick={() => {
+                      updateSchedule(Number(eventDetail?.id));
+                      setUpdateModalOpen(false);
+                    }}
+                  >
+                    일정 수정
+                  </button>
+                  <button
+                    className="text-white bg-red-500 active:bg-red-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    type="button"
+                    onClick={() => setUpdateModalOpen(false)}
+                  >
+                    취소
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : null}
+      <div className="App mt-5 z-30">
         <FullCalendar
           initialView="dayGridMonth"
           plugins={[dayGridPlugin, timeGridPlugin]}
@@ -264,11 +408,11 @@ const CalendarScreen = ({ user }: UserProps) => {
           locale={"ko"}
         />
       </div>
-      <div className="group fixed bottom-0 right-0 p-2  flex items-end justify-end">
-        <div className="flex items-center justify-center p-3 rounded-full z-50 absolute">
+      {!modalOpen ? (
+        <div className="group fixed bottom-0 right-0 p-2 z-50  flex items-end justify-end">
           <button
             onClick={() => setModalOpen(true)}
-            className="grid place-items-center p-0 w-16 h-16 bg-red-300 rounded-full hover:bg-red-100 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+            className="p-0 w-12 h-12 md:w-16 md:h-16 bg-red-600 rounded-full hover:bg-red-400 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
           >
             <svg
               viewBox="0 0 20 20"
@@ -278,13 +422,13 @@ const CalendarScreen = ({ user }: UserProps) => {
               <path
                 fill="#FFFFFF"
                 d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
-                                  C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
-                                  C15.952,9,16,9.447,16,10z"
+                                    C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                                    C15.952,9,16,9.447,16,10z"
               />
             </svg>
           </button>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };
