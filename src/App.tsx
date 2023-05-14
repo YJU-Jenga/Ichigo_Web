@@ -82,7 +82,7 @@ function App() {
           <Route path="/qna" element={<Qna user={user} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/custom/:id" element={<Custom user={user} />} />
+          <Route path="/custom" element={<Custom user={user} />} />
           <Route
             path="/write_product_inquiury"
             element={<WriteProductInquiry user={user} />}
