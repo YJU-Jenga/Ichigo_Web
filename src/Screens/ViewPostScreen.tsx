@@ -80,19 +80,12 @@ const ViewPostScreen = ({ user }: UserProps) => {
   if (!boardDetail) {
     return <></>;
   }
-
-  // 작성자 이름 가져오기
-  // const getWritersName = async () => {
-  //   const getWritersUrl = `${API_URL}/user/user/${id}`;
-  //   const res = await axios.get(getWritersUrl);
-  // };
-
   // 댓글쓰기 함수
   const writeComment = async () => {
     const writeCommentUrl = `${API_URL}/comment/write`;
     const headers = { "Content-Type": "application/json" };
     const body = {
-      writer: 1,
+      writer: user?.id,
       postId: id,
       content: comment,
     };
@@ -161,7 +154,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
       showCancelButton: true,
     });
     const body = {
-      writer: 1,
+      writer: user?.id,
       postId: postId,
       content: text,
     };

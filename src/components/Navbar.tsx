@@ -69,7 +69,7 @@ export function Navbar({ user }: UserProps) {
   }
 
   return (
-    <nav>
+    <nav className="">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between">
           {/* 메뉴1 */}

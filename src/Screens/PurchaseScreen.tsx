@@ -12,7 +12,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const productId: any[] = [];
   const productCount: any[] = [];
-  const id = 1;
+  const id = user?.id;
 
   useEffect(() => {
     getTotalPrice();

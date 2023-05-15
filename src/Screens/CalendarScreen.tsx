@@ -261,7 +261,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-row items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
+                <div className="flex flex-row-reverse items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
                   <button
                     className="text-white bg-yellow-500 active:bg-yellow-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
@@ -370,7 +370,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                     />
                   </div>
                 </div>
-                <div className="flex flex-row items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
+                <div className="flex flex-row-reverse items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
                   <button
                     className="text-white bg-yellow-500 active:bg-yellow-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"

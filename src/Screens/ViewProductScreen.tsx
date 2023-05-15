@@ -93,7 +93,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    const CartUpdateUrl = `${API_URL}/cart/updateAddedProdcut/${userId}`;
+    const CartUpdateUrl = `${API_URL}/cart/updateAddedProduct/${userId}`;
     const body = {
       productId: productId,
       count: 1,

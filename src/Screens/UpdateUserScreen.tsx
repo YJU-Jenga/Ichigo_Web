@@ -9,7 +9,7 @@ import { API_URL } from "../config";
 export default function UpdateUserScreen({ user }: UserProps) {
   // 전송할 form데이터
   const [form, setForm] = useState({
-    writer: 1,
+    writer: user?.id,
     title: "",
     password: "",
     secret: false,
