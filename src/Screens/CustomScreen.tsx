@@ -101,7 +101,7 @@ export default function CustomScreen({ user }: UserProps) {
                     }}
                 >
                     <img src="img/cloth/QJ.png" width="100" />
-                    <input checked={visible1} type="checkbox"></input>
+                    <input hidden={true} checked={visible1} type="checkbox"></input>
                 </div>
                 <div
                     className="flex"
@@ -114,7 +114,7 @@ export default function CustomScreen({ user }: UserProps) {
                     }}
                 >
                     <img src="img/cloth/T-Shirt.png" width="100" />
-                    <input checked={visible2} type="checkbox"></input>
+                    <input hidden={true} checked={visible2} type="checkbox"></input>
                 </div>
                 <div
                     className="flex"
@@ -126,7 +126,7 @@ export default function CustomScreen({ user }: UserProps) {
                     }}
                 >
                     <img src="img/cloth/Jean.png" width="100" />
-                    <input checked={visible3} type="checkbox"></input>
+                    <input hidden={true} checked={visible3} type="checkbox"></input>
                 </div>
                 <div
                     className="flex"
@@ -139,7 +139,7 @@ export default function CustomScreen({ user }: UserProps) {
                     }}
                 >
                     <img src="img/cloth/Hoodie.png" width="100" />
-                    <input checked={visible4} type="checkbox"></input>
+                    <input hidden={true} checked={visible4} type="checkbox"></input>
                 </div>
             </div>
         );
