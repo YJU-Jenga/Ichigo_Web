@@ -91,7 +91,7 @@ export default function WriteItemUseScreen({ user }: UserProps) {
     <form onSubmit={submit}>
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
-          <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
+          <h1 className="text-center text-2xl font-bold mb-10">
             상품후기 쓰기
           </h1>
           <div className="space-y-4">
@@ -118,7 +118,7 @@ export default function WriteItemUseScreen({ user }: UserProps) {
               </label>
               <textarea
                 id="first_name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
                 placeholder="내용을 입력해주세요"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
@@ -146,31 +146,36 @@ export default function WriteItemUseScreen({ user }: UserProps) {
                 }}
               />
             </div>
-            <div className="flex flex-row">
-              <label className="block mb-2 text-sm font-medium text-gray-900">
-                비밀글
-              </label>
-              <input
-                className="block mb-2 text-lg px-3"
-                type="checkbox"
-                onChange={(event) => {
-                  setForm({ ...form, secret: event.target.checked });
-                }}
-              />
-              <label className="block mb-2 text-sm font-medium text-gray-900">
-                비밀번호
-              </label>
-              <input
-                type="password"
-                placeholder="비밀번호"
-                id="password"
-                className="ml-2 outline-none text-md border-2 rounded-md"
-                onChange={(event) =>
-                  setForm({ ...form, password: event.target.value })
-                }
-              />
+            <div className="flex w-full flex-col">
+              <div className="flex flex-row">
+                <label className="block text-sm font-medium text-gray-900 mr-2 mb-2">
+                  비밀글
+                </label>
+                <input
+                  className="block text-lg mb-2"
+                  type="checkbox"
+                  onChange={(event) => {
+                    setForm({ ...form, secret: event.target.checked });
+                  }}
+                />
+              </div>
+              <div className="divider divider-horizontal"></div>
+              <div className="flex flex-row">
+                <label className="block text-sm font-medium text-gray-900 mt-2 mr-2">
+                  비밀번호
+                </label>
+                <input
+                  type="password"
+                  placeholder="비밀번호"
+                  id="password"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
+                  onChange={(event) =>
+                    setForm({ ...form, password: event.target.value })
+                  }
+                />
+              </div>
             </div>
-            <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">
+            <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300 hover:bg-red-200">
               글 쓰기
             </button>
           </div>
