@@ -11,9 +11,8 @@ export function Navbar({ user }: UserProps) {
     const [menuToggle, setMenuToggle] = useState(false);
     const location = useLocation();
 
-    useEffect(() => {
+    const refreshToken = () => {
         if (localStorage.getItem('refresh-token')) {
-            console.log(localStorage.getItem('refresh-token'));
             (async () => {
                 try {
                     const rt = localStorage.getItem('refresh-token');
@@ -25,7 +24,6 @@ export function Navbar({ user }: UserProps) {
                     })
                         .then((res) => res.json()) // 리턴값이 있으면 리턴값에 맞는 req 지정
                         .then((res) => {
-                            console.log(res); // 리턴값에 대한 처리
                             const refreshToken = res['refresh_token'];
                             // localStorage.removeItem('refresh-token');
                             localStorage.setItem('refresh-token', refreshToken);
@@ -37,7 +35,15 @@ export function Navbar({ user }: UserProps) {
                 }
             })();
         }
+    };
+
+    useEffect(() => {
+        refreshToken();
     }, [location]);
+
+    useEffect(() => {
+        refreshToken();
+    }, []);
 
     const logout = async () => {
         try {

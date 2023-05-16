@@ -138,7 +138,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
                 pay_method: 'card',
                 merchant_uid: `mid_${new Date().getTime()}`,
                 name: purchaseName,
-                amount: 100,
+                amount: totalPrice,
                 buyer_email: user?.email,
                 buyer_name: user?.name,
                 buyer_tel: user?.phone as string,
