@@ -1,4 +1,10 @@
-import { BrowserRouter, NavLink, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  NavLink,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { UserProps } from "../App";
 import { useEffect, useState } from "react";
@@ -8,6 +14,7 @@ import Swal from "sweetalert2";
 import { getCookie } from "../cookie";
 
 const MyPageScreen = ({ user }: UserProps) => {
+  const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const [orderList, setOrderList] = useState<Array<any>>([]);
   const orders: any[] = [];
@@ -189,6 +196,9 @@ const MyPageScreen = ({ user }: UserProps) => {
                                   <button
                                     className="text-white bg-green-500 hover:bg-green-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                                     type="button"
+                                    onClick={() => {
+                                      navigate("/write_item_use");
+                                    }}
                                   >
                                     후기작성
                                   </button>
