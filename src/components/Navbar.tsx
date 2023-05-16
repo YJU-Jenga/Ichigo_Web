@@ -105,11 +105,11 @@ export function Navbar({ user }: UserProps) {
 
     return (
         <nav className="">
-            <div className="max-w-6xl mx-auto px-4">
+            <div className="mx-5">
                 <div className="flex justify-between">
                     {/* 메뉴1 */}
                     <div className="flex space-x-4">
-                        <div className="hidden md:flex items-center space-x-1">
+                        <div className="hidden md:flex items-center space-x-1 gap-0 sm:gap-5">
                             <NavLink
                                 to="/"
                                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
