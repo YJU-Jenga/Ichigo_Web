@@ -195,11 +195,20 @@ const CartScreen = ({ user }: UserProps) => {
         );
     }
     return (
-        <body className="bg-gray-100">
+        <body className="">
             <div className="container mx-auto mt-10">
-                <div className="flex shadow-md my-10">
-                    <div className="w-3/4 bg-white px-10 py-10">
-                        <div className="flex justify-between border-b pb-8">
+                <NavLink
+                    to="/product"
+                    className="flex font-semibold text-red-400 text-sm mt-10 px-5"
+                >
+                    <svg className="fill-current mr-2 text-red-400 w-4" viewBox="0 0 448 512">
+                        <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
+                    </svg>
+                    쇼핑 계속하기
+                </NavLink>
+                <section className="flex md:flex-row flex-col">
+                    <div className="w-screen md:w-8/12 bg-white px-5 py-10">
+                        <div className="flex justify-between border-b pb-5">
                             <h1 className="font-semibold text-2xl">장바구니</h1>
                             <h2 className="font-semibold text-2xl">총 {totalCount}개 상품</h2>
                         </div>
@@ -232,6 +241,7 @@ const CartScreen = ({ user }: UserProps) => {
                                             />
                                         </div>
                                         <div className="flex flex-col justify-between ml-4 flex-grow">
+                                            <p></p>
                                             <span className="font-bold text-sm">
                                                 {product?.product.name}
                                             </span>
@@ -284,22 +294,10 @@ const CartScreen = ({ user }: UserProps) => {
                                 </div>
                             );
                         })}
-                        <NavLink
-                            to="/product"
-                            className="flex font-semibold text-indigo-600 text-sm mt-10"
-                        >
-                            <svg
-                                className="fill-current mr-2 text-indigo-600 w-4"
-                                viewBox="0 0 448 512"
-                            >
-                                <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
-                            </svg>
-                            쇼핑 계속하기
-                        </NavLink>
                     </div>
 
-                    <div id="summary" className="w-1/4 px-8 py-10">
-                        <h1 className="font-semibold text-2xl border-b pb-8">상품 합계</h1>
+                    <div id="summary" className="w-screen md:w-4/12 px-8 py-10">
+                        <h1 className="font-semibold text-2xl border-b pb-5">상품 합계</h1>
                         <div className="flex justify-between mt-10 mb-5">
                             <span className="font-semibold text-sm uppercase">
                                 총 {totalCount}개
@@ -309,7 +307,7 @@ const CartScreen = ({ user }: UserProps) => {
                         <div className="border-t mt-8">
                             <div className="flex font-semibold justify-between py-6 text-sm uppercase">
                                 <span>총 가격</span>
-                                <span>
+                                <span className="mt-4">
                                     ₩ {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}{' '}
                                 </span>
                             </div>
@@ -317,13 +315,13 @@ const CartScreen = ({ user }: UserProps) => {
                                 onClick={() => {
                                     goToPurchase();
                                 }}
-                                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+                                className="bg-rose-300 font-semibold hover:bg-rose-400 py-3 text-sm text-white uppercase w-full"
                             >
                                 주문하기
                             </button>
                         </div>
                     </div>
-                </div>
+                </section>
             </div>
         </body>
     );
