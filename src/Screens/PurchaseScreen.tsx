@@ -150,7 +150,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
                     alert(res);
                     submit();
                 } else {
-                    alert(res.error_msg);
+                    alert('결제 오류 발생');
+                    navigate('/cart');
                 }
             }
         );
