@@ -96,34 +96,44 @@ export default function WriteItemUseScreen({ user }: UserProps) {
           </h1>
           <div className="space-y-4">
             <div>
-              <label className="text-lx">제목</label>
-              <input
-                type="text"
-                placeholder="제목"
-                id="title"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                onChange={(event) =>
-                  setForm({ ...form, title: event.target.value })
-                }
-              />
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900">
+                  제목
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="제목"
+                  onChange={(event) =>
+                    setForm({ ...form, title: event.target.value })
+                  }
+                  required
+                />
+              </div>
             </div>
             <div>
-              <label className="block mb-2 text-lg">글</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                내용
+              </label>
               <textarea
-                id="content"
-                placeholder="이곳에 작성해주세요"
-                className="w-full border-2 p-4 text-gray-600 outline-none rounded-md"
+                id="first_name"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="내용을 입력해주세요"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
                 }
+                required
               ></textarea>
             </div>
             <div>
-              <label className="text-lx">파일:</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                파일
+              </label>
               <input
                 type="file"
                 id="file"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
                   const files = (target.files as FileList)[0];
@@ -136,22 +146,25 @@ export default function WriteItemUseScreen({ user }: UserProps) {
                 }}
               />
             </div>
-            <div>
-              비밀글
+            <div className="flex flex-row">
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                비밀글
+              </label>
               <input
+                className="block mb-2 text-lg px-3"
                 type="checkbox"
                 onChange={(event) => {
                   setForm({ ...form, secret: event.target.checked });
                 }}
               />
-            </div>
-            <div>
-              <label className="block mb-2 text-lg">비밀번호</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                비밀번호
+              </label>
               <input
                 type="password"
                 placeholder="비밀번호"
                 id="password"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                className="ml-2 outline-none text-md border-2 rounded-md"
                 onChange={(event) =>
                   setForm({ ...form, password: event.target.value })
                 }

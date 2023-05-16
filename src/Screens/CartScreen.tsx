@@ -148,7 +148,7 @@ const CartScreen = ({ user }: UserProps) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    const CartUpdateUrl = `${API_URL}/cart/updateAddedProdcut/${id}`;
+    const CartUpdateUrl = `${API_URL}/cart/updateAddedProduct/${id}`;
     const newProduct = [...product];
     console.log(newProduct);
     if (newProduct.length === 1) {
@@ -223,7 +223,7 @@ const CartScreen = ({ user }: UserProps) => {
               return (
                 <div
                   key={product.product.id}
-                  className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
+                  className="flex items-center hover:bg-gray-100"
                 >
                   <div className="flex w-2/5">
                     <div className="w-20">
@@ -244,39 +244,41 @@ const CartScreen = ({ user }: UserProps) => {
                       </a>
                     </div>
                   </div>
-                  <div className="flex justify-center w-1/5">
-                    <svg
-                      onClick={() => {
-                        handleSub(product?.product.id);
-                      }}
-                      className="fill-current text-gray-600 w-3"
-                      viewBox="0 0 448 512"
-                    >
-                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                    </svg>
-                    <input
-                      className="mx-2 border text-center w-8"
-                      type="text"
-                      value={product?.count}
-                      readOnly
-                    />
-                    <svg
-                      onClick={() => {
-                        handleAdd(product?.product.id);
-                      }}
-                      className="fill-current text-gray-600 w-3"
-                      viewBox="0 0 448 512"
-                    >
-                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
-                    </svg>
+                  <div className="custom-number-input h-10 w-32 flex justify-center pl-10">
+                    <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
+                      <button
+                        data-action="decrement"
+                        className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
+                        onClick={() => {
+                          handleSub(product?.product.id);
+                        }}
+                      >
+                        <span className="m-auto text-2xl font-thin">-</span>
+                      </button>
+                      <input
+                        type="number"
+                        className="appearance-none outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700"
+                        name="custom-input-number"
+                        value={product?.count}
+                      ></input>
+                      <button
+                        data-action="increment"
+                        className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
+                        onClick={() => {
+                          handleAdd(product?.product.id);
+                        }}
+                      >
+                        <span className="m-auto text-2xl font-thin">+</span>
+                      </button>
+                    </div>
                   </div>
-                  <span className="text-center w-1/5 font-semibold text-sm">
+                  <span className="text-center w-1/5 font-semibold text-sm pl-20">
                     ₩{" "}
                     {product?.product.price
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
-                  <span className="text-center w-1/5 font-semibold text-sm">
+                  <span className="text-center w-1/5 font-semibold text-sm pl-20">
                     ₩{" "}
                     {(product?.product.price * product?.count)
                       .toString()
