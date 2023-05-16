@@ -196,8 +196,8 @@ const CartScreen = ({ user }: UserProps) => {
   }
   console.log(product);
   return (
-    <body className="bg-gray-100">
-      <div className="container mx-auto mt-10">
+    <body className="bg-gray-100 h-screen">
+      <div className="container mx-auto">
         <div className="flex shadow-md my-10">
           <div className="w-3/4 bg-white px-10 py-10">
             <div className="flex justify-between border-b pb-8">
@@ -233,9 +233,7 @@ const CartScreen = ({ user }: UserProps) => {
                       />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <span className="font-bold text-sm">
-                        {product?.product.name}
-                      </span>
+                      <span className="font-bold">{product?.product.name}</span>
                       <a
                         className="font-semibold hover:text-red-500 text-gray-500 text-xs"
                         onClick={() => deleteProduct(product?.product.id)}
@@ -272,13 +270,13 @@ const CartScreen = ({ user }: UserProps) => {
                       </button>
                     </div>
                   </div>
-                  <span className="text-center w-1/5 font-semibold text-sm pl-20">
+                  <span className="text-center w-1/5 font-semibold pl-20">
                     ₩{" "}
                     {product?.product.price
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
-                  <span className="text-center w-1/5 font-semibold text-sm pl-20">
+                  <span className="text-center w-1/5 font-semibold pl-20">
                     ₩{" "}
                     {(product?.product.price * product?.count)
                       .toString()
@@ -289,10 +287,10 @@ const CartScreen = ({ user }: UserProps) => {
             })}
             <NavLink
               to="/product"
-              className="flex font-semibold text-indigo-600 text-sm mt-10"
+              className="flex font-semibold text-red-300 text-sm mt-10"
             >
               <svg
-                className="fill-current mr-2 text-indigo-600 w-4"
+                className="fill-current mr-2 text-red-300 w-4"
                 viewBox="0 0 448 512"
               >
                 <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
@@ -321,7 +319,7 @@ const CartScreen = ({ user }: UserProps) => {
                 onClick={() => {
                   goToPurchase();
                 }}
-                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
+                className="bg-red-300 font-semibold hover:bg-red-200 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
               </button>

@@ -7,7 +7,14 @@ import {
 } from "react-router-dom";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { UserProps } from "../App";
-import { useEffect, useState } from "react";
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactFragment,
+  ReactPortal,
+  useEffect,
+  useState,
+} from "react";
 import { API_URL } from "../config";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
@@ -17,7 +24,6 @@ const MyPageScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const [orderList, setOrderList] = useState<Array<any>>([]);
-  const orders: any[] = [];
 
   useEffect(() => {
     getOrderList();
@@ -51,18 +57,8 @@ const MyPageScreen = ({ user }: UserProps) => {
       }
     }
   };
+
   console.log(orderList);
-  console.log(user);
-  for (let i in orderList) {
-    if (user?.id === orderList[i]?.userId) {
-      orders.push({
-        id: orderList[i]?.id,
-        userId: orderList[i]?.userId,
-        state: orderList[i]?.state,
-        updatedAt: orderList[i]?.updatedAt,
-      });
-    }
-  }
   return (
     <Tabs
       selectedIndex={index}
@@ -163,65 +159,70 @@ const MyPageScreen = ({ user }: UserProps) => {
                           </th>
                         </tr>
                       </thead>
-                      {orders.map((order) => {
+                      {orderList.map((order) => {
                         return (
                           <tbody key={order?.id}>
-                            <tr>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm w-2/5">
-                                <div className="flex items-center justify-center pr-6">
-                                  <div className="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
-                                    <img
-                                      className="w-full h-full rounded-full"
-                                      src="https://images.unsplash.com/photo-1601046668428-94ea13437736?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2167&q=80"
-                                      alt=""
-                                    />
-                                  </div>
-                                  <div className="ml-3">
-                                    <p className="text-gray-900 whitespace-no-wrap text-center text-l">
-                                      테드
+                            {order.orderToProducts.map((product: any) => {
+                              return (
+                                <tr>
+                                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm w-2/5">
+                                    <div className="flex items-center justify-center pr-6">
+                                      <div className="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
+                                        <img
+                                          className="w-full h-full rounded-full"
+                                          src={`${API_URL}/${product?.product?.image}`}
+                                          alt=""
+                                        />
+                                      </div>
+                                      <div className="ml-3">
+                                        <p className="text-gray-900 whitespace-no-wrap text-center text-l">
+                                          {product?.product?.name}
+                                        </p>
+                                        <p className="text-gray-900 whitespace-no-wrap text-center text-l">
+                                          {product?.product?.price}원 /{" "}
+                                          {product?.count}개
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </td>
+                                  <td className="px-5 py-5 border-b border-gray-200 bg-white">
+                                    <p className="text-gray-900 whitespace-no-wrap text-center">
+                                      {order?.updatedAt.substr(0, 10)}
                                     </p>
-                                    <p className="text-gray-900 whitespace-no-wrap text-center text-l">
-                                      1,000원 / *개
-                                    </p>
-                                  </div>
-                                </div>
-                              </td>
-                              <td className="px-5 py-5 border-b border-gray-200 bg-white">
-                                <p className="text-gray-900 whitespace-no-wrap text-center">
-                                  {order?.updatedAt.substr(0, 10)}
-                                </p>
-                              </td>
-                              <td className="px-5 py-5 bg-white flex items-center justify-center border-b border-gray-200">
-                                {order?.state ? (
-                                  <button
-                                    className="text-white bg-green-500 hover:bg-green-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                                    type="button"
-                                    onClick={() => {
-                                      navigate("/write_item_use");
-                                    }}
-                                  >
-                                    후기작성
-                                  </button>
-                                ) : (
-                                  <button
-                                    className="text-white bg-green-500 hover:bg-green-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
-                                    type="button"
-                                    onClick={() => {
-                                      Swal.fire({
-                                        position: "center",
-                                        icon: "warning",
-                                        title:
-                                          "아직 상품 후기를 작성할 수 없습니다",
-                                        showConfirmButton: false,
-                                        timer: 1000,
-                                      });
-                                    }}
-                                  >
-                                    후기작성
-                                  </button>
-                                )}
-                              </td>
-                            </tr>
+                                  </td>
+                                  <td className="px-5 py-5 bg-white flex items-center justify-center border-b border-gray-200">
+                                    {order?.state ? (
+                                      <button
+                                        className="text-white bg-green-500 hover:bg-green-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                                        type="button"
+                                        onClick={() => {
+                                          navigate("/write_item_use");
+                                        }}
+                                      >
+                                        후기작성
+                                      </button>
+                                    ) : (
+                                      <button
+                                        className="text-white bg-green-500 hover:bg-green-400 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                                        type="button"
+                                        onClick={() => {
+                                          Swal.fire({
+                                            position: "center",
+                                            icon: "warning",
+                                            title:
+                                              "아직 상품 후기를 작성할 수 없습니다",
+                                            showConfirmButton: false,
+                                            timer: 1000,
+                                          });
+                                        }}
+                                      >
+                                        후기작성
+                                      </button>
+                                    )}
+                                  </td>
+                                </tr>
+                              );
+                            })}
                           </tbody>
                         );
                       })}

@@ -6,33 +6,44 @@ import Swal from "sweetalert2";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
 import { getCookie } from "../cookie";
-
 const PurchaseScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [totalPrice, setTotalPrice] = useState(0);
-  const productId: any[] = [];
-  const productCount: any[] = [];
+  const [productId, setProductId] = useState<number[]>([]);
+  const [productCount, setProductCount] = useState<number[]>([]);
   const id = user?.id;
-
   useEffect(() => {
-    getTotalPrice();
-  }, []);
-
+    if (user != undefined) {
+      getTotalPrice();
+    }
+  }, [user]);
   const getTotalPrice = async () => {
+    if (user == undefined) return;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
     const url = `${API_URL}/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
-      const res = await axios.get(url);
-      console.log(res);
+      const res = await axios.get(url, { headers });
       for (let i in res.data[0].cartToProducts) {
         totalP +=
           res.data[0].cartToProducts[i].count *
           res.data[0].cartToProducts[i].product.price;
       }
       setTotalPrice(totalP);
+      if (user == undefined) return;
       for (let i in res.data[0].cartToProducts) {
-        productCount.push(res.data[0].cartToProducts[i].count);
-        productId.push(res.data[0].cartToProducts[i].productId);
+        setProductId((prevArray) => [
+          ...prevArray,
+          res.data[0].cartToProducts[i].productId,
+        ]);
+        setProductCount((prevArray) => [
+          ...prevArray,
+          res.data[0].cartToProducts[i].count,
+        ]);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -47,24 +58,20 @@ const PurchaseScreen = ({ user }: UserProps) => {
       }
     }
   };
-
   const [form, setForm] = useState({
     userId: user?.id,
     address: "",
     postalCode: "",
   });
-
   const onCompletePost = (data: any) => {
     setForm({ ...form, address: data.address, postalCode: data.zonecode });
     console.log(data);
   };
-
   // 주소 + 상세주소까지 합치기
   const full_address = (detailAddress: String) => {
     let fullAddress = form.address + " " + detailAddress;
     return setForm({ ...form, address: fullAddress });
   };
-
   const body = {
     userId: form.userId,
     address: form.address,
@@ -72,16 +79,17 @@ const PurchaseScreen = ({ user }: UserProps) => {
     productIds: productId,
     counts: productCount,
   };
-
   const submit = async (e: SyntheticEvent) => {
-    const purchase_url = `${API_URL}/order/create`;
-    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const headers = {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    e.preventDefault();
     try {
+      e.preventDefault();
+      if (user == undefined) return;
+      const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const purchase_url = `${API_URL}/order/create`;
+      console.log(body);
       const res = await axios.post(purchase_url, body, { headers });
       if (res.status === 201) {
         Swal.fire({
@@ -106,6 +114,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
       }
     }
   };
+  console.log(body);
   return (
     <form
       className="flex flex-col gap-5 text-base text-zinc-800"
@@ -121,7 +130,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
             // onChange={onOrdererNameChange}
             required
             style={{
-              borderBottom: "1px solid #1f2937",
+              borderBottom: "1px solid #1F2937",
             }}
             className="mt-2 h-8 px-2 pt-1 pb-1"
           />
@@ -149,7 +158,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
             }}
             required
             style={{
-              borderBottom: "1px solid #1f2937",
+              borderBottom: "1px solid #1F2937",
             }}
             className="mt-2 h-8 px-2 pt-1 pb-1"
           />
@@ -162,7 +171,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               required
               value={form.postalCode}
               style={{
-                borderBottom: "1px solid #1f2937",
+                borderBottom: "1px solid #1F2937",
               }}
               className="mt-2 h-8 px-2 pt-1 pb-1"
               readOnly
@@ -175,7 +184,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               required
               value={form.address}
               style={{
-                borderBottom: "1px solid #1f2937",
+                borderBottom: "1px solid #1F2937",
               }}
               className="mt-2 h-8 px-2 pt-1 pb-1"
               readOnly
@@ -187,7 +196,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               type="text"
               required
               style={{
-                borderBottom: "1px solid #1f2937",
+                borderBottom: "1px solid #1F2937",
               }}
               className="mt-2 h-8 px-2 pt-1 pb-1"
               // focus상태였던 커서가 다른 곳으로 옮겨갈때 이벤트 함수 실행 - 상세주소 입력 후 full_address실행
@@ -212,5 +221,4 @@ const PurchaseScreen = ({ user }: UserProps) => {
     </form>
   );
 };
-
 export default PurchaseScreen;
