@@ -68,7 +68,7 @@ const CartScreen = ({ user }: UserProps) => {
   // 상품 삭제
   const deleteProduct = async (id: number) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const deleteProductUrl = `${API_URL}/cart/deleteAddedProdcut`;
+    const deleteProductUrl = `${API_URL}/cart/deleteAddedProduct`;
     const cartId = user?.id;
     try {
       const res = await axios.delete(deleteProductUrl, {

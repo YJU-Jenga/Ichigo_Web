@@ -11,6 +11,7 @@ import Register from "./Screens/RegisterScreen";
 import Custom from "./Screens/CustomScreen";
 import WriteProductInquiry from "./Screens/WriteProductInquiryScreen";
 import WriteQna from "./Screens/WriteQnaScreen";
+import WriteItemUse from "./Screens/WriteItemUseScreen";
 import Cart from "./Screens/CartScreen";
 import Purchase from "./Screens/PurchaseScreen";
 import ViewPost from "./Screens/ViewPostScreen";
@@ -88,6 +89,10 @@ function App() {
             element={<WriteProductInquiry user={user} />}
           />
           <Route path="/write_q&a" element={<WriteQna user={user} />} />
+          <Route
+            path="/write_item_use"
+            element={<WriteItemUse user={user} />}
+          />
           <Route path="/cart" element={<Cart user={user} />} />
           <Route path="/purchase" element={<Purchase user={user} />} />
           <Route path="/viewpost/:id" element={<ViewPost user={user} />} />
