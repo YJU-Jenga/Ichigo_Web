@@ -33,10 +33,15 @@ const CartScreen = ({ user }: UserProps) => {
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
     const url = `${API_URL}/cart/findAllProducts/${id}`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     try {
       let totalP = 0;
       let totalC = 0;
-      const res = await axios.get(url);
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setCartList(res.data);
       setProduct(res.data[0].cartToProducts);
       for (let i in res.data[0].cartToProducts) {

@@ -29,9 +29,14 @@ const PurchaseScreen = ({ user }: UserProps) => {
 
   const getTotalPrice = async () => {
     const url = `${API_URL}/cart/findAllProducts/${id}`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     try {
       let totalP = 0;
-      const res = await axios.get(url);
+      const res = await axios.get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log(res.data[0].cartToProducts[0].product);
       const cartItemCount = res.data[0].cartToProducts.length;
       for (let i in res.data[0].cartToProducts) {
