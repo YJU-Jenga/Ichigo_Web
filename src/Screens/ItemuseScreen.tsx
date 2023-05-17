@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { UserProps } from "../App";
-
+// 이름바꿈
 const ItemUseScreen = ({ user }: UserProps) => {
   const [boardList, setList] = useState([
     {
