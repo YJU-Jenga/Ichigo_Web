@@ -11,7 +11,6 @@ import { API_URL } from "../config";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
-  const id = user?.id;
   const [cartList, setCartList] = useState<Array<Cart>>([]);
   const [product, setProduct] = useState<Array<any>>([]);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -19,7 +18,7 @@ const CartScreen = ({ user }: UserProps) => {
 
   useEffect(() => {
     getCartList();
-  }, []);
+  }, [user]);
 
   let currentPath = "";
   let location = useLocation();
@@ -32,16 +31,19 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 장바구니id로 장바구니 목록 가져오기 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   const getCartList = async () => {
-    const url = `${API_URL}/cart/findAllProducts/${id}`;
+    if (user == undefined) return;
+    const id = user?.id;
+
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const url = `${API_URL}/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
       let totalC = 0;
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get(url, { headers });
       setCartList(res.data);
       setProduct(res.data[0].cartToProducts);
       for (let i in res.data[0].cartToProducts) {
@@ -72,19 +74,23 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 상품 삭제
   const deleteProduct = async (id: number) => {
+    const userId = user?.id;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const deleteProductUrl = `${API_URL}/cart/deleteAddedProdcut`;
-    const cartId = user?.id;
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const CartIdUrl = `${API_URL}/cart/findCartId/${userId}`;
+    const res = await axios.get(CartIdUrl, { headers });
+    const cartId = res.data;
+    const deleteProductUrl = `${API_URL}/cart/deleteAddedProduct`;
     try {
       const res = await axios.delete(deleteProductUrl, {
         data: {
           cartId: cartId,
           productId: id,
         },
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers,
       });
       if (res.status === 200) {
         console.log(res);
@@ -148,12 +154,16 @@ const CartScreen = ({ user }: UserProps) => {
 
   // 주문페이지로 넘기기, 반복문으로 상품 아이디랑 갯수 넘겨주기
   const goToPurchase = async () => {
+    const id = user?.id;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    const CartUpdateUrl = `${API_URL}/cart/updateAddedProduct/${id}`;
+    const CartIdUrl = `${API_URL}/cart/findCartId/${id}`;
+    const res = await axios.get(CartIdUrl, { headers });
+    const cartId = res.data;
+    const CartUpdateUrl = `${API_URL}/cart/updateAddedProduct/${cartId}`;
     const newProduct = [...product];
     console.log(newProduct);
     if (newProduct.length === 1) {
@@ -170,7 +180,7 @@ const CartScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
-        navigate("/purchase", { state: newProduct });
+        navigate("/purchase");
       }
     } else {
       for (let i in newProduct) {
@@ -188,7 +198,7 @@ const CartScreen = ({ user }: UserProps) => {
         showConfirmButton: false,
         timer: 1000,
       });
-      navigate("/purchase", { state: newProduct });
+      navigate("/purchase");
     }
   };
 
