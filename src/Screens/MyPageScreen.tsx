@@ -66,7 +66,7 @@ const MyPageScreen = ({ user }: UserProps) => {
       className="flex flex-row"
     >
       <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l">
-        <h1 className="mx-2 font-semibold text-gray-600">
+        <h1 className="mx-2 font-semibold text-gray-600 underline decoration-red-300">
           {user?.name}님의 마이페이지
         </h1>
         <div className="flex flex-col justify-between flex-1 mt-6">

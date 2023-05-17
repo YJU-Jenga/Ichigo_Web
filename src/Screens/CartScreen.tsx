@@ -210,13 +210,17 @@ const CartScreen = ({ user }: UserProps) => {
     );
   }
   return (
-    <body className="bg-gray-100">
+    <body className="bg-gray-100 h-screen">
       <div className="container mx-auto mt-10">
         <div className="flex shadow-md my-10">
           <div className="w-3/4 bg-white px-10 py-10">
             <div className="flex justify-between border-b pb-8">
-              <h1 className="font-semibold text-2xl">장바구니</h1>
-              <h2 className="font-semibold text-2xl">총 {totalCount}개 상품</h2>
+              <h1 className="font-semibold text-2xl underline decoration-red-300">
+                장바구니
+              </h1>
+              <h2 className="font-semibold text-2xl underline decoration-red-300">
+                총 {totalCount}개 상품
+              </h2>
             </div>
             <div className="flex mt-10 mb-5">
               <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
@@ -314,7 +318,9 @@ const CartScreen = ({ user }: UserProps) => {
           </div>
 
           <div id="summary" className="w-1/4 px-8 py-10">
-            <h1 className="font-semibold text-2xl border-b pb-8">상품 합계</h1>
+            <h1 className="font-semibold text-2xl border-b pb-8 underline decoration-red-300">
+              상품 합계
+            </h1>
             <div className="flex justify-between mt-10 mb-5">
               <span className="font-semibold text-sm uppercase">
                 총 {totalCount}개
