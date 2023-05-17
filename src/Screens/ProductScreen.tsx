@@ -84,12 +84,9 @@ const ProductScreen = ({ user }: UserProps) => {
         </div>
       </div>
       {user?.permission ? (
-        <div className="group fixed bottom-0 right-0 p-2  flex items-end justify-end">
-          <div className="flex items-center justify-center p-3 rounded-full z-50 absolute">
-            <NavLink
-              to={"/addproduct"}
-              className="grid place-items-center p-0 w-16 h-16 bg-red-300 rounded-full hover:bg-red-100 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
-            >
+        <div className="group fixed bottom-0 right-0 p-2  flex items-end justify-end w-24 h-24 ">
+          <div className="group fixed bottom-0 right-0 p-2 z-50  flex items-end justify-end">
+            <button className="group-hover:rotate-90 p-0 w-12 h-12 md:w-16 md:h-16 bg-red-300 rounded-full hover:bg-red-200 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none">
               <svg
                 viewBox="0 0 20 20"
                 enable-background="new 0 0 20 20"
@@ -98,12 +95,30 @@ const ProductScreen = ({ user }: UserProps) => {
                 <path
                   fill="#FFFFFF"
                   d="M16,10c0,0.553-0.048,1-0.601,1H11v4.399C11,15.951,10.553,16,10,16c-0.553,0-1-0.049-1-0.601V11H4.601
-                                  C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
-                                  C15.952,9,16,9.447,16,10z"
+                                    C4.049,11,4,10.553,4,10c0-0.553,0.049-1,0.601-1H9V4.601C9,4.048,9.447,4,10,4c0.553,0,1,0.048,1,0.601V9h4.399
+                                    C15.952,9,16,9.447,16,10z"
                 />
               </svg>
-            </NavLink>
+            </button>
           </div>
+          <NavLink
+            to={"/addproduct"}
+            className="text-m absolute rounded-full transition-all duration-[0.2s] ease-out scale-y-0 group-hover:scale-y-100 group-hover:-translate-x-20   flex  p-2 hover:p-3 bg-green-300 scale-100 hover:bg-green-400 text-white"
+          >
+            <p>+🐻</p>
+          </NavLink>
+          <NavLink
+            to={"/addmodel"}
+            className="text-m absolute rounded-full transition-all duration-[0.2s] ease-out scale-x-0 group-hover:scale-x-100 group-hover:-translate-y-20  flex  p-2 hover:p-3 bg-blue-300 hover:bg-blue-400  text-white"
+          >
+            <p>+💃</p>
+          </NavLink>
+          <NavLink
+            to={"/addclothes"}
+            className="text-m absolute rounded-full transition-all duration-[0.2s] ease-out scale-x-0 group-hover:scale-x-110 group-hover:-translate-y-16 group-hover:-translate-x-16   flex  p-2 hover:p-3 bg-yellow-300 hover:bg-yellow-400 text-white"
+          >
+            <p>+👕</p>
+          </NavLink>
         </div>
       ) : null}
     </section>

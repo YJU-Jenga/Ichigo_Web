@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import Main from "./Screens/MainScreen";
 import Product from "./Screens/ProductScreen";
@@ -11,7 +11,7 @@ import Register from "./Screens/RegisterScreen";
 import Custom from "./Screens/CustomScreen";
 import WriteProductInquiry from "./Screens/WriteProductInquiryScreen";
 import WriteQna from "./Screens/WriteQnaScreen";
-import WriteItemUse from "./Screens/WriteItemUseScreen";
+import WriteItemUseScreen from "./Screens/WriteItemUseScreen";
 import Cart from "./Screens/CartScreen";
 import Purchase from "./Screens/PurchaseScreen";
 import ViewPost from "./Screens/ViewPostScreen";
@@ -27,6 +27,8 @@ import MyPageScreen from "./Screens/MyPageScreen";
 import UpdateUserScreen from "./Screens/UpdateUserScreen";
 import { API_URL } from "./config";
 import ViewProductScreen from "./Screens/ViewProductScreen";
+import AddModelScreen from "./Screens/AddModelScreen";
+import AddClothesScreen from "./Screens/AddClothesScreen";
 
 export interface User {
   id: number;
@@ -67,7 +69,6 @@ function App() {
   useEffect(() => {
     getUser();
   }, [user?.id]);
-
   return (
     <>
       <BrowserRouter>
@@ -91,7 +92,7 @@ function App() {
           <Route path="/write_q&a" element={<WriteQna user={user} />} />
           <Route
             path="/write_item_use"
-            element={<WriteItemUse user={user} />}
+            element={<WriteItemUseScreen user={user} />}
           />
           <Route path="/cart" element={<Cart user={user} />} />
           <Route path="/purchase" element={<Purchase user={user} />} />
@@ -103,6 +104,11 @@ function App() {
           <Route
             path="/addproduct"
             element={<AddProductScreen user={user} />}
+          />
+          <Route path="/addmodel" element={<AddModelScreen user={user} />} />
+          <Route
+            path="/addclothes"
+            element={<AddClothesScreen user={user} />}
           />
           <Route path="/calendar" element={<CalendarScreen user={user} />} />
           <Route path="/maniging" element={<ManigingScreen user={user} />} />

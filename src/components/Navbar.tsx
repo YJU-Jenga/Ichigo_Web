@@ -1,14 +1,45 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import classNames from "classnames";
 
 export function Navbar({ user }: UserProps) {
   const [cookies, setCookie, removeCookie] = useCookies();
   const [checked, setChecked] = useState(true);
   const [menuToggle, setMenuToggle] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (localStorage.getItem("refresh-token")) {
+      console.log(localStorage.getItem("refresh-token"));
+      (async () => {
+        try {
+          const rt = localStorage.getItem("refresh-token");
+
+          await fetch(`${API_URL}/auth/refresh`, {
+            method: "POST",
+            headers: { authorization: `Bearer ${rt}` },
+            credentials: "include",
+          })
+            .then((res) => res.json()) // 리턴값이 있으면 리턴값에 맞는 req 지정
+            .then((res) => {
+              console.log(res); // 리턴값에 대한 처리
+              const refreshToken = res["refresh_token"];
+              // localStorage.removeItem('refresh-token');
+              localStorage.setItem("refresh-token", refreshToken);
+              // removeCookie('access-token')
+              setCookie("access-token", res["access_token"], {
+                maxAge: 15 * 60,
+              });
+            });
+        } catch (error) {
+          console.log(error);
+        }
+      })();
+    }
+  }, [location]);
 
   const logout = async () => {
     try {

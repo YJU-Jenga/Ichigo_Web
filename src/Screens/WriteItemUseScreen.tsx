@@ -56,11 +56,11 @@ export default function WriteItemUseScreen({ user }: UserProps) {
       body.append("content", JSON.stringify({ content: form.content }));
 
       const res = await axios.post(url, body, { headers });
-      if (res.status === 201) {
+      if (res.status === 200) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "상품문의 작성이 완료되었습니다.",
+          title: "상품후기 작성이 완료되었습니다.",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -102,7 +102,6 @@ export default function WriteItemUseScreen({ user }: UserProps) {
                 </label>
                 <input
                   type="text"
-                  id="first_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="제목"
                   onChange={(event) =>
@@ -117,7 +116,6 @@ export default function WriteItemUseScreen({ user }: UserProps) {
                 내용
               </label>
               <textarea
-                id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
                 placeholder="내용을 입력해주세요"
                 onChange={(event) =>
@@ -132,7 +130,6 @@ export default function WriteItemUseScreen({ user }: UserProps) {
               </label>
               <input
                 type="file"
-                id="file"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
@@ -167,7 +164,6 @@ export default function WriteItemUseScreen({ user }: UserProps) {
                 <input
                   type="password"
                   placeholder="비밀번호"
-                  id="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
                   onChange={(event) =>
                     setForm({ ...form, password: event.target.value })

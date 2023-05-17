@@ -7,6 +7,7 @@ import { folder, button, Leva, useControls } from "leva";
 import { positions, width } from "@mui/system";
 import { UserProps } from "../App";
 import { useParams } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa";
 
 interface color {
   color: string;
@@ -89,6 +90,7 @@ export default function CustomScreen({ user }: UserProps) {
     return (
       <div style={{ position: "absolute", padding: 0, margin: 0 }}>
         <div
+          className="flex"
           style={{ border: "solid white 1px" }}
           onClick={() => {
             setVisible1(!visible1);
@@ -99,8 +101,10 @@ export default function CustomScreen({ user }: UserProps) {
           }}
         >
           <img src="img/cloth/QJ.png" width="100" />
+          <input checked={visible1} type="checkbox"></input>
         </div>
         <div
+          className="flex"
           style={{ border: "solid white 1px" }}
           onClick={() => {
             setVisible2(!visible2);
@@ -110,8 +114,10 @@ export default function CustomScreen({ user }: UserProps) {
           }}
         >
           <img src="img/cloth/T-Shirt.png" width="100" />
+          <input checked={visible2} type="checkbox"></input>
         </div>
         <div
+          className="flex"
           style={{ border: "solid white 1px" }}
           onClick={() => {
             setVisible3(!visible3);
@@ -120,8 +126,10 @@ export default function CustomScreen({ user }: UserProps) {
           }}
         >
           <img src="img/cloth/Jean.png" width="100" />
+          <input checked={visible3} type="checkbox"></input>
         </div>
         <div
+          className="flex"
           style={{ border: "solid white 1px" }}
           onClick={() => {
             setVisible4(!visible4);
@@ -131,6 +139,7 @@ export default function CustomScreen({ user }: UserProps) {
           }}
         >
           <img src="img/cloth/Hoodie.png" width="100" />
+          <input checked={visible4} type="checkbox"></input>
         </div>
       </div>
     );
@@ -138,35 +147,55 @@ export default function CustomScreen({ user }: UserProps) {
 
   function buildColors(cloth: string) {
     return (
-      <div style={{ position: "absolute", bottom: 0, padding: 0, margin: 0 }}>
-        {colors.map((color) => (
-          <div
-            style={{
-              background: `#${color.color}`,
-              border: "solid 1px white",
-              borderRadius: 25,
-              width: "4vh",
-              height: "4vh",
-              display: "inline-block",
-            }}
-            onClick={() => {
-              switch (cloth) {
-                case "cloth1":
-                  setColor1(`#${color.color}`);
-                  break;
-                case "cloth2":
-                  setColor2(`#${color.color}`);
-                  break;
-                case "cloth3":
-                  setColor3(`#${color.color}`);
-                  break;
-                case "cloth4":
-                  setColor4(`#${color.color}`);
-                  break;
-              }
-            }}
-          ></div>
-        ))}
+      <div
+        style={{
+          position: "absolute",
+          bottom: 0,
+          paddingLeft: "2vw",
+          paddingRight: "2vw",
+          margin: 0,
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+        }}
+      >
+        <div>
+          {colors.map((color) => (
+            <div
+              style={{
+                background: `#${color.color}`,
+                border: "solid 1px white",
+                borderRadius: 25,
+                width: "3vh",
+                height: "3vh",
+                display: "inline-block",
+                marginRight: "1px",
+              }}
+              onClick={() => {
+                switch (cloth) {
+                  case "cloth1":
+                    setColor1(`#${color.color}`);
+                    break;
+                  case "cloth2":
+                    setColor2(`#${color.color}`);
+                    break;
+                  case "cloth3":
+                    setColor3(`#${color.color}`);
+                    break;
+                  case "cloth4":
+                    setColor4(`#${color.color}`);
+                    break;
+                }
+              }}
+            ></div>
+          ))}
+        </div>
+        {/* 장바구니로 넘기기 */}
+        <div>
+          <button>
+            <FaShoppingCart size={30} color="#fff"></FaShoppingCart>
+          </button>
+        </div>
       </div>
     );
   }

@@ -1,53 +1,63 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { UserProps } from "../App";
+import Swal from "sweetalert2";
+import { API_URL } from "../config";
+import { Board } from "../dto/Board";
 
-const ItemUseScreen = ({ user }: UserProps) => {
-  const [boardList, setList] = useState([
-    {
-      id: "",
-      title: "",
-      content: "",
-      createdOn: "",
-    },
-  ]);
+const ItemUseScreen = ({ user }: UserProps, id: number) => {
+  const [boardList, setBoardList] = useState<Array<Board>>([]);
 
   useEffect(() => {
-    axios
-      .get("/boards")
-      .then((res) => setList(res.data))
-      .catch((error) => console.log(error));
-  });
+    getPostList();
+  }, []);
+
+  const getPostList = async () => {
+    try {
+      const url = `${API_URL}/post/item_use_all`;
+      const res = await axios.get(url);
+      setBoardList(res.data);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: "error",
+          title: error.response?.data.message,
+          text: "관리자에게 문의해주세요",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      }
+    }
+  };
 
   return (
     <>
-      {dummyData.map((board) => {
+      {boardList.map((board) => {
         return (
           <div className="p-4 items-center justify-center w-[680px] rounded-xl group sm:flex space-x-6 bg-white bg-opacity-50 shadow-xl hover:rounded-2xl">
-            <img
-              className="mx-auto w-full block sm:w-4/12 h-40 rounded-lg"
-              alt="art cover"
-              loading="lazy"
-              src="https://picsum.photos/seed/2/2000/1000"
-            />
+            {board.image ? (
+              <img
+                className="mx-auto w-full block sm:w-4/12 h-40 rounded-lg"
+                alt="이미지가 없습니다."
+                loading="lazy"
+                src={`${API_URL}/${board?.image}`}
+              />
+            ) : null}
             <div className="sm:w-8/12 pl-0 p-5">
               <div className="space-y-2">
                 <div className="space-y-4">
                   <h4 className="text-md font-semibold text-cyan-900 text-justify">
-                    {board.title}
+                    {board?.title}
                   </h4>
                 </div>
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="flex gap-3 space-y-1">
-                    <span className="text-m">{board.content}</span>
+                    <span className="text-m">{board?.content}</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4 justify-between">
-                  <div className="text-grey-500 flex flex-row space-x-1  my-4">
-                    <p>{board.createdOn}</p>
-                  </div>
-                  <div className="flex flex-row space-x-1 font-semibold">
-                    {board.user}
+                  <div className="flex flex-row-reverse space-x-1 font-semibold">
+                    <p>{board.createdAt.substr(0, 10)}</p>
                   </div>
                 </div>
               </div>

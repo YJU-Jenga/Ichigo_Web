@@ -54,7 +54,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
       Authorization: `Bearer ${token}`,
     };
     const body = {
-      cartId: 1,
+      cartId: user?.id,
       productId: id,
       count: 1,
     };
@@ -87,19 +87,20 @@ const ViewProductScreen = ({ user }: UserProps) => {
     }
   };
 
-  const goToPurchase = async () => {
+  const goToPurchase = async (id: number) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    const CartUpdateUrl = `${API_URL}/cart/updateAddedProduct/${userId}`;
+    const CartUpdateUrl = `${API_URL}/cart/addProduct`;
     const body = {
-      productId: productId,
+      cartId: user?.id,
+      productId: id,
       count: 1,
     };
-    const res = await axios.patch(CartUpdateUrl, body, { headers });
-    if (res.status === 200) {
+    const res = await axios.post(CartUpdateUrl, body, { headers });
+    if (res.status === 201) {
       Swal.fire({
         icon: "success",
         text: "주문페이지로 이동합니다.",
@@ -148,7 +149,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
                   장바구니 담기
                 </button>
                 <NavLink
-                  to={`/custom`}
+                  to={`/custom/${productId}`}
                   className="position: static block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
                 >
                   커스텀
@@ -156,7 +157,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
                 <button
                   className="block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
                   onClick={() => {
-                    goToPurchase();
+                    goToPurchase(productDetail.id);
                   }}
                 >
                   구매하기

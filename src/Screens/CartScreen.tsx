@@ -68,7 +68,7 @@ const CartScreen = ({ user }: UserProps) => {
   // 상품 삭제
   const deleteProduct = async (id: number) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-    const deleteProductUrl = `${API_URL}/cart/deleteAddedProduct`;
+    const deleteProductUrl = `${API_URL}/cart/deleteAddedProdcut`;
     const cartId = user?.id;
     try {
       const res = await axios.delete(deleteProductUrl, {
@@ -165,7 +165,7 @@ const CartScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
-        navigate("/purchase");
+        navigate("/purchase", { state: newProduct });
       }
     } else {
       for (let i in newProduct) {
@@ -183,7 +183,7 @@ const CartScreen = ({ user }: UserProps) => {
         showConfirmButton: false,
         timer: 1000,
       });
-      navigate("/purchase");
+      navigate("/purchase", { state: newProduct });
     }
   };
 
@@ -194,10 +194,9 @@ const CartScreen = ({ user }: UserProps) => {
       </>
     );
   }
-  console.log(product);
   return (
-    <body className="bg-gray-100 h-screen">
-      <div className="container mx-auto">
+    <body className="bg-gray-100">
+      <div className="container mx-auto mt-10">
         <div className="flex shadow-md my-10">
           <div className="w-3/4 bg-white px-10 py-10">
             <div className="flex justify-between border-b pb-8">
@@ -223,7 +222,7 @@ const CartScreen = ({ user }: UserProps) => {
               return (
                 <div
                   key={product.product.id}
-                  className="flex items-center hover:bg-gray-100"
+                  className="flex items-center hover:bg-gray-100 -mx-8 px-6 py-5"
                 >
                   <div className="flex w-2/5">
                     <div className="w-20">
@@ -233,7 +232,9 @@ const CartScreen = ({ user }: UserProps) => {
                       />
                     </div>
                     <div className="flex flex-col justify-between ml-4 flex-grow">
-                      <span className="font-bold">{product?.product.name}</span>
+                      <span className="font-bold text-sm">
+                        {product?.product.name}
+                      </span>
                       <a
                         className="font-semibold hover:text-red-500 text-gray-500 text-xs"
                         onClick={() => deleteProduct(product?.product.id)}
@@ -242,41 +243,39 @@ const CartScreen = ({ user }: UserProps) => {
                       </a>
                     </div>
                   </div>
-                  <div className="custom-number-input h-10 w-32 flex justify-center pl-10">
-                    <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-                      <button
-                        data-action="decrement"
-                        className=" bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none"
-                        onClick={() => {
-                          handleSub(product?.product.id);
-                        }}
-                      >
-                        <span className="m-auto text-2xl font-thin">-</span>
-                      </button>
-                      <input
-                        type="number"
-                        className="appearance-none outline-none focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700"
-                        name="custom-input-number"
-                        value={product?.count}
-                      ></input>
-                      <button
-                        data-action="increment"
-                        className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer"
-                        onClick={() => {
-                          handleAdd(product?.product.id);
-                        }}
-                      >
-                        <span className="m-auto text-2xl font-thin">+</span>
-                      </button>
-                    </div>
+                  <div className="flex justify-center w-1/5">
+                    <svg
+                      onClick={() => {
+                        handleSub(product?.product.id);
+                      }}
+                      className="fill-current text-gray-600 w-3"
+                      viewBox="0 0 448 512"
+                    >
+                      <path d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
+                    <input
+                      className="mx-2 border text-center w-8"
+                      type="text"
+                      value={product?.count}
+                      readOnly
+                    />
+                    <svg
+                      onClick={() => {
+                        handleAdd(product?.product.id);
+                      }}
+                      className="fill-current text-gray-600 w-3"
+                      viewBox="0 0 448 512"
+                    >
+                      <path d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z" />
+                    </svg>
                   </div>
-                  <span className="text-center w-1/5 font-semibold pl-20">
+                  <span className="text-center w-1/5 font-semibold text-sm">
                     ₩{" "}
                     {product?.product.price
                       .toString()
                       .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                   </span>
-                  <span className="text-center w-1/5 font-semibold pl-20">
+                  <span className="text-center w-1/5 font-semibold text-sm">
                     ₩{" "}
                     {(product?.product.price * product?.count)
                       .toString()
@@ -287,10 +286,10 @@ const CartScreen = ({ user }: UserProps) => {
             })}
             <NavLink
               to="/product"
-              className="flex font-semibold text-red-300 text-sm mt-10"
+              className="flex font-semibold text-indigo-600 text-sm mt-10"
             >
               <svg
-                className="fill-current mr-2 text-red-300 w-4"
+                className="fill-current mr-2 text-indigo-600 w-4"
                 viewBox="0 0 448 512"
               >
                 <path d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z" />
@@ -319,7 +318,7 @@ const CartScreen = ({ user }: UserProps) => {
                 onClick={() => {
                   goToPurchase();
                 }}
-                className="bg-red-300 font-semibold hover:bg-red-200 py-3 text-sm text-white uppercase w-full"
+                className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full"
               >
                 주문하기
               </button>
