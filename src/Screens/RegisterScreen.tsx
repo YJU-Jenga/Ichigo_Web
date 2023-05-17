@@ -107,23 +107,23 @@ export default function RegisterScreen(this: any) {
   };
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section className="bg-gray-200 h-100%">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl underline decoration-red-300">
               회원가입
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={submit}>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block mb-2 text-sm font-medium text-gray-900 ">
                   이메일
                 </label>
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="name@company.com"
                   required
                   onChange={(event) =>
@@ -132,7 +132,7 @@ export default function RegisterScreen(this: any) {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block mb-2 text-sm font-medium text-gray-900 ">
                   비밀번호 - 영어 대문자, 숫자, 특수기호 포함하기
                 </label>
                 <input
@@ -140,18 +140,18 @@ export default function RegisterScreen(this: any) {
                   name="password"
                   id="password"
                   placeholder="비밀번호"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, password: event.target.value })
                   }
                 />
-                <a onClick={toggleHidePassword} className="text-white text-sm">
+                <a onClick={toggleHidePassword} className="text-sm">
                   {hidePassword ? <span>보이기</span> : <span>숨기기</span>}
                 </a>
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block mb-2 text-sm font-medium text-gray-900 ">
                   비밀번호 확인
                 </label>
                 <input
@@ -159,16 +159,13 @@ export default function RegisterScreen(this: any) {
                   name="confirm-password"
                   id="confirm-password"
                   placeholder="비밀번호 확인"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, confirmPassword: event.target.value })
                   }
                 />
-                <a
-                  onClick={toggleHideConfirmPassword}
-                  className="text-white text-sm"
-                >
+                <a onClick={toggleHideConfirmPassword} className="text-sm">
                   {hideConfirmPassword ? (
                     <span>보이기</span>
                   ) : (
@@ -177,7 +174,7 @@ export default function RegisterScreen(this: any) {
                 </a>
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block mb-2 text-sm font-medium text-gray-900 ">
                   이름
                 </label>
                 <input
@@ -185,7 +182,7 @@ export default function RegisterScreen(this: any) {
                   name="name"
                   id="name"
                   placeholder="홍길동"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, name: event.target.value })
@@ -193,7 +190,7 @@ export default function RegisterScreen(this: any) {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                <label className="block mb-2 text-sm font-medium text-gray-900 ">
                   전화번호
                 </label>
                 <input
@@ -201,7 +198,7 @@ export default function RegisterScreen(this: any) {
                   name="phone"
                   id="phone"
                   placeholder="010-1111-1111"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, phone: event.target.value })
@@ -210,15 +207,15 @@ export default function RegisterScreen(this: any) {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full font-bold text-medium bg-red-300 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg px-5 py-2.5 text-center"
               >
                 회원가입
               </button>
-              <p className="text-sm font-light text-gray-500 dark:text-gray-400">
+              <p className="text-sm">
                 이미 계정이 있나요?{" "}
                 <NavLink
                   to="/login"
-                  className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+                  className="font-medium text-primary-600 hover:text-gray-400"
                 >
                   로그인
                 </NavLink>
