@@ -108,9 +108,9 @@ export default function RegisterScreen(this: any) {
 
   return (
     <section className="bg-gray-200 h-100%">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div className="flex flex-col items-center justify-center px-6 mx-2 lg:py-0">
+        <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md lg:py-0">
+          <div className="p-4 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl underline decoration-red-300">
               회원가입
             </h1>
