@@ -412,7 +412,7 @@ const CalendarScreen = ({ user }: UserProps) => {
         <div className="group fixed bottom-0 right-0 p-2 z-50  flex items-end justify-end">
           <button
             onClick={() => setModalOpen(true)}
-            className="p-0 w-12 h-12 md:w-16 md:h-16 bg-red-600 rounded-full hover:bg-red-400 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
+            className="p-0 w-12 h-12 md:w-16 md:h-16 bg-red-300 rounded-full hover:bg-red-200 active:shadow-lg mouse shadow transition ease-in duration-200 focus:outline-none"
           >
             <svg
               viewBox="0 0 20 20"

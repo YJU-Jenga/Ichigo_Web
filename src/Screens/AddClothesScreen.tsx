@@ -44,7 +44,6 @@ const AddClothesScreen = ({ user }: UserProps) => {
     }
   };
 
-  // 상품추가 함수
   const AddClothes = async (e: SyntheticEvent) => {
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
     try {
