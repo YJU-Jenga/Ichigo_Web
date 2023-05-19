@@ -97,15 +97,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
     console.log(data);
   };
 
-  // // 주소 + 상세주소까지 합치기
-  // const full_address = (detailAddress: String) => {
-  //   let fullAddress = form.address + " " + detailAddress;
-  //   return setForm({ ...form, address: fullAddress });
-  // };
-
-  const submit = async (e: SyntheticEvent) => {
+  const submit = async () => {
     try {
-      e.preventDefault();
       const body = {
         userId: form.userId,
         address: form.address,
@@ -146,12 +139,45 @@ const PurchaseScreen = ({ user }: UserProps) => {
       }
     }
   };
+
+  const onClickPayment = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (!window.IMP) return;
+    const { IMP } = window;
+    IMP.init("imp63783256");
+
+    IMP.request_pay(
+      {
+        pg: "kakaopay.TC0ONETIME",
+        pay_method: "card",
+        merchant_uid: `mid_${new Date().getTime()}`,
+        name: purchaseName,
+        amount: totalPrice,
+        buyer_email: user?.email,
+        buyer_name: user?.name,
+        buyer_tel: user?.phone as string,
+        buyer_addr: form.address,
+        buyer_postcode: form.postalCode,
+      },
+      (res) => {
+        if (res.success) {
+          alert("주문이 완료되었습니다");
+          submit();
+        } else {
+          alert("결제 오류 발생");
+          navigate("/cart");
+        }
+      }
+    );
+  };
+
   return (
     <form
-      className="flex flex-col gap-5 text-base text-zinc-800"
-      onSubmit={submit}
+      className="flex m-5 flex-col gap-5 text-base text-zinc-800"
+      onSubmit={onClickPayment}
     >
-      <section className="flex flex-col gap-10">
+      <h1 className="mx-3 text-4xl mb-6 ">구매</h1>
+      <section className="flex flex-col border p-5 border-red-200 rounded-xl">
         {/* <label className="w-fit">
           <h3 className="text-xl font-semibold">* 주문자</h3>
           <input
@@ -194,17 +220,15 @@ const PurchaseScreen = ({ user }: UserProps) => {
             className="mt-2 h-8 px-2 pt-1 pb-1"
           />
         </label> */}
-        <div className="mt-2 flex-col">
+        <div className="flex-col p-2 ">
           <label className="w-fit">
             <h3 className="text-xl font-semibold">우편번호</h3>
             <input
               type="text"
               required
               value={form.postalCode}
-              style={{
-                borderBottom: "1px solid #1f2937",
-              }}
-              className="mt-2 h-8 px-2 pt-1 pb-1"
+              style={{}}
+              className="mb-5 mt-2"
               readOnly
             />
           </label>
@@ -214,10 +238,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
               type="text"
               required
               value={form.address}
-              style={{
-                borderBottom: "1px solid #1f2937",
-              }}
-              className="mt-2 h-8 px-2 pt-1 pb-1"
+              style={{}}
+              className="mb-5 mt-2"
               readOnly
             />
           </label>
@@ -229,10 +251,11 @@ const PurchaseScreen = ({ user }: UserProps) => {
               style={{
                 borderBottom: "1px solid #1f2937",
               }}
-              className="mt-2 h-8 px-2 pt-1 pb-1"
+              className="mb-12 mt-2"
+              ref={detailAddrRef}
               // focus상태였던 커서가 다른 곳으로 옮겨갈때 이벤트 함수 실행 - 상세주소 입력 후 full_address실행
               // onBlur={(event) => {
-              //   full_address(event.target.value);
+              //     //full_address(event.target.value);
               // }}
             />
           </label>
@@ -241,13 +264,11 @@ const PurchaseScreen = ({ user }: UserProps) => {
       </section>
       <button
         type="submit"
-        className="mt-8 border border-transparent hover:border-gray-300 bg-gray-900 hover:bg-white text-white hover:text-gray-900 flex justify-center items-center py-4 rounded w-full"
+        className="mt-8 border border-transparent hover:border-red-400 bg-red-300 hover:bg-red-400 text-white hover:text-white flex justify-center items-center py-4 rounded w-full"
       >
-        <div>
-          <p className="text-base leading-4 font-semibold">
-            총 {totalPrice}원 결제하기
-          </p>
-        </div>
+        <p className="text-base leading-4 font-semibold">
+          총 {totalPrice}원 결제하기
+        </p>
       </button>
     </form>
   );
