@@ -14,6 +14,10 @@ const PurchaseScreen = ({ user }: UserProps) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const productId: any[] = [];
   const productCount: any[] = [];
+  const productOption: any[] = [];
+  const clothesId: any[] = [];
+  const color: any[] = [];
+  const counts: any[] = [];
   const id = user?.id;
 
   // Purchase Information
@@ -34,6 +38,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
     try {
       let totalP = 0;
       const res = await axios.get(url, { headers });
+      console.log(res.data);
 
       const cartItemCount = res.data[0].cartToProducts.length;
       for (let i in res.data[0].cartToProducts) {
@@ -53,6 +58,12 @@ const PurchaseScreen = ({ user }: UserProps) => {
       for (let i in res.data[0].cartToProducts) {
         productCount.push(res.data[0].cartToProducts[i].count);
         productId.push(res.data[0].cartToProducts[i].productId);
+        clothesId.push(
+          res.data[0].cartToProducts[i].cartToProductOption.clothesId
+        );
+        color.push(res.data[0].cartToProducts[i].cartToProductOption.color);
+        counts.push(res.data[0].cartToProducts[i].cartToProductOption.counts);
+        productOption.push(productId, clothesId, color, counts);
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -92,6 +103,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
       postalCode: form?.postalCode,
       productIds: productId,
       counts: productCount,
+      productOptions: productOption,
     };
 
     const purchase_url = `${API_URL}/order/create`;
@@ -110,7 +122,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
-        // navigate('/');
+        navigate("/");
       }
     } catch (error) {
       if (error instanceof AxiosError) {
