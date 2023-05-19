@@ -9,4 +9,5 @@ export interface Product {
   stock: number;
   type: boolean;
   updatedAt: String;
+  cartToProductOption: Array<any>;
 }
