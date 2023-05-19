@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState, useRef } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -18,26 +18,23 @@ const PurchaseScreen = ({ user }: UserProps) => {
 
   // Purchase Information
   const [purchaseName, setPurchaseName] = useState();
+  const detailAddrRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     getTotalPrice();
   }, []);
 
-  useEffect(() => {
-    console.log(purchaseName);
-  }, [purchaseName]);
-
   const getTotalPrice = async () => {
-    const url = `${API_URL}/cart/findAllProducts/${id}`;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const url = `${API_URL}/cart/findAllProducts/${id}`;
     try {
       let totalP = 0;
-      const res = await axios.get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      console.log(res.data[0].cartToProducts[0].product);
+      const res = await axios.get(url, { headers });
+
       const cartItemCount = res.data[0].cartToProducts.length;
       for (let i in res.data[0].cartToProducts) {
         totalP +=
@@ -79,7 +76,6 @@ const PurchaseScreen = ({ user }: UserProps) => {
 
   const onCompletePost = (data: any) => {
     setForm({ ...form, address: data.address, postalCode: data.zonecode });
-    console.log(data);
   };
 
   // 주소 + 상세주소까지 합치기
@@ -89,15 +85,14 @@ const PurchaseScreen = ({ user }: UserProps) => {
   };
 
   const submit = async () => {
+    const address = form.address + " " + (detailAddrRef.current?.value ?? "");
     const body = {
       userId: form.userId,
-      address: form.address,
+      address: address,
       postalCode: form?.postalCode,
       productIds: productId,
       counts: productCount,
     };
-
-    console.log(body);
 
     const purchase_url = `${API_URL}/order/create`;
     const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
@@ -105,8 +100,6 @@ const PurchaseScreen = ({ user }: UserProps) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-
-    //onClickPayment();
     try {
       const res = await axios.post(purchase_url, body, { headers });
       if (res.status === 201) {
@@ -145,7 +138,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
         pay_method: "card",
         merchant_uid: `mid_${new Date().getTime()}`,
         name: purchaseName,
-        amount: 100,
+        amount: totalPrice,
         buyer_email: user?.email,
         buyer_name: user?.name,
         buyer_tel: user?.phone as string,
@@ -154,10 +147,11 @@ const PurchaseScreen = ({ user }: UserProps) => {
       },
       (res) => {
         if (res.success) {
-          alert(res);
+          alert("주문이 완료되었습니다");
           submit();
         } else {
-          alert(res.error_msg);
+          alert("결제 오류 발생");
+          navigate("/cart");
         }
       }
     );
@@ -165,10 +159,11 @@ const PurchaseScreen = ({ user }: UserProps) => {
 
   return (
     <form
-      className="flex flex-col gap-5 text-base text-zinc-800"
+      className="flex m-5 flex-col gap-5 text-base text-zinc-800"
       onSubmit={onClickPayment}
     >
-      <section className="flex flex-col gap-10">
+      <h1 className="mx-3 text-4xl mb-6 ">구매</h1>
+      <section className="flex flex-col border p-5 border-red-200 rounded-xl">
         {/* <label className="w-fit">
           <h3 className="text-xl font-semibold">* 주문자</h3>
           <input
@@ -211,17 +206,15 @@ const PurchaseScreen = ({ user }: UserProps) => {
             className="mt-2 h-8 px-2 pt-1 pb-1"
           />
         </label> */}
-        <div className="mt-2 flex-col p-4 ">
+        <div className="flex-col p-2 ">
           <label className="w-fit">
             <h3 className="text-xl font-semibold">우편번호</h3>
             <input
               type="text"
               required
               value={form.postalCode}
-              style={{
-                borderBottom: "1px solid #1f2937",
-              }}
-              className="mt-2 h-8 px-2 pt-1 pb-1"
+              style={{}}
+              className="mb-5 mt-2"
               readOnly
             />
           </label>
@@ -231,10 +224,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
               type="text"
               required
               value={form.address}
-              style={{
-                borderBottom: "1px solid #1f2937",
-              }}
-              className="mt-2 h-8 px-2 pt-1 pb-1"
+              style={{}}
+              className="mb-5 mt-2"
               readOnly
             />
           </label>
@@ -246,11 +237,12 @@ const PurchaseScreen = ({ user }: UserProps) => {
               style={{
                 borderBottom: "1px solid #1f2937",
               }}
-              className="mt-2 h-8 px-2 pt-1 pb-1"
+              className="mb-12 mt-2"
+              ref={detailAddrRef}
               // focus상태였던 커서가 다른 곳으로 옮겨갈때 이벤트 함수 실행 - 상세주소 입력 후 full_address실행
-              onBlur={(event) => {
-                full_address(event.target.value);
-              }}
+              // onBlur={(event) => {
+              //     //full_address(event.target.value);
+              // }}
             />
           </label>
           <DaumPostcode onComplete={onCompletePost}></DaumPostcode>
@@ -258,13 +250,11 @@ const PurchaseScreen = ({ user }: UserProps) => {
       </section>
       <button
         type="submit"
-        className="mt-8 border border-transparent hover:border-gray-300 bg-gray-900 hover:bg-white text-white hover:text-gray-900 flex justify-center items-center py-4 rounded w-full"
+        className="mt-8 border border-transparent hover:border-red-400 bg-red-300 hover:bg-red-400 text-white hover:text-white flex justify-center items-center py-4 rounded w-full"
       >
-        <div>
-          <p className="text-base leading-4 font-semibold">
-            총 {totalPrice}원 결제하기
-          </p>
-        </div>
+        <p className="text-base leading-4 font-semibold">
+          총 {totalPrice}원 결제하기
+        </p>
       </button>
     </form>
   );
