@@ -312,8 +312,14 @@ const CartScreen = ({ user }: UserProps) => {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </span>
                   </div>
+                  <div>옵션</div>
                   {product.cartToProductOption.map((option) => {
-                    return <div>옵션: </div>;
+                    return (
+                      <>
+                        <div>옷: {option?.clothesId}</div>
+                        <div>색상: {option?.color}</div>
+                      </>
+                    );
                   })}
                 </>
               );
