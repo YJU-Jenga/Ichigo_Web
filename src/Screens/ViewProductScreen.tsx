@@ -53,8 +53,12 @@ const ViewProductScreen = ({ user }: UserProps) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+    if (user == undefined) return;
+    const CartIdUrl = `${API_URL}/cart/findCartId/${id}`;
+    const cartIdRes = await axios.get(CartIdUrl, { headers });
+    const cartId = cartIdRes.data;
     const body = {
-      cartId: 1,
+      cartId: cartId,
       productId: id,
       count: 1,
     };
