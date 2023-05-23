@@ -11,8 +11,6 @@ import ItemUseScreen from "./ItemUseScreen";
 const ViewProductScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
 
-  const userId = user?.id;
-
   let { id } = useParams();
   const productId = Number(id);
   console.log(typeof productId);
@@ -54,7 +52,8 @@ const ViewProductScreen = ({ user }: UserProps) => {
       Authorization: `Bearer ${token}`,
     };
     if (user == undefined) return;
-    const CartIdUrl = `${API_URL}/cart/findCartId/${id}`;
+    const userId = user?.id;
+    const CartIdUrl = `${API_URL}/cart/findCartId/${userId}`;
     const cartIdRes = await axios.get(CartIdUrl, { headers });
     const cartId = cartIdRes.data;
     const body = {
@@ -97,6 +96,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
+    const userId = user?.id;
     const CartUpdateUrl = `${API_URL}/cart/updateAddedProduct/${userId}`;
     const body = {
       productId: productId,
