@@ -1,20 +1,23 @@
 import axios, { AxiosError } from "axios";
-import React, { SyntheticEvent, useEffect, useRef, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState, useRef } from "react";
 import DaumPostcode from "react-daum-postcode";
 import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserProps } from "../App";
 import { API_URL } from "../config";
 import { getCookie } from "../cookie";
+import { useLocation } from "react-router";
 import { ProductOption } from "../dto/ProductOption";
 import { CartToProductOption } from "../dto/CartToProductOption";
 
 const PurchaseScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [totalPrice, setTotalPrice] = useState(0);
   const [productId, setProductId] = useState<number[]>([]);
   const [productCount, setProductCount] = useState<number[]>([]);
   const [productOptions, setProductOption] = useState<ProductOption[]>([]);
+  const id = user?.id;
 
   // Purchase Information
   const [purchaseName, setPurchaseName] = useState();
@@ -38,12 +41,21 @@ const PurchaseScreen = ({ user }: UserProps) => {
     try {
       let totalP = 0;
       const res = await axios.get(url, { headers });
+      const cartItemCount = res.data[0].cartToProducts.length;
       for (let i in res.data[0].cartToProducts) {
         totalP +=
           res.data[0].cartToProducts[i].count *
           res.data[0].cartToProducts[i].product.price;
       }
       setTotalPrice(totalP);
+      setPurchaseName(
+        cartItemCount == 1
+          ? res.data[0].cartToProducts[0].product.name
+          : `${res.data[0].cartToProducts[0].product.name} 외 ${
+              cartItemCount - 1
+            }개 `
+      );
+
       if (user == undefined) return;
       for (let i in res.data[0].cartToProducts) {
         const productId = res.data[0].cartToProducts[i].productId;
@@ -94,27 +106,32 @@ const PurchaseScreen = ({ user }: UserProps) => {
 
   const onCompletePost = (data: any) => {
     setForm({ ...form, address: data.address, postalCode: data.zonecode });
-    console.log(data);
+  };
+
+  // 주소 + 상세주소까지 합치기
+  const full_address = (detailAddress: String) => {
+    let fullAddress = form.address + " " + detailAddress;
+    return setForm({ ...form, address: fullAddress });
   };
 
   const submit = async () => {
+    const address = form.address + " " + (detailAddrRef.current?.value ?? "");
+    const body = {
+      userId: form.userId,
+      address: address,
+      postalCode: form?.postalCode,
+      productIds: productId,
+      counts: productCount,
+      productOptions: productOptions,
+    };
+
+    const purchase_url = `${API_URL}/order/create`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
     try {
-      const body = {
-        userId: form.userId,
-        address: form.address,
-        postalCode: form.postalCode,
-        productIds: productId,
-        counts: productCount,
-        productOptions: productOptions,
-      };
-      if (user == undefined) return;
-      const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      };
-      const purchase_url = `${API_URL}/order/create`;
-      console.log(body);
       const res = await axios.post(purchase_url, body, { headers });
       if (res.status === 201) {
         Swal.fire({
@@ -164,6 +181,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
           alert("주문이 완료되었습니다");
           submit();
         } else {
+          console.log(res);
           alert("결제 오류 발생");
           navigate("/cart");
         }
@@ -178,48 +196,6 @@ const PurchaseScreen = ({ user }: UserProps) => {
     >
       <h1 className="mx-3 text-4xl mb-6 ">구매</h1>
       <section className="flex flex-col border p-5 border-red-200 rounded-xl">
-        {/* <label className="w-fit">
-          <h3 className="text-xl font-semibold">* 주문자</h3>
-          <input
-            type="text"
-            placeholder={"주문자 성명"}
-            value={user?.name}
-            // onChange={onOrdererNameChange}
-            required
-            style={{
-              borderBottom: "1px solid #1f2937",
-            }}
-            className="mt-2 h-8 px-2 pt-1 pb-1"
-          />
-        </label>
-        <label className="w-fit">
-          <div className="flex flex-wrap items-center gap-3">
-            <h3 className="text-xl font-semibold">수령인</h3>
-            <label>
-              <input
-                type="checkbox"
-                // checked={sameAsOrderer}
-                // onChange={onSameAsOrdererChange}
-                value="sameAsOrderer"
-              />{" "}
-              주문자와 동일
-            </label>
-          </div>
-          <input
-            type="text"
-            placeholder={"수령인 성명"}
-            // value={sameAsOrderer ? ordererName : recipientName}
-            onChange={(e) => {
-              // setSameAsOrderer(false);
-              // onRecipientNameChange(e);
-            }}
-            required
-            style={{
-              borderBottom: "1px solid #1f2937",
-            }}
-            className="mt-2 h-8 px-2 pt-1 pb-1"
-          />
-        </label> */}
         <div className="flex-col p-2 ">
           <label className="w-fit">
             <h3 className="text-xl font-semibold">우편번호</h3>
