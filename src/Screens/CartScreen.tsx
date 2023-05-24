@@ -268,6 +268,25 @@ const CartScreen = ({ user }: UserProps) => {
                         <span className="font-bold text-sm">
                           {product?.product.name}
                         </span>
+                        {product.cartToProductOption.map((option) => {
+                          const clothes = {
+                            1: "",
+                            2: "",
+                            3: "",
+                            4: "",
+                          };
+                          if (option?.clothesId == 1) {
+                          }
+                          return (
+                            <>
+                              <div>옷: {option?.clothesId}</div>
+                              <div
+                                className={`h-5 w-5 rounded-full bg-[${option?.color}]`}
+                              ></div>
+                            </>
+                          );
+                        })}
+
                         <a
                           className="font-semibold hover:text-red-500 text-gray-500 text-xs"
                           onClick={() => deleteProduct(product?.product.id)}
@@ -315,15 +334,6 @@ const CartScreen = ({ user }: UserProps) => {
                         .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                     </span>
                   </div>
-                  <div>옵션</div>
-                  {product.cartToProductOption.map((option) => {
-                    return (
-                      <>
-                        <div>옷: {option?.clothesId}</div>
-                        <div>색상: {option?.color}</div>
-                      </>
-                    );
-                  })}
                 </>
               );
             })}
