@@ -300,7 +300,7 @@ export default function CustomScreen({ user }: UserProps) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    const url = `${API_URL}/clothes/getAll/${Number(productId)}`;
+    const url = `${API_URL}/clothes/getAll/${productId}`;
     const res = await axios.get(url, { headers });
     if (res.data != undefined) {
       const cloth: Clothes[] = res.data;
@@ -327,7 +327,7 @@ export default function CustomScreen({ user }: UserProps) {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     };
-    const url = `${API_URL}/models/getModel/${Number(productId)}`;
+    const url = `${API_URL}/models/getModel/${productId}`;
     const res = await axios.get(url, { headers });
     if (res.data != undefined) {
       setHasModel(true);

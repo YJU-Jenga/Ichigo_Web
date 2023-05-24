@@ -152,7 +152,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
                   장바구니 담기
                 </button>
                 <NavLink
-                  to={`/custom/:${productDetail.id}`}
+                  to={`/custom/${productDetail.id}`}
                   className="position: static block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
                 >
                   커스텀
