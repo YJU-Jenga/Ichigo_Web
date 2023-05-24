@@ -283,7 +283,11 @@ const CartScreen = ({ user }: UserProps) => {
                                     {clothes[option?.clothesId]}
                                   </div>
                                   <div
-                                    className={`mx-2 h-5 w-5 border-solid border-2 border-gray-700 rounded-full bg-${option?.color}`}
+                                    className={`mx-2 h-5 w-5 rounded-full bg-${option?.color}`}
+                                    style={{
+                                      backgroundColor: option?.color,
+                                      border: "solid 1px",
+                                    }}
                                   ></div>
                                 </div>
                               </>
