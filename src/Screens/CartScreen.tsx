@@ -265,28 +265,25 @@ const CartScreen = ({ user }: UserProps) => {
                         />
                       </div>
                       <div className="flex flex-col justify-between ml-4 flex-grow">
-                        <div
-                          className={`mx-2 h-5 w-5 rounded-full bg-[#000000]`}
-                        ></div>
                         <span className="font-bold text-sm">
                           {product?.product.name}
                         </span>
-                        {product.cartToProductOption.map(
+                        {product.cartToProductOption[0].map(
                           (option: CartToProductOption) => {
-                            // const clothes: string[] = [
-                            //   "패딩",
-                            //   "티셔츠",
-                            //   "바지",
-                            //   "후드티",
-                            // ];
+                            const clothes: string[] = [
+                              "패딩",
+                              "티셔츠",
+                              "바지",
+                              "후드티",
+                            ];
                             return (
                               <>
                                 <div className="flex flex-row">
                                   <div className="mr-2 text-gray-600 text-xs">
-                                    {/* {clothes[option?.clothesId]} */}옷
+                                    {clothes[option?.clothesId]}
                                   </div>
                                   <div
-                                    className={`mx-2 h-5 w-5 rounded-full bg-[#${option?.color}]`}
+                                    className={`mx-2 h-5 w-5 rounded-full bg-[${option?.color}]`}
                                   ></div>
                                 </div>
                               </>
