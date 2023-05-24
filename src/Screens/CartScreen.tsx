@@ -8,6 +8,7 @@ import { CartToProduct } from "../dto/CartToProduct";
 import { Product } from "../dto/Product";
 import { getCookie } from "../cookie";
 import { API_URL } from "../config";
+import { CartToProductOption } from "../dto/CartToProductOption";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -268,24 +269,28 @@ const CartScreen = ({ user }: UserProps) => {
                         <span className="font-bold text-sm">
                           {product?.product.name}
                         </span>
-                        {product.cartToProductOption.map((option) => {
-                          const clothes = {
-                            1: "",
-                            2: "",
-                            3: "",
-                            4: "",
-                          };
-                          if (option?.clothesId == 1) {
+                        {product.cartToProductOption.map(
+                          (option: CartToProductOption) => {
+                            const clothes: string[] = [
+                              "패딩",
+                              "티셔츠",
+                              "바지",
+                              "후드티",
+                            ];
+                            return (
+                              <>
+                                <div className="flex flex-row">
+                                  <div className="mx-2">
+                                    {clothes[option?.clothesId]}
+                                  </div>
+                                  <div
+                                    className={`mx-2 h-5 w-5 rounded-full bg-[${option?.color}]`}
+                                  ></div>
+                                </div>
+                              </>
+                            );
                           }
-                          return (
-                            <>
-                              <div>옷: {option?.clothesId}</div>
-                              <div
-                                className={`h-5 w-5 rounded-full bg-[${option?.color}]`}
-                              ></div>
-                            </>
-                          );
-                        })}
+                        )}
 
                         <a
                           className="font-semibold hover:text-red-500 text-gray-500 text-xs"
