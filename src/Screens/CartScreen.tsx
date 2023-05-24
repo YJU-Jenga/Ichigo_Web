@@ -268,7 +268,7 @@ const CartScreen = ({ user }: UserProps) => {
                         <span className="font-bold text-sm">
                           {product?.product.name}
                         </span>
-                        {product.cartToProductOption[0].map(
+                        {product.cartToProductOption.map(
                           (option: CartToProductOption) => {
                             const clothes: string[] = [
                               "패딩",
