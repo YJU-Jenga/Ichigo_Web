@@ -9,16 +9,21 @@ import { Product } from "../dto/Product";
 import { getCookie } from "../cookie";
 import { API_URL } from "../config";
 import { CartToProductOption } from "../dto/CartToProductOption";
+import { Clothes } from "../dto/Clothes";
 
 const CartScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
   const [cartList, setCartList] = useState<Array<Cart>>([]);
   const [product, setProduct] = useState<Array<any>>([]);
+  const [clothes, setClothes] = useState<Array<Clothes>>([]);
+  const [options, setOptions] = useState<Array<any>>([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
 
   useEffect(() => {
     getCartList();
+    getClothes();
+    getClothesName();
   }, [user]);
 
   let currentPath = "";
@@ -73,7 +78,30 @@ const CartScreen = ({ user }: UserProps) => {
       }
     }
   };
+
+  const getClothes = async () => {
+    const getClothesNameUrl = `${API_URL}/clothes/getOne/${1}`;
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const res = await axios.get(getClothesNameUrl, { headers });
+    setClothes(res.data);
+  };
   // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+  const getProductOption = async () => {
+    const token = getCookie("access-token"); // 쿠키에서 JWT 토큰 값을 가져온다.
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    };
+    const getProductOptionUrl = `${API_URL}/clothes/getAll/{productId}`;
+    const res = await axios.get(getProductOptionUrl, { headers });
+    return res.data;
+  };
+
   // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   // 상품 삭제
@@ -206,6 +234,23 @@ const CartScreen = ({ user }: UserProps) => {
     }
   };
 
+  const getClothesName = () => {
+    const test_product_option = [
+      ...cartList[0]?.cartToProducts[0].cartToProductOption,
+    ];
+    for (let i in cartList[0]?.cartToProducts[0].cartToProductOption) {
+      for (let j in clothes) {
+        if (
+          cartList[0]?.cartToProducts[0].cartToProductOption[i].clothesId ===
+          clothes[j]?.id
+        ) {
+          test_product_option.push(clothes[j]?.name);
+        }
+      }
+    }
+    setOptions(test_product_option);
+  };
+
   if (!cartList) {
     return (
       <>
@@ -268,32 +313,24 @@ const CartScreen = ({ user }: UserProps) => {
                         <span className="font-bold text-sm">
                           {product?.product.name}
                         </span>
-                        {product.cartToProductOption.map(
-                          (option: CartToProductOption) => {
-                            const clothes: string[] = [
-                              "패딩",
-                              "티셔츠",
-                              "바지",
-                              "후드티",
-                            ];
-                            return (
-                              <>
-                                <div className="flex flex-row">
-                                  <div className="mr-2 text-gray-600 text-xs">
-                                    {clothes[option?.clothesId]}
-                                  </div>
-                                  <div
-                                    className={`mx-2 h-5 w-5 rounded-full bg-${option?.color}`}
-                                    style={{
-                                      backgroundColor: option?.color,
-                                      border: "solid 1px",
-                                    }}
-                                  ></div>
+                        {options.map((option: any) => {
+                          return (
+                            <>
+                              <div className="flex flex-row mb-1">
+                                <div className="mr-1 text-gray-600 text-xs">
+                                  {option?.name}
                                 </div>
-                              </>
-                            );
-                          }
-                        )}
+                                <div
+                                  className={`mx-2 h-5 w-5 rounded-full bg-${option?.color}`}
+                                  style={{
+                                    backgroundColor: option?.color,
+                                    border: "solid 1px",
+                                  }}
+                                ></div>
+                              </div>
+                            </>
+                          );
+                        })}
 
                         <a
                           className="font-semibold hover:text-red-500 text-gray-500 text-xs"
