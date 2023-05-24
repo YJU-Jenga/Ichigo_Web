@@ -280,7 +280,7 @@ const CartScreen = ({ user }: UserProps) => {
                             return (
                               <>
                                 <div className="flex flex-row">
-                                  <div className="mx-2">
+                                  <div className="mx-2 text-gray-600 text-xs">
                                     {clothes[option?.clothesId]}
                                   </div>
                                   <div
