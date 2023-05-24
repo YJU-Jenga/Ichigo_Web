@@ -23,7 +23,7 @@ const CartScreen = ({ user }: UserProps) => {
   useEffect(() => {
     getCartList();
     getClothes();
-    getClothesName();
+    // getClothesName();
   }, [user]);
 
   let currentPath = "";
@@ -234,23 +234,22 @@ const CartScreen = ({ user }: UserProps) => {
     }
   };
 
-  const getClothesName = () => {
-    const test_product_option = [
-      ...cartList[0]?.cartToProducts[0].cartToProductOption,
-    ];
-    for (let i in cartList[0]?.cartToProducts[0].cartToProductOption) {
-      for (let j in clothes) {
-        if (
-          cartList[0]?.cartToProducts[0].cartToProductOption[i].clothesId ===
-          clothes[j]?.id
-        ) {
-          test_product_option.push(clothes[j]?.name);
-        }
-      }
-    }
-    setOptions(test_product_option);
-  };
-
+  // const getClothesName = () => {
+  //   const test_product_option = [
+  //     ...cartList[0]?.cartToProducts[0].cartToProductOption,
+  //   ];
+  //   for (let i in cartList[0]?.cartToProducts[0].cartToProductOption) {
+  //     for (let j in clothes) {
+  //       if (
+  //         cartList[0]?.cartToProducts[0].cartToProductOption[i].clothesId ===
+  //         clothes[j]?.id
+  //       ) {
+  //         test_product_option.push(clothes[j]?.name);
+  //       }
+  //     }
+  //   }
+  //   setOptions(test_product_option);
+  // };
   if (!cartList) {
     return (
       <>
@@ -313,24 +312,32 @@ const CartScreen = ({ user }: UserProps) => {
                         <span className="font-bold text-sm">
                           {product?.product.name}
                         </span>
-                        {options.map((option: any) => {
-                          return (
-                            <>
-                              <div className="flex flex-row mb-1">
-                                <div className="mr-1 text-gray-600 text-xs">
-                                  {option?.name}
+                        {product.cartToProductOption.map(
+                          (option: CartToProductOption) => {
+                            const clothes: string[] = [
+                              "깔깔이",
+                              "티셔츠",
+                              "바지",
+                              "후드티",
+                            ];
+                            return (
+                              <>
+                                <div className="flex flex-row mb-1">
+                                  <div className="mr-1 text-gray-600 text-xs">
+                                    {clothes[option?.clothesId - 1]}
+                                  </div>
+                                  <div
+                                    className={`mx-2 h-5 w-5 rounded-full bg-${option?.color}`}
+                                    style={{
+                                      backgroundColor: option?.color,
+                                      border: "solid 1px",
+                                    }}
+                                  ></div>
                                 </div>
-                                <div
-                                  className={`mx-2 h-5 w-5 rounded-full bg-${option?.color}`}
-                                  style={{
-                                    backgroundColor: option?.color,
-                                    border: "solid 1px",
-                                  }}
-                                ></div>
-                              </div>
-                            </>
-                          );
-                        })}
+                              </>
+                            );
+                          }
+                        )}
 
                         <a
                           className="font-semibold hover:text-red-500 text-gray-500 text-xs"
