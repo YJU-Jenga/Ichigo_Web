@@ -29,6 +29,7 @@ import { API_URL } from "./config";
 import ViewProductScreen from "./Screens/ViewProductScreen";
 import AddModelScreen from "./Screens/AddModelScreen";
 import AddClothesScreen from "./Screens/AddClothesScreen";
+import ManigingDeviceScreen from "./Screens/ManigingDeviceScreen";
 
 export interface User {
   id: number;
@@ -112,6 +113,10 @@ function App() {
           />
           <Route path="/calendar" element={<CalendarScreen user={user} />} />
           <Route path="/maniging" element={<ManigingScreen user={user} />} />
+          <Route
+            path="/maniging_device"
+            element={<ManigingDeviceScreen user={user} />}
+          />
           <Route path="/mypage" element={<MyPageScreen user={user} />} />
           <Route
             path="/viewproduct/:id"

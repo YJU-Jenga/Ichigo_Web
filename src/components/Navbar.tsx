@@ -158,6 +158,15 @@ export function Navbar({ user }: UserProps) {
                   주문관리
                 </NavLink>
               ) : null}
+              {user?.permission ? (
+                <NavLink
+                  to="/maniging_device"
+                  className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
+                  aria-current="page"
+                >
+                  기기관리
+                </NavLink>
+              ) : null}
               {user ? (
                 <NavLink
                   to="/mypage"
