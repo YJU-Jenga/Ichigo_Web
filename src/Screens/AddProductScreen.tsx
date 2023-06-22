@@ -100,62 +100,67 @@ const AddProductScreen = ({ user }: UserProps) => {
 
   return (
     <form>
-      <div className="bg-indigo-50 min-h-screen md:px-20 pt-6">
+      <div className="bg-gray-200 min-h-screen md:px-20 pt-6">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           {form ? (
-            <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
-              상품 등록
-            </h1>
+            <h1 className="text-center text-2xl font-bold mb-10">상품 등록</h1>
           ) : null}
           <div className="space-y-4">
             <div>
-              <label className="text-lx">이름:</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                이름
+              </label>
               <input
-                type="text"
-                placeholder="name"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="이름"
                 onChange={(event) =>
                   setForm({ ...form, name: event.target.value })
                 }
-              />
+              ></input>
             </div>
             <div>
-              <label className="text-lx">가격:</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                가격
+              </label>
               <input
-                type="number"
-                placeholder="price"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="가격"
                 onChange={(event) =>
                   setForm({ ...form, price: Number(event.target.value) })
                 }
-              />
+              ></input>
             </div>
             <div>
-              <label className="block mb-2 text-lg">상품설명:</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                상품 설명
+              </label>
               <textarea
-                id="description"
                 placeholder="상품설명을 작성해주세요"
-                className="w-full p-4 text-gray-600 bg-indigo-50 outline-none rounded-md"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event) =>
                   setForm({ ...form, description: event.target.value })
                 }
               ></textarea>
             </div>
             <div>
-              <label className="text-lx">수량:</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                수량
+              </label>
               <input
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 type="number"
-                placeholder="stock"
-                id="email"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                placeholder="수량"
                 onChange={(event) =>
                   setForm({ ...form, stock: Number(event.target.value) })
                 }
               />
             </div>
             <div>
-              <label className="text-lx">타입: </label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                타입
+              </label>
               <select
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event) => {
                   if (event.target.value === "true") {
                     setForm({ ...form, type: true });
@@ -169,11 +174,13 @@ const AddProductScreen = ({ user }: UserProps) => {
               </select>
             </div>
             <div>
-              <label className="text-lx">파일:</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900">
+                파일
+              </label>
               <input
                 type="file"
-                id="file"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                placeholder="가격"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
                   const files = (target.files as FileList)[0];
@@ -184,10 +191,10 @@ const AddProductScreen = ({ user }: UserProps) => {
 
                   setFile(files);
                 }}
-              />
+              ></input>
             </div>
             <button
-              className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  "
+              className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300  "
               onClick={AddProduct}
             >
               상품 추가하기

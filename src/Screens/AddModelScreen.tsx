@@ -173,7 +173,7 @@ const AddModelScreen = ({ user }: UserProps) => {
               className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300  "
               onClick={AddModel}
             >
-              상품 추가하기
+              모델 등록하기
             </button>
           </div>
         </div>
