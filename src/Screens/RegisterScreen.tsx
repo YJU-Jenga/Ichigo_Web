@@ -133,7 +133,7 @@ export default function RegisterScreen(this: any) {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  暗証番号 - 영어 대문자, 숫자, 특수기호 포함하기
+                  暗証番号 - 英語の大文字、数字、特殊記号を含む
                 </label>
                 <input
                   type={hidePassword ? "password" : "text"}
