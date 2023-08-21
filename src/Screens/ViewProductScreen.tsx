@@ -144,26 +144,26 @@ const ViewProductScreen = ({ user }: UserProps) => {
               </h1>
               <div className="flex">
                 <button
-                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#41B979] rounded-[14px]"
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-bold tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#41B979] rounded-[14px]"
                   onClick={(event) => {
                     addToCart(event, productDetail.id);
                   }}
                 >
-                  장바구니 담기
+                  カートに追加
                 </button>
                 <NavLink
                   to={`/custom/${productDetail.id}`}
-                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-bold tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
                 >
-                  커스텀
+                  カスタマイズ
                 </NavLink>
                 <button
-                  className="block mt-10 w-full px-4 py-3 mx-1 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
+                  className="block mt-10 w-full px-4 py-3 mx-1 font-bold tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
                   onClick={() => {
                     goToPurchase();
                   }}
                 >
-                  구매하기
+                  購入
                 </button>
               </div>
             </div>
@@ -173,7 +173,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
       <hr className="mb-10" />
       <section className="grid place-items-center">
         <h1 className="text-gray-900 text-3xl title-font font-bold mb-1 mx-10 underline decoration-red-300">
-          상품 후기
+          この商品を購入された方のレビュー
         </h1>
         <ItemUseScreen user={undefined} />
       </section>

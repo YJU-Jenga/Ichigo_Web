@@ -67,12 +67,12 @@ export default function LoginScreen() {
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md xl:p-0 ">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl underline decoration-red-300">
-              로그인
+              ログイン
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={submit}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  이메일
+                  E-Mail
                 </label>
                 <input
                   type="email"
@@ -88,7 +88,7 @@ export default function LoginScreen() {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  비밀번호
+                  Password
                 </label>
                 <input
                   type="password"
@@ -112,9 +112,9 @@ export default function LoginScreen() {
                       className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300"
                     />
                   </div>
-                  <div className="ml-3 text-sm">
+                  <div className="ml-2 text-sm">
                     <label className="underline decoration-red-300">
-                      로그인 정보 기억하기
+                      ログイン情報保存
                     </label>
                   </div>
                 </div>
@@ -122,23 +122,23 @@ export default function LoginScreen() {
                   href="#"
                   className="underline decoration-red-300 text-sm font-medium text-primary-600 hover:underline"
                 >
-                  비밀번호를 잊어버리셨나요?
+                  暗証番号を忘れた場合
                 </a>
               </div>
               <button
                 type="submit"
                 className="w-full font-bold text-medium bg-red-300 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg px-5 py-2.5 text-center"
               >
-                로그인
+                ログイン
               </button>
               <p className="text-sm">
-                아직 계정이 없으신가요?{"     "}
+                まだアカウントがありませんか？{"     "}
                 <NavLink
                   to="/register"
                   className="font-medium text-primary-600 hover:text-gray-400"
                   aria-current="page"
                 >
-                  회원가입
+                  会員登録
                 </NavLink>
               </p>
             </form>

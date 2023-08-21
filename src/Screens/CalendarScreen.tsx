@@ -152,12 +152,12 @@ const CalendarScreen = ({ user }: UserProps) => {
     });
     Swal.fire({
       title: `${clickInfo.event.title}`,
-      text: `시작 : ${clickInfo.event.start.toLocaleString()}`,
+      text: `開始 : ${clickInfo.event.start.toLocaleString()}`,
       showDenyButton: true,
       showCancelButton: true,
-      confirmButtonText: `수정`,
-      denyButtonText: `삭제`,
-      cancelButtonText: `취소`,
+      confirmButtonText: `修正`,
+      denyButtonText: `削除`,
+      cancelButtonText: `キャンセル`,
     }).then((result) => {
       if (result.isConfirmed) {
         (async () => {
@@ -185,7 +185,7 @@ const CalendarScreen = ({ user }: UserProps) => {
             <div className="flex justify-center h-screen w-full items-center z-50 fixed bg-black-100">
               <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
                 <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
-                  <p className="font-semibold text-gray-800">일정 추가</p>
+                  <p className="font-semibold text-gray-800">日程追加</p>
                   <button onClick={() => setModalOpen(false)}>
                     <svg
                       className="w-6 h-6"
@@ -206,7 +206,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                 <div className="flex flex-col px-6 py-5 bg-gray-50">
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      제목
+                      タイトル
                     </label>
                     <input
                       type="text"
@@ -216,7 +216,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      설명
+                      内容
                     </label>
                     <input
                       type="text"
@@ -226,7 +226,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      장소
+                      場所
                     </label>
                     <input
                       type="text"
@@ -236,7 +236,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      시작
+                      開始日時
                     </label>
                     <input
                       type="datetime-local"
@@ -249,7 +249,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      끝
+                      終了日時
                     </label>
                     <input
                       type="datetime-local"
@@ -270,14 +270,14 @@ const CalendarScreen = ({ user }: UserProps) => {
                       setModalOpen(false);
                     }}
                   >
-                    일정 추가
+                    日程追加
                   </button>
                   <button
                     className="text-white bg-red-500 active:bg-red-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     onClick={() => setModalOpen(false)}
                   >
-                    취소
+                    キャンセル
                   </button>
                 </div>
               </div>
@@ -291,7 +291,7 @@ const CalendarScreen = ({ user }: UserProps) => {
             <div className="flex justify-center h-screen w-full items-center z-50 fixed bg-black-100">
               <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
                 <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
-                  <p className="font-semibold text-gray-800">일정 수정</p>
+                  <p className="font-semibold text-gray-800">日程修正</p>
                   <button onClick={() => setUpdateModalOpen(false)}>
                     <svg
                       className="w-6 h-6"
@@ -312,7 +312,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                 <div className="flex flex-col px-6 py-5 bg-gray-50">
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      제목
+                      タイトル
                     </label>
                     <input
                       type="text"
@@ -323,7 +323,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      설명
+                      内容
                     </label>
                     <input
                       type="text"
@@ -334,7 +334,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      장소
+                      場所
                     </label>
                     <input
                       type="text"
@@ -345,7 +345,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      시작
+                      開始日時
                     </label>
                     <input
                       type="datetime-local"
@@ -358,7 +358,7 @@ const CalendarScreen = ({ user }: UserProps) => {
                   </div>
                   <div className="mb-3">
                     <label className="mb-2 font-semibold text-gray-700">
-                      끝
+                      終了日時
                     </label>
                     <input
                       type="datetime-local"
@@ -379,14 +379,14 @@ const CalendarScreen = ({ user }: UserProps) => {
                       setUpdateModalOpen(false);
                     }}
                   >
-                    일정 수정
+                    日程修正
                   </button>
                   <button
                     className="text-white bg-red-500 active:bg-red-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     onClick={() => setUpdateModalOpen(false)}
                   >
-                    취소
+                    キャンセル
                   </button>
                 </div>
               </div>
@@ -405,7 +405,7 @@ const CalendarScreen = ({ user }: UserProps) => {
           }}
           events={events}
           eventClick={handleEventClick}
-          locale={"ko"}
+          locale={"jp"}
         />
       </div>
       {!modalOpen ? (

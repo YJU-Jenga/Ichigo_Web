@@ -83,7 +83,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
         <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-3">
           <h1 className="text-gray-900 text-3xl title-font font-medium mb-1 ml-3 underline decoration-red-300">
-            상품 문의
+            問い合わせ
           </h1>
           <div className="flex flex-col md:flex-row items-center justify-end space-y-3 md:space-y-0 md:space-x-4 p-2">
             <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0 ">
@@ -92,7 +92,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                   to="/write_product_inquiury"
                   className="flex ml-auto text-white bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-500 rounded"
                 >
-                  글 쓰기
+                  投稿
                 </NavLink>
               ) : (
                 <NavLink
@@ -102,7 +102,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                   to="/login"
                   className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                 >
-                  글 쓰기
+                  投稿
                 </NavLink>
               )}
             </div>
@@ -115,16 +115,16 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
             <thead className=" text-white uppercase bg-red-300 dark:bg-red-300 dark:text-white">
               <tr>
                 <th scope="col" className="px-4 py-3">
-                  제목
+                  タイトル
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  작성일자
+                  作成日
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  작성자
+                  作成者
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  조회수
+                  訪問数
                 </th>
               </tr>
             </thead>

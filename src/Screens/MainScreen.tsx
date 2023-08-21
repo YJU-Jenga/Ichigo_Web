@@ -6,19 +6,21 @@ const MainScreen = () => {
     <div className="lg:px-20 md:px-6 px-4 md:py-12 py-8">
       <div className="lg:flex items-center justify-between">
         <div className="lg:w-1/3">
-          <h1 className="text-4xl font-semibold leading-9 text-gray-800">
-            딸기
+          <h1 className="text-4xl font-semibold leading-9 text-gray-800 border-b-2 border-transparent border-red-300 w-24">
+            イチゴ
           </h1>
           <p className="text-base leading-6 mt-4 text-gray-600">
-            맞벌이 부부라서 아이가 걱정되십니까? 이제 걱정하지 마십시오...
-            저희가 아이의 놀이, 학습을 책임지겠습니다. 이름하여 딸기....
+            子供の友達として、自然な会話を通じて、
+          </p>
+          <p className="text-base leading-6 mt-2 text-gray-600">
+            親の育児負担をもっと軽くしてくれる対話型AI人形です。
           </p>
           <NavLink
             to="/product"
             aria-label="view catalogue"
-            className="mt-6 md:mt-8 text-base font-semibold leading-none text-gray-800 flex items-center hover:underline"
+            className="mt-6 md:mt-8 text-base font-semibold leading-none text-gray-800 flex items-center hover:text-red-300"
           >
-            구매하러 가기
+            買いに行く
             <svg
               className="ml-2 mt-1"
               width="12"

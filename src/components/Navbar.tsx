@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 import classNames from "classnames";
 
 export function Navbar({ user }: UserProps) {
+  // eslint-disable-next-line
   const [cookies, setCookie, removeCookie] = useCookies();
-  const [checked, setChecked] = useState(true);
   const [menuToggle, setMenuToggle] = useState(false);
   const location = useLocation();
 
@@ -41,10 +41,12 @@ export function Navbar({ user }: UserProps) {
 
   useEffect(() => {
     refreshToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   useEffect(() => {
     refreshToken();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const logout = async () => {
@@ -62,7 +64,7 @@ export function Navbar({ user }: UserProps) {
   };
   let signIn, join, signOut, nickname;
 
-  if (user == undefined) {
+  if (user === undefined) {
     signIn = (
       <div>
         <NavLink
@@ -70,7 +72,7 @@ export function Navbar({ user }: UserProps) {
           className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold"
           aria-current="page"
         >
-          로그인
+          ログイン
         </NavLink>
       </div>
     );
@@ -81,14 +83,14 @@ export function Navbar({ user }: UserProps) {
           className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold"
           aria-current="page"
         >
-          회원가입
+          会員登録
         </NavLink>
       </div>
     );
   } else {
     nickname = (
       <div className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300 font-bold">
-        {user.name}님
+        {user.name}さん
       </div>
     );
     signOut = (
@@ -99,7 +101,7 @@ export function Navbar({ user }: UserProps) {
           aria-current="page"
           onClick={logout}
         >
-          로그아웃
+          ログアウト
         </NavLink>
       </div>
     );
@@ -124,14 +126,14 @@ export function Navbar({ user }: UserProps) {
                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                 aria-current="page"
               >
-                상품
+                商品
               </NavLink>
               <NavLink
                 to="/productinquiry"
                 className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                 aria-current="page"
               >
-                상품 문의
+                問い合わせ
               </NavLink>
               <NavLink
                 to="/qna"
@@ -146,7 +148,7 @@ export function Navbar({ user }: UserProps) {
                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
-                  캘린더
+                  カレンダー
                 </NavLink>
               ) : null}
               {user?.permission ? (
@@ -155,7 +157,7 @@ export function Navbar({ user }: UserProps) {
                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
-                  주문관리
+                  注文管理
                 </NavLink>
               ) : null}
               {user?.permission ? (
@@ -164,7 +166,7 @@ export function Navbar({ user }: UserProps) {
                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
-                  기기관리
+                  デバイス管理
                 </NavLink>
               ) : null}
               {user ? (
@@ -173,7 +175,7 @@ export function Navbar({ user }: UserProps) {
                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
-                  마이페이지
+                  MyPage
                 </NavLink>
               ) : null}
               {user ? (
@@ -182,7 +184,7 @@ export function Navbar({ user }: UserProps) {
                   className="zIndex:1 lg:p-4 py-3 px-0 block border-b-2 border-transparent hover:border-red-300"
                   aria-current="page"
                 >
-                  장바구니
+                  カート
                 </NavLink>
               ) : null}
             </div>
@@ -251,7 +253,7 @@ export function Navbar({ user }: UserProps) {
           aria-current="page"
           onClick={() => setMenuToggle(!menuToggle)}
         >
-          상품
+          商品
         </NavLink>
         <NavLink
           to="/productinquiry"
@@ -259,7 +261,7 @@ export function Navbar({ user }: UserProps) {
           aria-current="page"
           onClick={() => setMenuToggle(!menuToggle)}
         >
-          상품 문의
+          商品についてのお問い合わせ
         </NavLink>
         <NavLink
           to="/qna"
@@ -276,7 +278,7 @@ export function Navbar({ user }: UserProps) {
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
-            캘린더
+            カレンダー
           </NavLink>
         ) : null}
         {user?.permission ? (
@@ -286,7 +288,7 @@ export function Navbar({ user }: UserProps) {
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
-            주문관리
+            注文管理
           </NavLink>
         ) : null}
         {user ? (
@@ -296,7 +298,7 @@ export function Navbar({ user }: UserProps) {
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
-            마이페이지
+            MyPage
           </NavLink>
         ) : null}
         {user ? (
@@ -306,7 +308,7 @@ export function Navbar({ user }: UserProps) {
             aria-current="page"
             onClick={() => setMenuToggle(!menuToggle)}
           >
-            장바구니
+            カート
           </NavLink>
         ) : null}
       </div>

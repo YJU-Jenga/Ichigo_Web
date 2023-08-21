@@ -112,12 +112,12 @@ export default function RegisterScreen(this: any) {
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md lg:py-0">
           <div className="p-4 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl underline decoration-red-300">
-              회원가입
+              会員登録
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={submit}>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  이메일
+                  E-Mail
                 </label>
                 <input
                   type="email"
@@ -133,7 +133,7 @@ export default function RegisterScreen(this: any) {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  비밀번호 - 영어 대문자, 숫자, 특수기호 포함하기
+                  暗証番号 - 영어 대문자, 숫자, 특수기호 포함하기
                 </label>
                 <input
                   type={hidePassword ? "password" : "text"}
@@ -152,7 +152,7 @@ export default function RegisterScreen(this: any) {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  비밀번호 확인
+                  暗証番号確認
                 </label>
                 <input
                   type={hideConfirmPassword ? "password" : "text"}
@@ -175,7 +175,7 @@ export default function RegisterScreen(this: any) {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  이름
+                  名前
                 </label>
                 <input
                   type="text"
@@ -191,7 +191,7 @@ export default function RegisterScreen(this: any) {
               </div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                  전화번호
+                  電話番号
                 </label>
                 <input
                   type="tel"
@@ -209,15 +209,15 @@ export default function RegisterScreen(this: any) {
                 type="submit"
                 className="w-full font-bold text-medium bg-red-300 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg px-5 py-2.5 text-center"
               >
-                회원가입
+                会員登録
               </button>
               <p className="text-sm">
-                이미 계정이 있나요?{" "}
+                もうアカウントを持っている方は{" "}
                 <NavLink
                   to="/login"
-                  className="font-medium text-primary-600 hover:text-gray-400"
+                  className="font-bold text-primary-600 hover:text-gray-400"
                 >
-                  로그인
+                  ログイン
                 </NavLink>
               </p>
             </form>

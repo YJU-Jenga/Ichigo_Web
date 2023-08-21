@@ -67,16 +67,16 @@ const MyPageScreen = ({ user }: UserProps) => {
     >
       <aside className="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l">
         <h1 className="mx-2 font-semibold text-gray-600 underline decoration-red-300">
-          {user?.name}님의 마이페이지
+          {user?.name}さんのMyPage
         </h1>
         <div className="flex flex-col justify-between flex-1 mt-6">
           <nav className="mx-2 space-y-6 ">
             <TabList className="space-y-3 ">
               <Tab className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700">
-                회원정보 수정
+                会員情報修正
               </Tab>
               <Tab className="flex items-center px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg hover:bg-gray-100 hover:text-gray-700">
-                구매 내역
+                購入内訳
               </Tab>
             </TabList>
           </nav>
@@ -86,11 +86,11 @@ const MyPageScreen = ({ user }: UserProps) => {
         <TabPanel className="w-full h-full">
           <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
             <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
-              <p className="font-semibold text-gray-800">회원정보 수정</p>
+              <p className="font-semibold text-gray-800">会員情報修正</p>
             </div>
             <div className="flex flex-col px-6 py-5 bg-gray-50">
               <div className="mb-3">
-                <label className="mb-2 font-semibold text-gray-700">이름</label>
+                <label className="mb-2 font-semibold text-gray-700">名前</label>
                 <input
                   type="text"
                   defaultValue={user?.name}
@@ -99,7 +99,7 @@ const MyPageScreen = ({ user }: UserProps) => {
               </div>
               <div className="mb-3">
                 <label className="mb-2 font-semibold text-gray-700">
-                  이메일
+                  E-Mail
                 </label>
                 <input
                   type="text"
@@ -109,7 +109,7 @@ const MyPageScreen = ({ user }: UserProps) => {
               </div>
               <div className="mb-3">
                 <label className="mb-2 font-semibold text-gray-700">
-                  전화번호
+                  電話番号
                 </label>
                 <input
                   type="text"
@@ -123,13 +123,13 @@ const MyPageScreen = ({ user }: UserProps) => {
                 className="text-white bg-yellow-500 active:bg-yellow-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
               >
-                회원정보 수정
+                会員情報修正
               </button>
               <button
                 className="text-white bg-red-500 active:bg-red-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
               >
-                취소
+                キャンセル
               </button>
             </div>
           </div>
@@ -140,7 +140,7 @@ const MyPageScreen = ({ user }: UserProps) => {
               <div className="py-8">
                 <div>
                   <h2 className="text-2xl font-semibold leading-tight">
-                    구매내역
+                    購入内訳
                   </h2>
                 </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
@@ -149,13 +149,13 @@ const MyPageScreen = ({ user }: UserProps) => {
                       <thead>
                         <tr>
                           <th className="px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg">
-                            상품정보
+                            商品情報
                           </th>
                           <th className="px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg">
-                            구매 / 구매확정일
+                            購入 / 購入確定日
                           </th>
                           <th className="px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg">
-                            구매후기
+                            購入レビュー
                           </th>
                         </tr>
                       </thead>
@@ -199,7 +199,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                                           navigate("/write_item_use");
                                         }}
                                       >
-                                        후기작성
+                                        レビュー作成
                                       </button>
                                     ) : (
                                       <button
@@ -216,7 +216,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                                           });
                                         }}
                                       >
-                                        후기작성
+                                        レビュー作成
                                       </button>
                                     )}
                                   </td>

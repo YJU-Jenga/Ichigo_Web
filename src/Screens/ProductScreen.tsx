@@ -42,7 +42,7 @@ const ProductScreen = ({ user }: UserProps) => {
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
       <h1 className="px-8 mt-3 text-gray-900 text-3xl title-font font-medium mb-1 ml-3 underline decoration-red-300">
-        상품
+        商品
       </h1>
       <div>
         <div className="p-8">

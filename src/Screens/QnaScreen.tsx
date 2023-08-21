@@ -91,7 +91,7 @@ const QnaScreen = ({ user }: UserProps) => {
                   to="/write_product_inquiury"
                   className="flex ml-auto text-white bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-500 rounded"
                 >
-                  글 쓰기
+                  投稿
                 </NavLink>
               ) : (
                 <NavLink
@@ -101,7 +101,7 @@ const QnaScreen = ({ user }: UserProps) => {
                   to="/login"
                   className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                 >
-                  글 쓰기
+                  投稿
                 </NavLink>
               )}
             </div>
@@ -114,16 +114,16 @@ const QnaScreen = ({ user }: UserProps) => {
             <thead className=" text-white uppercase bg-red-300 dark:bg-red-300 dark:text-white">
               <tr>
                 <th scope="col" className="px-4 py-3">
-                  제목
+                  タイトル
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  작성일자
+                  作成日
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  작성자
+                  作成者
                 </th>
                 <th scope="col" className="px-4 py-3">
-                  조회수
+                  訪問数
                 </th>
               </tr>
             </thead>
