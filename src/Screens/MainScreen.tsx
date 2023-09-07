@@ -1,24 +1,25 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { BsCheck2Circle } from 'react-icons/bs';
 
 const MainScreen = () => {
     return (
         <div className="lg:px-20 md:px-6 px-4 md:py-12 py-8">
             <div className="lg:flex items-center justify-between">
                 <div className="lg:w-1/3">
-                    <h1 className="text-4xl font-semibold leading-9 text-gray-800 border-b-2 border-transparent border-red-300 font-Line-bd w-fit">
+                    <h1 className="text-4xl font-semibold leading-9 text-gray-800 font-Line-bd w-fit">
                         イチゴ
                     </h1>
-                    <p className="text-base leading-6 mt-4 text-gray-600">
+                    <p className="text-base leading-6 mt-4 text-gray-600  font-Line-rg">
                         子供の友達として、自然な会話を通じて、
                     </p>
-                    <p className="text-base leading-6 mt-2 text-gray-600">
+                    <p className="text-base leading-6 mt-2 text-gray-600 font-Line-rg">
                         親の育児負担をもっと軽くしてくれる対話型AI人形です。
                     </p>
                     <NavLink
                         to="/product"
                         aria-label="view catalogue"
-                        className="mt-6 md:mt-8 text-base font-semibold leading-none text-gray-800 flex items-center hover:text-red-300"
+                        className="mt-6 md:mt-8 text-base font-semibold leading-none text-gray-800 flex items-center hover:text-red-300 font-Line-rg"
                     >
                         買いに行く
                         <svg
@@ -58,12 +59,19 @@ const MainScreen = () => {
                             className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 lg:gap-8 gap-6 lg:mt-8 md:mt-6 mt-4"
                         />
                     </div>
-                    {/* <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 lg:gap-8 gap-6 lg:mt-8 md:mt-6 mt-4">
-            <img src="img/ted.jpeg" className="w-full" alt="kitchen" />
-            <img src="img/ted.jpeg" className="w-full" alt="sitting room" />
-          </div> */}
                 </div>
             </div>
+            {/* <div className="mt-5">
+                <h1 className="font-Line-bd text-2xl mb-9">我々ならではの特徴</h1>
+                <div className="flex h-fit items-center">
+                    <BsCheck2Circle color="red" size="32"></BsCheck2Circle>
+                    <p className="text-2xl ml-3">良い習慣を身につける</p>
+                </div>
+                <div className="flex h-fit items-center">
+                    <BsCheck2Circle color="red" size="32"></BsCheck2Circle>
+                    <p className="text-2xl ml-3">両親が家を出ても安心</p>
+                </div>
+            </div> */}
         </div>
     );
 };
