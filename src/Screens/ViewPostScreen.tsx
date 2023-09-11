@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
 import { UserProps } from "../App";
-import { API_URL } from "../config";
+import { API_URL, IMG_URL } from "../config";
 
 const ViewPostScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
       }
     }
   };
-
+ 
   if (!boardDetail) {
     return <></>;
   }
@@ -198,6 +198,10 @@ const ViewPostScreen = ({ user }: UserProps) => {
               <div className="mb-3 text-xl font-bold">{boardDetail.title}</div>
               <div className="text-sm text-neutral-600">
                 {boardDetail.content}
+              </div>
+                <img src={IMG_URL + boardDetail.image} alt="" />
+              <div>
+
               </div>
             </div>
 
