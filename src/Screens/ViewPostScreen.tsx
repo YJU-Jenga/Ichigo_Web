@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
 import { UserProps } from "../App";
-import { API_URL, IMG_URL } from "../config";
+import { API_URL, BUCKET_URL } from "../config";
 
 const ViewPostScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -199,7 +199,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
               <div className="text-sm text-neutral-600">
                 {boardDetail.content}
               </div>
-                <img src={IMG_URL + boardDetail.image} alt="" />
+                <img src={BUCKET_URL + boardDetail.image} alt="" />
               <div>
 
               </div>

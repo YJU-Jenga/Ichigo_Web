@@ -15,7 +15,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { API_URL } from "../config";
+import { API_URL, BUCKET_URL } from "../config";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
 import { getCookie } from "../cookie";
@@ -170,7 +170,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                                       <div className="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
                                         <img
                                           className="w-full h-full rounded-full"
-                                          src={`${API_URL}/${product?.product?.image}`}
+                                          src={`${BUCKET_URL}${product?.product?.image}`}
                                           alt=""
                                         />
                                       </div>

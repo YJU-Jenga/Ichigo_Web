@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Product } from "../dto/Product";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
-import { API_URL } from "../config";
+import { API_URL, BUCKET_URL } from "../config";
 
 const ProductScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ const ProductScreen = ({ user }: UserProps) => {
                     <a href="#">
                       <img
                         className="rounded-t-lg"
-                        src={`${API_URL}/${product.image}`}
+                        src={`${BUCKET_URL}${product.image}`}
                         alt=""
                       />
                     </a>
