@@ -199,11 +199,13 @@ const PurchaseScreen = ({ user }: UserProps) => {
       className="flex m-5 flex-col gap-5 text-base text-zinc-800"
       onSubmit={onClickPayment}
     >
-      <h1 className="mx-3 text-4xl mb-6 ">購入</h1>
+      <h1 className="mx-3 text-4xl mb-6 font-Line-bd underline decoration-red-300">
+        購入
+      </h1>
       <section className="flex flex-col border p-5 border-red-200 rounded-xl">
         <div className="flex-col p-2 ">
           <label className="w-fit">
-            <h3 className="text-xl font-semibold">郵便番号</h3>
+            <h3 className="text-xl font-Line-bd">郵便番号</h3>
             <input
               type="text"
               required
@@ -214,7 +216,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
             />
           </label>
           <label className="w-fit">
-            <h3 className="text-xl font-semibold">住所</h3>
+            <h3 className="text-xl font-Line-bd">住所</h3>
             <input
               type="text"
               required
@@ -225,7 +227,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
             />
           </label>
           <label className="w-fit">
-            <h3 className="text-xl font-semibold">詳細住所</h3>
+            <h3 className="text-xl font-Line-bd">詳細住所</h3>
             <input
               type="text"
               required
@@ -247,8 +249,8 @@ const PurchaseScreen = ({ user }: UserProps) => {
         type="submit"
         className="mt-8 border border-transparent hover:border-red-400 bg-red-300 hover:bg-red-400 text-white hover:text-white flex justify-center items-center py-4 rounded w-full"
       >
-        <p className="text-base leading-4 font-semibold">
-          全部で{totalPrice}₩購入
+        <p className="text-base leading-4 font-Line-bd">
+          全部で{totalPrice}円購入
         </p>
       </button>
     </form>

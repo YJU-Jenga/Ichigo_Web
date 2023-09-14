@@ -57,7 +57,8 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
       body.append("content", JSON.stringify({ content: form.content }));
 
       const res = await axios.post(url, body, { headers });
-      if (res.status === 201) {
+      console.log(res);
+      if (res.status === 200) {
         Swal.fire({
           position: "center",
           icon: "success",
@@ -92,18 +93,18 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
     <form onSubmit={submit}>
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
-          <h1 className="text-center text-2xl font-bold mb-10">Q & A 쓰기</h1>
+          <h1 className="text-center text-2xl font-Line-bd mb-10">Q & A作成</h1>
           <div className="space-y-4">
             <div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900">
-                  제목
+                <label className="block mb-2 text-sm font-Line-rg text-gray-900">
+                  タイトル
                 </label>
                 <input
                   type="text"
                   id="first_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="제목"
+                  placeholder="タイトル"
                   onChange={(event) =>
                     setForm({ ...form, title: event.target.value })
                   }
@@ -112,13 +113,13 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
               </div>
             </div>
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900">
-                내용
+              <label className="block mb-2 text-sm font-Line-rg text-gray-900">
+                内容
               </label>
               <textarea
                 id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
-                placeholder="내용을 입력해주세요"
+                placeholder="内容を書いてください。"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
                 }
@@ -126,8 +127,8 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
               ></textarea>
             </div>
             <div>
-              <label className="block mb-2 text-sm font-medium text-gray-900">
-                파일
+              <label className="block mb-2 text-sm font-Line-rg text-gray-900">
+                ファイル
               </label>
               <input
                 type="file"
@@ -147,8 +148,8 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
             </div>
             <div className="flex w-full flex-col">
               <div className="flex flex-row">
-                <label className="block text-sm font-medium text-gray-900 mr-2 mb-2">
-                  비밀글
+                <label className="block text-sm font-Line-rg text-gray-900 mr-2 mb-2">
+                  秘密加減
                 </label>
                 <input
                   className="block text-lg mb-2"
@@ -160,12 +161,12 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
               </div>
               <div className="divider divider-horizontal"></div>
               <div className="flex flex-row">
-                <label className="block text-sm font-medium text-gray-900 mt-2 mr-2">
-                  비밀번호
+                <label className="block text-sm font-Line-rg text-gray-900 mt-2 mr-2">
+                  暗証番号
                 </label>
                 <input
                   type="password"
-                  placeholder="비밀번호"
+                  placeholder="暗証番号"
                   id="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
                   onChange={(event) =>
@@ -174,8 +175,8 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
                 />
               </div>
             </div>
-            <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300 hover:bg-red-200">
-              글 쓰기
+            <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-Line-bd text-white bg-red-300 hover:bg-red-200">
+              作成完了
             </button>
           </div>
         </div>

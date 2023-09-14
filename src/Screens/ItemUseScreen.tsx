@@ -33,20 +33,20 @@ const ItemUseScreen = ({ user }: UserProps) => {
             <div className="sm:w-8/12 pl-0 p-5">
               <div className="space-y-2">
                 <div className="space-y-4">
-                  <h4 className="text-md font-semibold text-cyan-900 text-justify">
+                  <h4 className="text-md font-Line-bd text-cyan-900 text-justify">
                     {board.title}
                   </h4>
                 </div>
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="flex gap-3 space-y-1">
-                    <span className="text-m">{board.content}</span>
+                    <span className="text-m font-Line-rg">{board.content}</span>
                   </div>
                 </div>
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="text-grey-500 flex flex-row space-x-1  my-4">
                     <p>{board.createdOn}</p>
                   </div>
-                  <div className="flex flex-row space-x-1 font-semibold">
+                  <div className="flex flex-row space-x-1 font-Line-bd">
                     {board.user}
                   </div>
                 </div>

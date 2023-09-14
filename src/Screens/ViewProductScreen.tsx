@@ -129,11 +129,11 @@ const ViewProductScreen = ({ user }: UserProps) => {
               alt=""
             />
             <div className="mt-6 lg:w-1/2 lg:mt-0 lg:mx-6 ">
-              <p className="block mt-4 text-4xl font-bold text-gray-800">
+              <p className="block mt-4 text-4xl font-bold text-gray-800 font-Line-bd">
                 {productDetail.name}
               </p>
 
-              <p className="mt-3 text-gray-500 text-xl">
+              <p className="mt-3 text-gray-500 text-xl font-Line-rg">
                 {productDetail.description}
               </p>
               <h1 className="py-2 text-2xl text-red-400 font-bold">
@@ -144,7 +144,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
               </h1>
               <div className="flex">
                 <button
-                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-bold tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#41B979] rounded-[14px]"
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#41B979] rounded-[14px]"
                   onClick={(event) => {
                     addToCart(event, productDetail.id);
                   }}
@@ -153,12 +153,12 @@ const ViewProductScreen = ({ user }: UserProps) => {
                 </button>
                 <NavLink
                   to={`/custom/${productDetail.id}`}
-                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-bold tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
                 >
                   カスタマイズ
                 </NavLink>
                 <button
-                  className="block mt-10 w-full px-4 py-3 mx-1 font-bold tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
+                  className="block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
                   onClick={() => {
                     goToPurchase();
                   }}
@@ -172,7 +172,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
       </section>
       <hr className="mb-10" />
       <section className="grid place-items-center">
-        <h1 className="text-gray-900 text-3xl title-font font-bold mb-1 mx-10 underline decoration-red-300">
+        <h1 className="text-gray-900 text-3xl title-font font-Line-bd mb-1 mx-10 underline decoration-red-300">
           この商品を購入された方のレビュー
         </h1>
         <ItemUseScreen user={undefined} />
