@@ -82,7 +82,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
     <section className="bg-gray-50  p-3 sm:p-5 h-screen">
       <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
         <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-3">
-          <h1 className="text-gray-900 text-3xl title-font font-medium mb-1 ml-3 underline decoration-red-300">
+          <h1 className="text-gray-900 text-3xl title-font font-Line-bd mb-1 ml-3 underline decoration-red-300">
             問い合わせ
           </h1>
           <div className="flex flex-col md:flex-row items-center justify-end space-y-3 md:space-y-0 md:space-x-4 p-2">
@@ -90,7 +90,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
               {user !== undefined ? (
                 <NavLink
                   to="/write_product_inquiury"
-                  className="flex ml-auto text-white bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-500 rounded"
+                  className="flex ml-auto text-white font-Line-rg bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-300 rounded"
                 >
                   投稿
                 </NavLink>
@@ -100,7 +100,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                     alert("로그인 해주세요.");
                   }}
                   to="/login"
-                  className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                  className="flex ml-auto text-white font-Line-rg bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-300 rounded"
                 >
                   投稿
                 </NavLink>
@@ -114,16 +114,16 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
           >
             <thead className=" text-white uppercase bg-red-300 dark:bg-red-300 dark:text-white">
               <tr>
-                <th scope="col" className="px-4 py-3">
+                <th scope="col" className="px-4 py-3 font-Line-bd">
                   タイトル
                 </th>
-                <th scope="col" className="px-4 py-3">
+                <th scope="col" className="px-4 py-3 font-Line-bd">
                   作成日
                 </th>
-                <th scope="col" className="px-4 py-3">
+                <th scope="col" className="px-4 py-3 font-Line-bd">
                   作成者
                 </th>
-                <th scope="col" className="px-4 py-3">
+                <th scope="col" className="px-4 py-3 font-Line-bd">
                   訪問数
                 </th>
               </tr>

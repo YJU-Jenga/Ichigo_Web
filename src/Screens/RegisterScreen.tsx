@@ -111,12 +111,12 @@ export default function RegisterScreen(this: any) {
       <div className="flex flex-col items-center justify-center px-6 mx-2 lg:py-0">
         <div className="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-md lg:py-0">
           <div className="p-4 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl underline decoration-red-300">
+            <h1 className="text-xl font-Line-bd leading-tight tracking-tight text-gray-900 md:text-2xl underline decoration-red-300">
               会員登録
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={submit}>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-Line-rg text-gray-900 ">
                   E-Mail
                 </label>
                 <input
@@ -132,14 +132,14 @@ export default function RegisterScreen(this: any) {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-Line-rg text-gray-900 ">
                   暗証番号 - 英語の大文字、数字、特殊記号を含む
                 </label>
                 <input
                   type={hidePassword ? "password" : "text"}
                   name="password"
                   id="password"
-                  placeholder="비밀번호"
+                  placeholder="暗証番号"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
@@ -151,14 +151,14 @@ export default function RegisterScreen(this: any) {
                 </a>
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-Line-rg text-gray-900 ">
                   暗証番号確認
                 </label>
                 <input
                   type={hideConfirmPassword ? "password" : "text"}
                   name="confirm-password"
                   id="confirm-password"
-                  placeholder="비밀번호 확인"
+                  placeholder="暗証番号確認"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
@@ -174,7 +174,7 @@ export default function RegisterScreen(this: any) {
                 </a>
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-Line-rg text-gray-900 ">
                   名前
                 </label>
                 <input
@@ -190,7 +190,7 @@ export default function RegisterScreen(this: any) {
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                <label className="block mb-2 text-sm font-Line-rg text-gray-900 ">
                   電話番号
                 </label>
                 <input
@@ -207,15 +207,15 @@ export default function RegisterScreen(this: any) {
               </div>
               <button
                 type="submit"
-                className="w-full font-bold text-medium bg-red-300 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg px-5 py-2.5 text-center"
+                className="w-full font-Line-bd text-medium bg-red-300 text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg px-5 py-2.5 text-center"
               >
                 会員登録
               </button>
-              <p className="text-sm">
+              <p className="text-sm font-Line-rg">
                 もうアカウントを持っている方は{" "}
                 <NavLink
                   to="/login"
-                  className="font-bold text-primary-600 hover:text-gray-400"
+                  className="font-Line-bd text-primary-600 hover:text-gray-400"
                 >
                   ログイン
                 </NavLink>

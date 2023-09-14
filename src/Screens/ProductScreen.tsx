@@ -41,7 +41,7 @@ const ProductScreen = ({ user }: UserProps) => {
   }
   return (
     <section className="text-gray-700 body-font overflow-hidden bg-white">
-      <h1 className="px-8 mt-3 text-gray-900 text-3xl title-font font-medium mb-1 ml-3 underline decoration-red-300">
+      <h1 className="px-8 mt-3 text-gray-900 text-3xl title-font font-Line-bd mb-1 ml-3 underline decoration-red-300">
         商品
       </h1>
       <div>
@@ -64,11 +64,11 @@ const ProductScreen = ({ user }: UserProps) => {
                     </a>
                     <div className="p-5">
                       <a href="#">
-                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                        <h5 className="mb-2 text-2xl font-Line-bd tracking-tight text-gray-900">
                           {product.name}
                         </h5>
                       </a>
-                      <p className="mb-3 font-normal text-gray-700">
+                      <p className="mb-3 font-Line-rg text-gray-700">
                         {product.description}
                       </p>
                       <p className="text-[17px] font-bold text-[#0FB478]">

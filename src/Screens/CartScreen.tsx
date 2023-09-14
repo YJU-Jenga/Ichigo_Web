@@ -253,7 +253,7 @@ const CartScreen = ({ user }: UserProps) => {
   if (!cartList) {
     return (
       <>
-        <h1>カートに商品が入っていません。</h1>
+        <h1 className="font-Line-rg">カートに商品が入っていません。</h1>
       </>
     );
   }
@@ -263,7 +263,7 @@ const CartScreen = ({ user }: UserProps) => {
       <div className="container mx-auto mt-10">
         <NavLink
           to="/product"
-          className="flex font-semibold text-red-400 text-sm mt-10 px-5"
+          className="flex font-Line-bd text-red-400 text-sm mt-10 px-5"
         >
           <svg
             className="fill-current mr-2 text-red-400 w-4"
@@ -276,20 +276,20 @@ const CartScreen = ({ user }: UserProps) => {
         <section className="flex md:flex-row flex-col">
           <div className="w-screen md:w-8/12 bg-white px-5 py-10">
             <div className="flex justify-between border-b pb-5">
-              <h1 className="font-semibold text-2xl">カート</h1>
-              <h2 className="font-semibold text-2xl">全部で{totalCount}個</h2>
+              <h1 className="font-Line-bd text-2xl">カート</h1>
+              <h2 className="font-Line-bd text-2xl">全部で{totalCount}個</h2>
             </div>
             <div className="flex mt-10 mb-5">
-              <h3 className="font-semibold text-gray-600 text-xs uppercase w-2/5">
+              <h3 className="font-Line-bd text-gray-600 text-xs uppercase w-2/5">
                 商品 / オプション
               </h3>
-              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">
+              <h3 className="font-Line-bd text-center text-gray-600 text-xs uppercase w-1/5">
                 数量
               </h3>
-              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">
+              <h3 className="font-Line-bd text-center text-gray-600 text-xs uppercase w-1/5">
                 価格
               </h3>
-              <h3 className="font-semibold text-center text-gray-600 text-xs uppercase w-1/5">
+              <h3 className="font-Line-bd text-center text-gray-600 text-xs uppercase w-1/5">
                 トタル価格
               </h3>
             </div>
@@ -309,7 +309,7 @@ const CartScreen = ({ user }: UserProps) => {
                         />
                       </div>
                       <div className="flex flex-col justify-between ml-4 flex-grow">
-                        <span className="font-bold text-sm">
+                        <span className="font-Line-bd text-sm">
                           {product?.product.name}
                         </span>
                         {product.cartToProductOption.map(
@@ -323,7 +323,7 @@ const CartScreen = ({ user }: UserProps) => {
                             return (
                               <>
                                 <div className="flex flex-row mb-1">
-                                  <div className="mr-1 text-gray-600 text-xs">
+                                  <div className="mr-1 text-gray-600 text-xs font-Line-rg">
                                     {clothes[option?.clothesId - 1]}
                                   </div>
                                   <div
@@ -340,7 +340,7 @@ const CartScreen = ({ user }: UserProps) => {
                         )}
 
                         <a
-                          className="font-semibold hover:text-red-200 text-red-500 text-xs"
+                          className="font-Line-bd hover:text-red-200 text-red-500 text-xs"
                           onClick={() => deleteProduct(product?.product.id)}
                         >
                           削除
@@ -374,16 +374,16 @@ const CartScreen = ({ user }: UserProps) => {
                       </svg>
                     </div>
                     <span className="text-center w-1/5 font-semibold text-sm">
-                      ₩{" "}
                       {product?.product.price
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                      円
                     </span>
                     <span className="text-center w-1/5 font-semibold text-sm">
-                      ₩{" "}
                       {(product?.product.price * product?.count)
                         .toString()
-                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                      円
                     </span>
                   </div>
                 </>
@@ -392,25 +392,25 @@ const CartScreen = ({ user }: UserProps) => {
           </div>
 
           <div id="summary" className="w-screen md:w-4/12 px-8 py-10">
-            <h1 className="font-semibold text-2xl border-b pb-5">商品合計</h1>
+            <h1 className="font-Line-bd text-2xl border-b pb-5">商品合計</h1>
             {/* <div className="flex justify-between mt-10 mb-5">
               <span className="font-semibold text-sm uppercase">
                 총 {totalCount}개
               </span>
             </div> */}
             <div>
-              <div className="flex font-semibold justify-between py-6 text-sm uppercase">
+              <div className="flex font-Line-bd justify-between py-6 text-sm uppercase">
                 <span>合計お支払い額</span>
                 <span className="mt-4">
-                  ₩{" "}
                   {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}{" "}
+                  円
                 </span>
               </div>
               <button
                 onClick={() => {
                   goToPurchase();
                 }}
-                className="bg-rose-300 font-bold hover:bg-rose-400 py-3 text-sm text-white uppercase w-full"
+                className="bg-rose-300 font-Line-bd hover:bg-rose-400 py-3 text-sm text-white uppercase w-full"
               >
                 レジへ進む
               </button>

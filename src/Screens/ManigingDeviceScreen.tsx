@@ -70,7 +70,7 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
             <div className="flex justify-center h-screen w-full items-center z-50 fixed bg-black-100">
               <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
                 <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
-                  <p className="font-semibold text-gray-800">기기 추가</p>
+                  <p className="font-Line-bd text-gray-800">デバイス追加</p>
                   <button onClick={() => setModalOpen(false)}>
                     <svg
                       className="w-6 h-6"
@@ -90,8 +90,8 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
                 </div>
                 <div className="flex flex-col px-6 py-5 bg-gray-50">
                   <div className="mb-3">
-                    <label className="mb-2 font-semibold text-gray-700">
-                      이름
+                    <label className="mb-2 font-Line-bd text-gray-700">
+                      名前
                     </label>
                     <input
                       onChange={(event) => setName(event.target.value)}
@@ -100,8 +100,8 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
                     />
                   </div>
                   <div className="mb-3">
-                    <label className="mb-2 font-semibold text-gray-700">
-                      MAC 주소
+                    <label className="mb-2 font-Line-bd text-gray-700">
+                      MAC住所
                     </label>
                     <input
                       onChange={(event) => setMacAddress(event.target.value)}
@@ -112,21 +112,21 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
                 </div>
                 <div className="flex flex-row-reverse items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
                   <button
-                    className="text-white bg-yellow-500 active:bg-yellow-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    className="text-white bg-yellow-500 active:bg-yellow-200 font-Line-bd uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     onClick={() => {
                       addDevice();
                       setModalOpen(false);
                     }}
                   >
-                    일정 추가
+                    デバイス追加
                   </button>
                   <button
-                    className="text-white bg-red-500 active:bg-red-200 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                    className="text-white bg-red-500 active:bg-red-200 font-Line-bd uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                     type="button"
                     onClick={() => setModalOpen(false)}
                   >
-                    취소
+                    キャンセル
                   </button>
                 </div>
               </div>
@@ -135,35 +135,35 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
         </>
       ) : null}
       <div className="p-4">
-        <h1 className="text-gray-900 text-3xl title-font font-medium mb-5 underline decoration-red-300">
-          기기 관리
+        <h1 className="text-gray-900 text-3xl title-font font-Line-bd mb-5 underline decoration-red-300">
+          デバイス管理
         </h1>
         <button
           onClick={() => setModalOpen(true)}
-          className="mb-5 text-xs bg-gray-600 font-medium rounded-lg hover:bg-gray-500 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none"
+          className="mb-5 text-xs bg-gray-600 font-Line-rg rounded-lg hover:bg-gray-500 text-white px-4 py-2.5 duration-300 transition-colors focus:outline-none"
         >
-          기기 등록
+          デバイス登録
         </button>
         <table className="min-w-full border-collapse block md:table">
           <thead className="block md:table-header-group">
             <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-              <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                번호
+              <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+                番号
               </th>
-              <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                MAC주소
+              <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+                MAC住所
               </th>
-              <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                이름
+              <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+                名前
               </th>
-              <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                유저
+              <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+                ユーザー
               </th>
-              <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                등록일
+              <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+                登録日時
               </th>
-              <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-                유저 등록일
+              <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+                ユーザー登録日
               </th>
             </tr>
           </thead>
@@ -176,37 +176,37 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
                 >
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
-                      번호
+                      番号
                     </span>
                     {hihi.id}
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
-                      MAC주소
+                      MAC住所
                     </span>
                     {hihi.macAddress}
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
-                      이름
+                      名前
                     </span>
                     {hihi.name}
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
-                      유저
+                      ユーザー
                     </span>
                     {hihi.userId}
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
-                      등록일
+                      登録日時
                     </span>
                     {hihi.createdAt}
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
-                      유저 등록일
+                      ユーザー登録日
                     </span>
                     {hihi.updatedAt}
                   </td>

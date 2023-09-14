@@ -97,29 +97,29 @@ const ManigingScreen = ({ user }: UserProps) => {
 
   return (
     <div className="p-4">
-      <h1 className="text-gray-900 text-3xl title-font font-medium mb-5 underline decoration-red-300">
-        주문 관리
+      <h1 className="text-gray-900 text-3xl title-font font-Line-bd mb-5 underline decoration-red-300">
+        注文管理
       </h1>
       <table className="min-w-full border-collapse block md:table">
         <thead className="block md:table-header-group">
           <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-            <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-              번호
+            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+              番号
             </th>
-            <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-              주문자
+            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+              注文者
             </th>
-            <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-              배송지
+            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+              配送先
             </th>
-            <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-              우편번호
+            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+              郵便番号
             </th>
-            <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-              주문상태
+            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+              注文状態
             </th>
-            <th className="bg-gray-600 p-2 text-white font-bold md:border md:border-grey-500 text-left block md:table-cell">
-              주문 상태 변경
+            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+              注文状態変更
             </th>
           </tr>
         </thead>
@@ -132,53 +132,53 @@ const ManigingScreen = ({ user }: UserProps) => {
               >
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
-                    번호
+                    番号
                   </span>
                   {hihi.id}
                 </td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
-                    주문자
+                    注文者
                   </span>
                   {hihi.userId}
                 </td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
-                    배송지
+                    配送先
                   </span>
                   {hihi.address}
                 </td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
-                    우편번호
+                    郵便番号
                   </span>
                   {hihi.postalCode}
                 </td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
-                    주문상태
+                    注文状態
                   </span>
                   {hihi.state ? (
                     <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                      접수됨
+                      受付された
                     </p>
                   ) : (
                     <p className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-brown-800">
-                      접수 필요
+                      受付必要
                     </p>
                   )}
                 </td>
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
-                    주문 접수
+                    注文受け付ける
                   </span>
                   <button
                     onClick={() => {
                       updateState(hihi.id);
                     }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 border border-blue-500 rounded"
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-Line-bd py-1 px-2 border border-blue-500 rounded"
                   >
-                    접수
+                    受け付ける
                   </button>
                   {/* <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">
                     Delete
