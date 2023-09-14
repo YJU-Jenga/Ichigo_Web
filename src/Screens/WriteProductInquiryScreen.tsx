@@ -56,7 +56,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
       body.append("content", JSON.stringify({ content: form.content }));
 
       const res = await axios.post(url, body, { headers });
-      if (res.status === 201) {
+      if (res.status === 200) {
         Swal.fire({
           position: "center",
           icon: "success",

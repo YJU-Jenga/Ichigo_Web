@@ -64,13 +64,13 @@ const ManigingScreen = ({ user }: UserProps) => {
       }
     }
 
-    const body = {
-      userId: updateUserId,
-      postalCode: updatePostalCode,
-      address: updateAddress,
-      state: true,
-    };
     try {
+      const body = {
+        userId: updateUserId,
+        postalCode: updatePostalCode,
+        address: updateAddress,
+        state: true,
+      };
       const res = await axios.patch(UpdateStateUrl, body, { headers });
       if (res.status === 200) {
         Swal.fire({
@@ -180,9 +180,6 @@ const ManigingScreen = ({ user }: UserProps) => {
                   >
                     受け付ける
                   </button>
-                  {/* <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 border border-red-500 rounded">
-                    Delete
-                  </button> */}
                 </td>
               </tr>
             );
