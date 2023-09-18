@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
+import localesAll from "@fullcalendar/core/locales-all.js";
 import dayjs from "dayjs";
 
 interface EventData {
@@ -396,7 +397,7 @@ const CalendarScreen = ({ user }: UserProps) => {
       ) : null}
       <div className="App mt-5 z-30">
         <FullCalendar
-          initialView="dayGridMonth"
+          // initialView="dayGridMonth"
           plugins={[dayGridPlugin, timeGridPlugin]}
           headerToolbar={{
             left: "prev,next",
@@ -405,7 +406,8 @@ const CalendarScreen = ({ user }: UserProps) => {
           }}
           events={events}
           eventClick={handleEventClick}
-          locale={"jp"}
+          locales={localesAll}
+          locale={"ja"}
         />
       </div>
       {!modalOpen ? (
