@@ -149,7 +149,7 @@ export default function CustomScreen({ user }: UserProps) {
 
       const body = {
         cartId: cartId,
-        productId: parseInt(productId.substr(1, 1)),
+        productId: parseInt(productId),
         count: 1,
         clothesIds: clothesIds,
         colors: colors,

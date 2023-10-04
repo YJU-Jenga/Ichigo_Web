@@ -68,7 +68,9 @@ function App() {
   };
 
   useEffect(() => {
-    getUser();
+    if(cookies["access-token"] != undefined) {
+      getUser();
+    }
   }, [user?.id]);
   return (
     <>
