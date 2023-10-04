@@ -14,7 +14,7 @@ import { positions, width } from "@mui/system";
 import { UserProps } from "../App";
 import { useNavigate, useParams } from "react-router-dom";
 import { FaShoppingCart } from "react-icons/fa";
-import { API_URL } from "../config";
+import { API_URL, BUCKET_URL } from "../config";
 import axios, { AxiosError } from "axios";
 import { getCookie } from "../cookie";
 import Swal from "sweetalert2";
@@ -195,7 +195,7 @@ export default function CustomScreen({ user }: UserProps) {
             SetSelect("cloth1");
           }}
         >
-          <img src={API_URL + "/" + clothes[0].file.toString()} width="100" />
+          <img src={BUCKET_URL + clothes[0].file.toString()} width="100" />
           <input checked={visible1} type="checkbox"></input>
         </div>
         <div
@@ -208,7 +208,7 @@ export default function CustomScreen({ user }: UserProps) {
             SetSelect("cloth2");
           }}
         >
-          <img src={API_URL + "/" + clothes[1].file.toString()} width="100" />
+          <img src={BUCKET_URL + clothes[1].file.toString()} width="100" />
           <input checked={visible2} type="checkbox"></input>
         </div>
         <div
@@ -220,7 +220,7 @@ export default function CustomScreen({ user }: UserProps) {
             SetSelect("cloth3");
           }}
         >
-          <img src={API_URL + "/" + clothes[2].file.toString()} width="100" />
+          <img src={BUCKET_URL + clothes[2].file.toString()} width="100" />
           <input checked={visible3} type="checkbox"></input>
         </div>
         <div
@@ -233,7 +233,7 @@ export default function CustomScreen({ user }: UserProps) {
             SetSelect("cloth4");
           }}
         >
-          <img src={API_URL + "/" + clothes[3].file.toString()} width="100" />
+          <img src={BUCKET_URL + clothes[2].file.toString()} width="100" />
           <input checked={visible4} type="checkbox"></input>
         </div>
       </div>

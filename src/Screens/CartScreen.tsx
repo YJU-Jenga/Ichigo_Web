@@ -7,7 +7,7 @@ import { UserProps } from "../App";
 import { CartToProduct } from "../dto/CartToProduct";
 import { Product } from "../dto/Product";
 import { getCookie } from "../cookie";
-import { API_URL } from "../config";
+import { API_URL, BUCKET_URL } from "../config";
 import { CartToProductOption } from "../dto/CartToProductOption";
 import { Clothes } from "../dto/Clothes";
 
@@ -305,7 +305,7 @@ const CartScreen = ({ user }: UserProps) => {
                       <div className="w-20">
                         <img
                           className="h-24"
-                          src={`${API_URL}/${product?.product.image}`}
+                          src={`${BUCKET_URL}${product?.product.image}`}
                         />
                       </div>
                       <div className="flex flex-col justify-between ml-4 flex-grow">
