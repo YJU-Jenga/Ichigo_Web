@@ -199,8 +199,11 @@ const ViewPostScreen = ({ user }: UserProps) => {
               <div className="text-sm text-neutral-600">
                 {boardDetail.content}
               </div>
-              <img src={BUCKET_URL + boardDetail.image} alt="" />
+              <div>
+                <img src={BUCKET_URL + boardDetail.image} alt="" />
+              </div>
             </div>
+
             <div>
               <div className="flex items-center justify-between text-slate-500">
                 <div className="flex space-x-4 md:space-x-8">

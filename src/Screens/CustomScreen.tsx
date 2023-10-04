@@ -233,7 +233,7 @@ export default function CustomScreen({ user }: UserProps) {
             SetSelect("cloth4");
           }}
         >
-          <img src={BUCKET_URL + clothes[2].file.toString()} width="100" />
+          <img src={BUCKET_URL + clothes[3].file.toString()} width="100" />
           <input checked={visible4} type="checkbox"></input>
         </div>
       </div>
@@ -332,7 +332,7 @@ export default function CustomScreen({ user }: UserProps) {
     if (res.data != undefined) {
       setHasModel(true);
       let path: string = res.data.file;
-      path = path.slice(7);
+      path = BUCKET_URL + path;
       // console.log(path);
       setModel(path);
     } else {
@@ -347,28 +347,7 @@ export default function CustomScreen({ user }: UserProps) {
   };
 
   function Model() {
-    // const url = `${API_URL}/${model}`;
-    // console.log(url);
-    // const requestOptions: RequestInit = {
-    //         method: 'GET',
-    //         mode: 'no-cors',
-    //     };
-
-    //     fetch(url, requestOptions)
-    //     .then(response => response.blob())
-    //     .then(data => {
-    //     console.log("data",data);
-    // })
-    // .catch(error => {
-    //         // 에러 처리
-    //         console.log(error);
-    //     });
-    //     const modelData = axios.get(`${API_URL}/${model}`, { withCredentials: true });
-    //     console.log(modelData);
-
-    // const { scene } = useLoader(GLTFLoader, `/models/ted.gltf`);
     const { scene } = useLoader(GLTFLoader, `${model}`);
-    // const { scene } = useLoader(GLTFLoader, `${API_URL}/${model}`); // cors error
     // console.log(scene);
 
     return scene ? (
