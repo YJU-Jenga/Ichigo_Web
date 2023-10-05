@@ -211,7 +211,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               required
               value={form.postalCode}
               style={{}}
-              className="mb-5 mt-2"
+              className="mb-5 mt-2 w-full"
               readOnly
             />
           </label>
@@ -222,7 +222,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               required
               value={form.address}
               style={{}}
-              className="mb-5 mt-2"
+              className="mb-5 mt-2 w-full"
               readOnly
             />
           </label>
@@ -234,7 +234,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
               style={{
                 borderBottom: "1px solid #1f2937",
               }}
-              className="mb-12 mt-2"
+              className="mb-12 mt-2 w-full"
               ref={detailAddrRef}
               // focus상태였던 커서가 다른 곳으로 옮겨갈때 이벤트 함수 실행 - 상세주소 입력 후 full_address실행
               // onBlur={(event) => {
