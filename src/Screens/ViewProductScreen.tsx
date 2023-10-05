@@ -144,7 +144,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
               </h1>
               <div className="flex">
                 <button
-                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#41B979] rounded-[14px]"
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-red-300 hover:bg-red-200 rounded-[14px]"
                   onClick={(event) => {
                     addToCart(event, productDetail.id);
                   }}
@@ -153,12 +153,12 @@ const ViewProductScreen = ({ user }: UserProps) => {
                 </button>
                 <NavLink
                   to={`/custom/${productDetail.id}`}
-                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#FFD400] rounded-[14px]"
+                  className="position: static block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-red-300 hover:bg-red-200 rounded-[14px]"
                 >
                   カスタマイズ
                 </NavLink>
                 <button
-                  className="block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-[#EF6253] rounded-[14px]"
+                  className="block mt-10 w-full px-4 py-3 mx-1 font-Line-bd tracking-wide text-center capitalize transition-colors duration-300 transform text-white bg-red-300 hover:bg-red-200 rounded-[14px]"
                   onClick={() => {
                     goToPurchase();
                   }}

@@ -71,7 +71,7 @@ const ProductScreen = ({ user }: UserProps) => {
                       <p className="mb-3 font-Line-rg text-gray-700">
                         {product.description}
                       </p>
-                      <p className="text-[17px] font-bold text-[#0FB478]">
+                      <p className="text-[17px] font-bold text-red-300">
                         {product.price
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}

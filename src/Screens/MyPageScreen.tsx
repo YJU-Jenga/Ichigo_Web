@@ -84,13 +84,17 @@ const MyPageScreen = ({ user }: UserProps) => {
       </aside>
       <div className="w-full h-100% grid place-items-center bg-gray-100">
         <TabPanel className="w-full h-full">
-          <div className="flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
+          <div className="mt-20 flex flex-col w-11/12 sm:w-5/6 lg:w-1/2 max-w-2xl mx-auto rounded-lg border border-gray-300 shadow-xl">
             <div className="flex flex-row justify-between p-6 bg-white border-b border-gray-200 rounded-tl-lg rounded-tr-lg">
-              <p className="font-Line-bd text-gray-800">会員情報修正</p>
+              <p className="font-Line-bd text-gray-800 underline decoration-red-300">
+                会員情報修正
+              </p>
             </div>
             <div className="flex flex-col px-6 py-5 bg-gray-50">
               <div className="mb-3">
-                <label className="mb-2 font-Line-bd text-gray-700">名前</label>
+                <label className="mb-2 font-Line-bd text-gray-700 underline decoration-red-300">
+                  名前
+                </label>
                 <input
                   type="text"
                   defaultValue={user?.name}
@@ -98,7 +102,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                 />
               </div>
               <div className="mb-3">
-                <label className="mb-2 font-Line-bd text-gray-700">
+                <label className="mb-2 font-Line-bd text-gray-700 underline decoration-red-300">
                   E-Mail
                 </label>
                 <input
@@ -108,7 +112,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                 />
               </div>
               <div className="mb-3">
-                <label className="mb-2 font-Line-bd text-gray-700">
+                <label className="mb-2 font-Line-bd text-gray-700 underline decoration-red-300">
                   電話番号
                 </label>
                 <input
@@ -120,7 +124,7 @@ const MyPageScreen = ({ user }: UserProps) => {
             </div>
             <div className="flex flex-row-reverse items-center p-5 bg-white border-t border-gray-200 rounded-bl-lg rounded-br-lg">
               <button
-                className="text-white bg-yellow-500 active:bg-yellow-200 font-Line-bd uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                className="text-white bg-red-300 hover:bg-red-200 font-Line-bd uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                 type="button"
               >
                 会員情報修正
@@ -139,7 +143,7 @@ const MyPageScreen = ({ user }: UserProps) => {
             <div className="w-3/4 container mx-auto px-4 sm:px-8">
               <div className="py-8">
                 <div>
-                  <h2 className="text-2xl font-Line-bd leading-tight">
+                  <h2 className="text-2xl font-Line-bd leading-tight underline decoration-red-300">
                     購入内訳
                   </h2>
                 </div>
@@ -148,13 +152,13 @@ const MyPageScreen = ({ user }: UserProps) => {
                     <table className="min-w-full leading-normal">
                       <thead>
                         <tr>
-                          <th className="font-Line-bd px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg">
+                          <th className="font-Line-bd px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg underline decoration-red-300">
                             商品情報
                           </th>
-                          <th className=" font-Line-bd px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg">
+                          <th className=" font-Line-bd px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg underline decoration-red-300">
                             購入 / 購入確定日
                           </th>
-                          <th className=" font-Line-bd px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg">
+                          <th className=" font-Line-bd px-3 py-2 text-gray-600 transition-colors duration-300 transform rounded-lg underline decoration-red-300">
                             購入レビュー
                           </th>
                         </tr>
@@ -193,7 +197,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                                   <td className="px-5 py-5 bg-white flex items-center justify-center border-b border-gray-200">
                                     {order?.state ? (
                                       <button
-                                        className="text-white bg-green-500 hover:bg-green-400 font-Line-bd uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
+                                        className="text-white bg-red-300 hover:bg-red-200 font-Line-bd uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1"
                                         type="button"
                                         onClick={() => {
                                           navigate("/write_item_use");

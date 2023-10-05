@@ -112,18 +112,30 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
             style={{ minHeight: "20vh" }}
             className="w-full text-sm text-left"
           >
-            <thead className=" text-white uppercase bg-red-300 dark:bg-red-300 dark:text-white">
+            <thead className=" uppercase bg-gray-300 dark:bg-gray-300">
               <tr>
-                <th scope="col" className="px-4 py-3 font-Line-bd">
+                <th
+                  scope="col"
+                  className="px-4 py-3 font-Line-bd underline decoration-red-300"
+                >
                   タイトル
                 </th>
-                <th scope="col" className="px-4 py-3 font-Line-bd">
+                <th
+                  scope="col"
+                  className="px-4 py-3 font-Line-bd underline decoration-red-300"
+                >
                   作成日
                 </th>
-                <th scope="col" className="px-4 py-3 font-Line-bd">
+                <th
+                  scope="col"
+                  className="px-4 py-3 font-Line-bd underline decoration-red-300"
+                >
                   作成者
                 </th>
-                <th scope="col" className="px-4 py-3 font-Line-bd">
+                <th
+                  scope="col"
+                  className="px-4 py-3 font-Line-bd underline decoration-red-300"
+                >
                   訪問数
                 </th>
               </tr>
@@ -135,7 +147,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                 return (
                   <tr
                     key={board.id}
-                    className="border-b dark:border-gray-700 bg-red-50"
+                    className="border-b dark:border-gray-700 bg-white"
                   >
                     <td className="px-4 py-3">
                       <Link to={`/viewpost/${board.id}`}>{board.title}</Link>
@@ -158,7 +170,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
               <ul className="inline-flex items-stretch -space-x-px">
                 <li>
                   <button
-                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-red-300 bg-white rounded-l-lg border border-gray-500 hover:bg-gray-100 hover:text-red-400"
+                    className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-white bg-red-300 rounded-l-lg border border-gray-500 hover:bg-gray-100 hover:text-red-400"
                     onClick={() => setPageGroup(pageGroup - 1)}
                     disabled={firstNum === 1}
                   >
@@ -180,7 +192,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                 {pagination()}
                 <li>
                   <button
-                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-red-300 bg-white rounded-r-lg border border-gray-500 hover:bg-gray-100 hover:text-red-400"
+                    className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-white bg-red-300 rounded-r-lg border border-gray-500 hover:bg-gray-100 hover:text-red-400"
                     onClick={() => setPageGroup(pageGroup + 1)}
                     disabled={lastNum === totalPage}
                   >
