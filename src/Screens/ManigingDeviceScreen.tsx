@@ -204,13 +204,13 @@ const ManigingDeviceScreen = ({ user }: UserProps) => {
                     <span className="inline-block w-1/3 md:hidden font-bold">
                       登録日時
                     </span>
-                    {hihi.createdAt}
+                    {hihi.createdAt.substr(0, 10)}
                   </td>
                   <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                     <span className="inline-block w-1/3 md:hidden font-bold">
                       ユーザー登録日
                     </span>
-                    {hihi.updatedAt}
+                    {hihi.updatedAt.substr(0, 10)}
                   </td>
                 </tr>
               );
