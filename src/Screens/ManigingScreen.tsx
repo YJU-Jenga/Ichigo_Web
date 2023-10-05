@@ -103,22 +103,22 @@ const ManigingScreen = ({ user }: UserProps) => {
       <table className="min-w-full border-collapse block md:table">
         <thead className="block md:table-header-group">
           <tr className="border border-grey-500 md:border-none block md:table-row absolute -top-full md:top-auto -left-full md:left-auto  md:relative ">
-            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+            <th className="bg-gray-200 p-2 font-Line-bd md:border md:border-grey-500 text-left block md:table-cell underline decoration-red-300">
               番号
             </th>
-            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+            <th className="bg-gray-200 p-2 font-Line-bd md:border md:border-grey-500 text-left block md:table-cell underline decoration-red-300">
               注文者
             </th>
-            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+            <th className="bg-gray-200 p-2 font-Line-bd md:border md:border-grey-500 text-left block md:table-cell underline decoration-red-300">
               配送先
             </th>
-            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+            <th className="bg-gray-200 p-2 font-Line-bd md:border md:border-grey-500 text-left block md:table-cell underline decoration-red-300">
               郵便番号
             </th>
-            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+            <th className="bg-gray-200 p-2 font-Line-bd md:border md:border-grey-500 text-left block md:table-cell underline decoration-red-300">
               注文状態
             </th>
-            <th className="bg-gray-600 p-2 text-white font-Line-bd md:border md:border-grey-500 text-left block md:table-cell">
+            <th className="bg-gray-200 p-2 font-Line-bd md:border md:border-grey-500 text-left block md:table-cell underline decoration-red-300">
               注文状態変更
             </th>
           </tr>
@@ -128,7 +128,7 @@ const ManigingScreen = ({ user }: UserProps) => {
             return (
               <tr
                 key={hihi.id}
-                className="bg-gray-100 border border-grey-500 md:border-none block md:table-row"
+                className="bg-white border border-grey-500 md:border-none block md:table-row"
               >
                 <td className="p-2 md:border md:border-grey-500 text-left block md:table-cell">
                   <span className="inline-block w-1/3 md:hidden font-bold">
@@ -176,7 +176,7 @@ const ManigingScreen = ({ user }: UserProps) => {
                     onClick={() => {
                       updateState(hihi.id);
                     }}
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-Line-bd py-1 px-2 border border-blue-500 rounded"
+                    className="bg-red-300 hover:bg-red-200 text-white font-Line-bd py-1 px-2 rounded"
                   >
                     受け付ける
                   </button>
