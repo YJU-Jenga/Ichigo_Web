@@ -94,7 +94,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -142,7 +142,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "주문이 완료되었습니다.",
+          title: "ご注文が完了しました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -153,7 +153,7 @@ const PurchaseScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 10000,
         });
@@ -183,11 +183,11 @@ const PurchaseScreen = ({ user }: UserProps) => {
       },
       (res) => {
         if (res.success) {
-          alert("주문이 완료되었습니다");
+          alert("ご注文が完了しました");
           submit();
         } else {
           console.log(res);
-          alert("결제 오류 발생");
+          alert("決済エラー発生");
           navigate("/cart");
         }
       }

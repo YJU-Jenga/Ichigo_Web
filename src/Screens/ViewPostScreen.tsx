@@ -38,7 +38,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -57,7 +57,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "상품문의 삭제가 완료되었습니다.",
+          title: "お問い合わせの削除が完了しました。",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -68,7 +68,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -95,7 +95,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "댓글이 작성되었습니다.",
+          title: "コメントが作成されました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -105,7 +105,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -122,7 +122,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "댓글이 삭제되었습니다.",
+          title: "コメントが削除されました",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -133,7 +133,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -164,7 +164,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "댓글이 수정되었습니다.",
+          title: "コメントを修正しました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -249,13 +249,13 @@ const ViewPostScreen = ({ user }: UserProps) => {
                         to={`/updateproductinquiry/${id}`}
                         className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                       >
-                        수정
+                        修正
                       </NavLink>
                       <a
                         onClick={deletePost}
                         className="flex ml-2 text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                       >
-                        삭제
+                        削除
                       </a>
                     </>
                   ) : null}
@@ -271,13 +271,13 @@ const ViewPostScreen = ({ user }: UserProps) => {
           <form className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
             <div className="flex flex-wrap -mx-3 mb-6">
               <h2 className="px-4 pt-3 pb-2 text-gray-800 text-lg">
-                댓글 작성하기
+                コメント作成
               </h2>
               <div className="w-full md:w-full px-3 mb-2 mt-2">
                 <textarea
                   className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
                   name="body"
-                  placeholder="댓글을 입력해 주세요"
+                  placeholder="コメントを記入してください"
                   required
                   onChange={(event) => setComment(event.target.value)}
                 ></textarea>
@@ -287,7 +287,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                   <input
                     type="submit"
                     className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-                    value="작성"
+                    value="作成"
                     onClick={writeComment}
                   />
                 </div>
@@ -319,7 +319,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                   </p>
                 </div>
               </div>
-              <p className="-mt-4 text-gray-500">작성자 표시하기</p>
+              <p className="-mt-4 text-gray-500">作成者表示</p>
               <div>
                 {user?.id === comments.writer ? (
                   <>
@@ -329,7 +329,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                         updateComment(comments.id);
                       }}
                     >
-                      수정
+                      修正
                     </button>
                     <button
                       className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600"
@@ -337,7 +337,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                         deleteComment(comments.id);
                       }}
                     >
-                      삭제
+                      削除
                     </button>
                   </>
                 ) : null}

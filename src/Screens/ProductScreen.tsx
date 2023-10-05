@@ -26,7 +26,7 @@ const ProductScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -75,7 +75,7 @@ const ProductScreen = ({ user }: UserProps) => {
                         {product.price
                           .toString()
                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                        원
+                        円
                       </p>
                     </div>
                   </NavLink>

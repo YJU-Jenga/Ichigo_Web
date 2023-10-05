@@ -24,17 +24,19 @@ export default function WriteItemUseScreen({ user }: UserProps) {
       e.preventDefault();
       if (form.secret) {
         if (form.password.length != 4) {
-          throw new Error("비밀번호를 양식(숫자 4글자)에 맞게 입력해주세요.");
+          throw new Error(
+            "パスワードをフォーム(数字4文字)に合わせて入力してください"
+          );
         }
       }
 
       if (form.title.length <= 0) {
-        throw new Error("제목을 입력해주세요.");
+        throw new Error("タイトルを入力してください");
       } else if (form.title.length < 2) {
-        throw new Error("제목은 최소 2글자 이상 입력해주세요.");
+        throw new Error("タイトルは2文字以上入力してください");
       }
       if (form.content.length <= 0) {
-        throw new Error("글의 내용을 입력해주세요.");
+        throw new Error("内容を入力してください");
       }
 
       // 전송할 부분 따로 변수로 관리
@@ -60,7 +62,7 @@ export default function WriteItemUseScreen({ user }: UserProps) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "상품문의 작성이 완료되었습니다.",
+          title: "レビュー作成が完了しました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -71,14 +73,14 @@ export default function WriteItemUseScreen({ user }: UserProps) {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
       } else if (error instanceof Error) {
         Swal.fire({
           icon: "error",
-          title: "입력 오류",
+          title: "記入error",
           text: error.message,
           showConfirmButton: false,
           timer: 1000,
@@ -92,19 +94,19 @@ export default function WriteItemUseScreen({ user }: UserProps) {
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           <h1 className="text-center text-2xl font-bold mb-10">
-            상품후기 쓰기
+            商品レビューを書く
           </h1>
           <div className="space-y-4">
             <div>
               <div>
                 <label className="block mb-2 text-sm font-medium text-gray-900">
-                  제목
+                  タイトル
                 </label>
                 <input
                   type="text"
                   id="first_name"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                  placeholder="제목"
+                  placeholder="タイトル"
                   onChange={(event) =>
                     setForm({ ...form, title: event.target.value })
                   }
@@ -114,12 +116,12 @@ export default function WriteItemUseScreen({ user }: UserProps) {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                내용
+                内容
               </label>
               <textarea
                 id="first_name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
-                placeholder="내용을 입력해주세요"
+                placeholder="内容を記入してください"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
                 }
@@ -128,7 +130,7 @@ export default function WriteItemUseScreen({ user }: UserProps) {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                파일
+                ファイル
               </label>
               <input
                 type="file"
@@ -149,7 +151,7 @@ export default function WriteItemUseScreen({ user }: UserProps) {
             <div className="flex w-full flex-col">
               <div className="flex flex-row">
                 <label className="block text-sm font-medium text-gray-900 mr-2 mb-2">
-                  비밀글
+                  秘密文の有無
                 </label>
                 <input
                   className="block text-lg mb-2"
@@ -162,11 +164,11 @@ export default function WriteItemUseScreen({ user }: UserProps) {
               <div className="divider divider-horizontal"></div>
               <div className="flex flex-row">
                 <label className="block text-sm font-medium text-gray-900 mt-2 mr-2">
-                  비밀번호
+                  パスワード
                 </label>
                 <input
                   type="password"
-                  placeholder="비밀번호"
+                  placeholder="パスワード"
                   id="password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
                   onChange={(event) =>
@@ -176,7 +178,7 @@ export default function WriteItemUseScreen({ user }: UserProps) {
               </div>
             </div>
             <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300 hover:bg-red-200">
-              글 쓰기
+              作成完了
             </button>
           </div>
         </div>

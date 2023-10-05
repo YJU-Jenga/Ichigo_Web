@@ -67,7 +67,7 @@ const CalendarScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -173,7 +173,7 @@ const CalendarScreen = ({ user }: UserProps) => {
         })();
       } else if (result.isDenied) {
         deleteSchedule(Number(clickInfo.event._def.publicId));
-        Swal.fire("삭제되었습니다", "", "success");
+        Swal.fire("削除されました", "", "success");
       }
     });
   };

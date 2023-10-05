@@ -70,7 +70,7 @@ const CartScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -128,7 +128,7 @@ const CartScreen = ({ user }: UserProps) => {
         console.log(res);
         Swal.fire({
           icon: "success",
-          text: "상품이 장바구니에서 삭제되었습니다.",
+          text: "商品がカートから削除されました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -150,7 +150,7 @@ const CartScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -208,7 +208,7 @@ const CartScreen = ({ user }: UserProps) => {
       if (res.status === 200) {
         Swal.fire({
           icon: "success",
-          text: "주문페이지로 이동합니다.",
+          text: "注文ページに移動します",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -226,7 +226,7 @@ const CartScreen = ({ user }: UserProps) => {
       }
       Swal.fire({
         icon: "success",
-        text: "주문페이지로 이동합니다.",
+        text: "注文ページに移動します",
         showConfirmButton: false,
         timer: 1000,
       });
@@ -315,10 +315,10 @@ const CartScreen = ({ user }: UserProps) => {
                         {product.cartToProductOption.map(
                           (option: CartToProductOption) => {
                             const clothes: string[] = [
-                              "깔깔이",
-                              "티셔츠",
-                              "바지",
-                              "후드티",
+                              "アウター",
+                              "Tシャツ",
+                              "パンツ",
+                              "フード",
                             ];
                             return (
                               <>

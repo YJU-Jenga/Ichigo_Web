@@ -24,17 +24,19 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
       e.preventDefault();
       if (form.secret) {
         if (form.password.length != 4) {
-          throw new Error("비밀번호를 양식(숫자 4글자)에 맞게 입력해주세요.");
+          throw new Error(
+            "パスワードをフォーム(数字4文字)に合わせて入力してください"
+          );
         }
       }
 
       if (form.title.length <= 0) {
-        throw new Error("제목을 입력해주세요.");
+        throw new Error("タイトルを入力してください");
       } else if (form.title.length < 2) {
-        throw new Error("제목은 최소 2글자 이상 입력해주세요.");
+        throw new Error("タイトルは2文字以上入力してください");
       }
       if (form.content.length <= 0) {
-        throw new Error("글의 내용을 입력해주세요.");
+        throw new Error("内容を入力してください");
       }
 
       // 전송할 부분 따로 변수로 관리
@@ -60,7 +62,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "상품문의 작성이 완료되었습니다.",
+          title: "お問い合わせの作成が完了しました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -71,14 +73,14 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
       } else if (error instanceof Error) {
         Swal.fire({
           icon: "error",
-          title: "입력 오류",
+          title: "記入error",
           text: error.message,
           showConfirmButton: false,
           timer: 1000,
@@ -103,7 +105,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
                 <input
                   type="text"
                   id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 font-Line-rg"
                   placeholder="タイトル"
                   onChange={(event) =>
                     setForm({ ...form, title: event.target.value })

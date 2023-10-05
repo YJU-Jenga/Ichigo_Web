@@ -36,8 +36,7 @@ const AddProductScreen = ({ user }: UserProps) => {
       if (file === null) {
         Swal.fire({
           icon: "error",
-          title: "상품이미지 미등록",
-          text: "상품이미지를 등록해주세요",
+          text: "商品のイメージを登録してください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -45,16 +44,16 @@ const AddProductScreen = ({ user }: UserProps) => {
       }
 
       if (form.name.length <= 0) {
-        throw new Error("상품명을 입력해주세요");
+        throw new Error("商品名を記入してください");
       }
       if (form.price.toString().length <= 0) {
-        throw new Error("상품가격을 입력해주세요");
+        throw new Error("商品の価格を記入してください");
       }
       if (form.description.length <= 0) {
-        throw new Error("상품설명을 입력해주세요");
+        throw new Error("商品の説明を記入してください");
       }
       if (form.stock.toString().length <= 0) {
-        throw new Error("상품재고를 입력해주세요");
+        throw new Error("商品の在庫を記入してください");
       }
 
       body.append("file", file);
@@ -71,7 +70,7 @@ const AddProductScreen = ({ user }: UserProps) => {
       if (res.status === 201) {
         Swal.fire({
           icon: "success",
-          text: "상품이 추가되었습니다.",
+          text: "商品が追加されました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -82,14 +81,14 @@ const AddProductScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
       } else if (error instanceof Error) {
         Swal.fire({
           icon: "error",
-          title: "입력 오류",
+          title: "error",
           text: error.message,
           showConfirmButton: false,
           timer: 1000,
@@ -103,16 +102,16 @@ const AddProductScreen = ({ user }: UserProps) => {
       <div className="bg-gray-200 min-h-screen md:px-20 pt-6">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           {form ? (
-            <h1 className="text-center text-2xl font-bold mb-10">상품 등록</h1>
+            <h1 className="text-center text-2xl font-bold mb-10">商品登録</h1>
           ) : null}
           <div className="space-y-4">
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                이름
+                名前
               </label>
               <input
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="이름"
+                placeholder="名前"
                 onChange={(event) =>
                   setForm({ ...form, name: event.target.value })
                 }
@@ -120,11 +119,11 @@ const AddProductScreen = ({ user }: UserProps) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                가격
+                価格
               </label>
               <input
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="가격"
+                placeholder="価格"
                 onChange={(event) =>
                   setForm({ ...form, price: Number(event.target.value) })
                 }
@@ -132,10 +131,10 @@ const AddProductScreen = ({ user }: UserProps) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                상품 설명
+                商品の説明
               </label>
               <textarea
-                placeholder="상품설명을 작성해주세요"
+                placeholder="商品の説明を作成してください"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event) =>
                   setForm({ ...form, description: event.target.value })
@@ -144,12 +143,12 @@ const AddProductScreen = ({ user }: UserProps) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                수량
+                在庫
               </label>
               <input
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 type="number"
-                placeholder="수량"
+                placeholder="在庫"
                 onChange={(event) =>
                   setForm({ ...form, stock: Number(event.target.value) })
                 }
@@ -157,7 +156,7 @@ const AddProductScreen = ({ user }: UserProps) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                타입
+                タイプ
               </label>
               <select
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -169,18 +168,18 @@ const AddProductScreen = ({ user }: UserProps) => {
                   }
                 }}
               >
-                <option value="true">남아용</option>
-                <option value="false">여아용</option>
+                <option value="true">男の子用</option>
+                <option value="false">女の子用</option>
               </select>
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                파일
+                ファイル
               </label>
               <input
                 type="file"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="가격"
+                placeholder="ファイル"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
                   const files = (target.files as FileList)[0];
@@ -197,7 +196,7 @@ const AddProductScreen = ({ user }: UserProps) => {
               className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300  "
               onClick={AddProduct}
             >
-              상품 추가하기
+              商品追加
             </button>
           </div>
         </div>

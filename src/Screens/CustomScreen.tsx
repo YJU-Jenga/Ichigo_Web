@@ -161,7 +161,7 @@ export default function CustomScreen({ user }: UserProps) {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "장바구니로 이동합니다.",
+          title: "カートへ移動します",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -172,7 +172,7 @@ export default function CustomScreen({ user }: UserProps) {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -313,7 +313,7 @@ export default function CustomScreen({ user }: UserProps) {
     } else {
       Swal.fire({
         icon: "error",
-        text: "해당 상품은 커스터마이징 할 수 없습니다.",
+        text: "この商品はカスタマイズできません",
         showConfirmButton: false,
         timer: 1000,
       });
@@ -338,7 +338,7 @@ export default function CustomScreen({ user }: UserProps) {
     } else {
       Swal.fire({
         icon: "error",
-        text: "해당 상품은 커스터마이징 할 수 없습니다.",
+        text: "この商品はカスタマイズできません",
         showConfirmButton: false,
         timer: 1000,
       });

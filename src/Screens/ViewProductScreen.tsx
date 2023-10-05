@@ -34,7 +34,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -69,7 +69,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "장바구니로 이동합니다.",
+          title: "カートへ移動します",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -81,7 +81,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -106,7 +106,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
     if (res.status === 200) {
       Swal.fire({
         icon: "success",
-        text: "주문페이지로 이동합니다.",
+        text: "注文ページに移動します",
         showConfirmButton: false,
         timer: 1000,
       });
@@ -140,7 +140,7 @@ const ViewProductScreen = ({ user }: UserProps) => {
                 {productDetail.price
                   .toString()
                   .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                원
+                円
               </h1>
               <div className="flex">
                 <button

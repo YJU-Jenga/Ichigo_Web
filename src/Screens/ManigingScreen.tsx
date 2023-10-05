@@ -39,7 +39,7 @@ const ManigingScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -75,7 +75,7 @@ const ManigingScreen = ({ user }: UserProps) => {
       if (res.status === 200) {
         Swal.fire({
           icon: "success",
-          text: "상태가 변경되었습니다.",
+          text: "ステータスが変更されました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -86,7 +86,7 @@ const ManigingScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });

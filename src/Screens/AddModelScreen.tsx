@@ -9,7 +9,7 @@ import { Product } from "../dto/Product";
 
 const AddModelScreen = ({ user }: UserProps) => {
   if (user == undefined || !user.permission) {
-    alert("권한이 없습니다.");
+    alert("権限がありません");
     window.location.replace("/");
   }
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const AddModelScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -58,8 +58,7 @@ const AddModelScreen = ({ user }: UserProps) => {
       if (file === null) {
         Swal.fire({
           icon: "error",
-          title: "모델 미등록",
-          text: "모델을 등록해주세요",
+          text: "モデルを登録してください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -67,7 +66,7 @@ const AddModelScreen = ({ user }: UserProps) => {
       }
 
       if (form.name.length <= 0) {
-        throw new Error("모델명을 입력해주세요");
+        throw new Error("モデル名を記入してください");
       }
 
       body.append("file", file);
@@ -78,7 +77,7 @@ const AddModelScreen = ({ user }: UserProps) => {
       if (res.status === 201) {
         Swal.fire({
           icon: "success",
-          text: "모델이 추가되었습니다.",
+          text: "モデルが登録されました",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -89,14 +88,14 @@ const AddModelScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
       } else if (error instanceof Error) {
         Swal.fire({
           icon: "error",
-          title: "입력 오류",
+          title: "記入error",
           text: error.message,
           showConfirmButton: false,
           timer: 1000,
@@ -110,12 +109,12 @@ const AddModelScreen = ({ user }: UserProps) => {
       <div className="bg-gray-200 min-h-screen md:px-20 pt-6">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           {form ? (
-            <h1 className="text-center text-2xl font-bold mb-10">모델 등록</h1>
+            <h1 className="text-center text-2xl font-bold mb-10">モデル登録</h1>
           ) : null}
           <div className="space-y-4">
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                상품
+                商品
               </label>
               <select
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
@@ -124,7 +123,7 @@ const AddModelScreen = ({ user }: UserProps) => {
                   console.log(form);
                 }}
               >
-                <option>선택</option>
+                <option>選択</option>
                 {productInfo.map((product: Product) => {
                   return (
                     <>
@@ -136,12 +135,12 @@ const AddModelScreen = ({ user }: UserProps) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                이름
+                名前
               </label>
               <input
                 type="text"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="이름"
+                placeholder="名前"
                 onChange={(event) => {
                   setForm({ ...form, name: event.target.value });
                   console.log(form);
@@ -151,7 +150,7 @@ const AddModelScreen = ({ user }: UserProps) => {
             </div>
             <div>
               <label className="block mb-2 text-sm font-medium text-gray-900">
-                파일
+                ファイル
               </label>
               <input
                 type="file"
@@ -173,7 +172,7 @@ const AddModelScreen = ({ user }: UserProps) => {
               className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-white bg-red-300  "
               onClick={AddModel}
             >
-              모델 등록하기
+              登録
             </button>
           </div>
         </div>

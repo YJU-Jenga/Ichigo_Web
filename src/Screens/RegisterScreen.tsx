@@ -71,7 +71,7 @@ export default function RegisterScreen(this: any) {
                 Swal.fire({
                   position: "center",
                   icon: "success",
-                  title: "회원가입이 완료되었습니다.",
+                  title: "会員登録が完了しました",
                   showConfirmButton: false,
                   timer: 1000,
                 });
@@ -82,23 +82,23 @@ export default function RegisterScreen(this: any) {
                 Swal.fire({
                   icon: "error",
                   title: error.response?.data.message,
-                  text: "관리자에게 문의해주세요",
+                  text: "管理者にお問い合わせください",
                   showConfirmButton: false,
                   timer: 1000,
                 });
               }
             }
           } else {
-            return alert("비밀번호가 일치하지 않습니다.");
+            return alert("パスワードが一致しません");
           }
         } else {
-          alert("휴대폰 번호 형식이 잘못되었습니다.");
+          alert("携帯電話番号の形式が間違っています");
         }
       } else {
-        alert("비밀번호 형식이 잘못되었습니다.");
+        alert("パスワードの形式が間違っています");
       }
     } else {
-      alert("이메일 형식이 잘못되었습니다.");
+      alert("メールの形式が間違っています");
     }
   };
 
@@ -181,7 +181,7 @@ export default function RegisterScreen(this: any) {
                   type="text"
                   name="name"
                   id="name"
-                  placeholder="홍길동"
+                  placeholder="中村"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>

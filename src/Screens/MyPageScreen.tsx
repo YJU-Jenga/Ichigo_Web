@@ -50,7 +50,7 @@ const MyPageScreen = ({ user }: UserProps) => {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -214,7 +214,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                                             position: "center",
                                             icon: "warning",
                                             title:
-                                              "아직 상품 후기를 작성할 수 없습니다",
+                                              "まだレビューを書くことができません",
                                             showConfirmButton: false,
                                             timer: 1000,
                                           });

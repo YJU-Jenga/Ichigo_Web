@@ -64,7 +64,7 @@ export default function UpdatePostScreen({ user }: UserProps) {
       Swal.fire({
         position: "center",
         icon: "success",
-        title: "상품문의 수정이 완료되었습니다.",
+        title: "お問い合わせの修正が完了しました",
         showConfirmButton: false,
         timer: 1000,
       });
@@ -76,14 +76,14 @@ export default function UpdatePostScreen({ user }: UserProps) {
         Swal.fire({
           icon: "error",
           title: error.response?.data.message,
-          text: "관리자에게 문의해주세요",
+          text: "管理者にお問い合わせください",
           showConfirmButton: false,
           timer: 1000,
         });
       } else if (error instanceof Error) {
         Swal.fire({
           icon: "error",
-          title: "입력 오류",
+          title: "記入error",
           text: error.message,
           showConfirmButton: false,
           timer: 1000,
@@ -97,14 +97,14 @@ export default function UpdatePostScreen({ user }: UserProps) {
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
           <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
-            상품문의 수정
+            お問い合わせの修正
           </h1>
           <div className="space-y-4">
             <div>
-              <label className="text-lx">제목</label>
+              <label className="text-lx">タイトル</label>
               <input
                 type="text"
-                placeholder="제목"
+                placeholder="タイトル"
                 id="title"
                 className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
                 onChange={(event) =>
@@ -113,10 +113,10 @@ export default function UpdatePostScreen({ user }: UserProps) {
               />
             </div>
             <div>
-              <label className="block mb-2 text-lg">글</label>
+              <label className="block mb-2 text-lg">内容</label>
               <textarea
                 id="content"
-                placeholder="이곳에 작성해주세요"
+                placeholder="こちらに作成してください"
                 className="w-full border-2 p-4 text-gray-600 outline-none rounded-md"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
@@ -124,7 +124,7 @@ export default function UpdatePostScreen({ user }: UserProps) {
               ></textarea>
             </div>
             <div>
-              <label className="text-lx">파일:</label>
+              <label className="text-lx">ファイル</label>
               <input
                 type="file"
                 id="file"
@@ -142,7 +142,7 @@ export default function UpdatePostScreen({ user }: UserProps) {
               />
             </div>
             <div>
-              비밀글
+              秘密の有無
               <input
                 type="checkbox"
                 onChange={(event) => {
@@ -151,10 +151,10 @@ export default function UpdatePostScreen({ user }: UserProps) {
               />
             </div>
             <div>
-              <label className="block mb-2 text-lg">비밀번호</label>
+              <label className="block mb-2 text-lg">暗証番号</label>
               <input
                 type="password"
-                placeholder="비밀번호"
+                placeholder="暗証番号"
                 id="password"
                 className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
                 onChange={(event) =>
@@ -163,7 +163,7 @@ export default function UpdatePostScreen({ user }: UserProps) {
               />
             </div>
             <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">
-              글 쓰기
+              修正
             </button>
           </div>
         </div>
