@@ -67,7 +67,7 @@ const QnaScreen = ({ user }: UserProps) => {
           <a
             key={i}
             onClick={() => setCurPage(i)}
-            className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-red-300 bg-white border border-gray-500 hover:bg-gray-100 hover:text-red-500"
+            className="font-bold flex items-center justify-center text-sm py-2 px-3 leading-tight text-white bg-red-300 border border-gray-500 hover:bg-gray-100 hover:text-red-500"
           >
             {i}
           </a>

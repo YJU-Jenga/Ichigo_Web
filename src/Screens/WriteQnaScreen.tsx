@@ -105,7 +105,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
                 <input
                   type="text"
                   id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   placeholder="タイトル"
                   onChange={(event) =>
                     setForm({ ...form, title: event.target.value })
@@ -120,7 +120,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
               </label>
               <textarea
                 id="first_name"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
+                className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
                 placeholder="内容を書いてください。"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
@@ -135,7 +135,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
               <input
                 type="file"
                 id="file"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
                   const files = (target.files as FileList)[0];
@@ -170,7 +170,7 @@ export default function WriteProductInquiryScreen({ user }: UserProps) {
                   type="password"
                   placeholder="暗証番号"
                   id="password"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
                   onChange={(event) =>
                     setForm({ ...form, password: event.target.value })
                   }

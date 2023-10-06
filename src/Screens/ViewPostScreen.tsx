@@ -6,6 +6,7 @@ import { Board } from "../dto/Board";
 import { Comment } from "../dto/Comment";
 import { UserProps } from "../App";
 import { API_URL, BUCKET_URL } from "../config";
+import { getCookie } from "../cookie";
 
 const ViewPostScreen = ({ user }: UserProps) => {
   const navigate = useNavigate();
@@ -83,7 +84,11 @@ const ViewPostScreen = ({ user }: UserProps) => {
   // 댓글쓰기 함수
   const writeComment = async () => {
     const writeCommentUrl = `${API_URL}/comment/write`;
-    const headers = { "Content-Type": "application/json" };
+    const token = getCookie("access-token");
+    const headers = {
+      "Content-Type": "Multipart/form-data",
+      Authorization: `Bearer ${token}`,
+    };
     const body = {
       writer: user?.id,
       postId: id,
@@ -107,7 +112,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
           title: error.response?.data.message,
           text: "管理者にお問い合わせください",
           showConfirmButton: false,
-          timer: 1000,
+          timer: 10000,
         });
       }
     }
@@ -247,7 +252,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                     <>
                       <NavLink
                         to={`/updateproductinquiry/${id}`}
-                        className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                        className="flex ml-auto text-white bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                       >
                         修正
                       </NavLink>
@@ -286,7 +291,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                 <div className="-mr-1">
                   <input
                     type="submit"
-                    className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
+                    className="bg-red-300 text-white font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-200"
                     value="作成"
                     onClick={writeComment}
                   />
