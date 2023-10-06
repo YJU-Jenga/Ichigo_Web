@@ -123,7 +123,7 @@ export default function RegisterScreen(this: any) {
                   type="email"
                   name="email"
                   id="email"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="name@company.com"
                   required
                   onChange={(event) =>
@@ -140,7 +140,7 @@ export default function RegisterScreen(this: any) {
                   name="password"
                   id="password"
                   placeholder="暗証番号"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, password: event.target.value })
@@ -159,7 +159,7 @@ export default function RegisterScreen(this: any) {
                   name="confirm-password"
                   id="confirm-password"
                   placeholder="暗証番号確認"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, confirmPassword: event.target.value })
@@ -182,7 +182,7 @@ export default function RegisterScreen(this: any) {
                   name="name"
                   id="name"
                   placeholder="中村"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, name: event.target.value })
@@ -198,7 +198,7 @@ export default function RegisterScreen(this: any) {
                   name="phone"
                   id="phone"
                   placeholder="010-1111-1111"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   required
                   onChange={(event) =>
                     setForm({ ...form, phone: event.target.value })

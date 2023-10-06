@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { useParams, useNavigate, NavLink } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import Swal from "sweetalert2";
@@ -82,20 +82,23 @@ const ViewPostScreen = ({ user }: UserProps) => {
     return <></>;
   }
   // 댓글쓰기 함수
-  const writeComment = async () => {
-    const writeCommentUrl = `${API_URL}/comment/write`;
-    const token = getCookie("access-token");
-    const headers = {
-      "Content-Type": "Multipart/form-data",
-      Authorization: `Bearer ${token}`,
-    };
-    const body = {
-      writer: user?.id,
-      postId: id,
-      content: comment,
-    };
+  const writeComment = async (e: SyntheticEvent) => {
     try {
+      e.preventDefault();
+      const writeCommentUrl = `${API_URL}/comment/write`;
+      const token = getCookie("access-token");
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const body = {
+        writer: user!.id,
+        postId: postId,
+        content: comment,
+      };
+      console.log(body);
       const res = await axios.post(writeCommentUrl, body, { headers });
+      console.log(res.status);
       if (res.status === 201) {
         Swal.fire({
           position: "center",
@@ -252,7 +255,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                     <>
                       <NavLink
                         to={`/updateproductinquiry/${id}`}
-                        className="flex ml-auto text-white bg-red-300 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
+                        className="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded"
                       >
                         修正
                       </NavLink>
@@ -273,7 +276,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
       {/* 댓글 쓰기 */}
       {user ? (
         <div className="flex mx-auto items-center justify-center shadow-lg mb-4 max-w-lg">
-          <form className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
+          <div className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
             <div className="flex flex-wrap -mx-3 mb-6">
               <h2 className="px-4 pt-3 pb-2 text-gray-800 text-lg">
                 コメント作成
@@ -291,14 +294,14 @@ const ViewPostScreen = ({ user }: UserProps) => {
                 <div className="-mr-1">
                   <input
                     type="submit"
-                    className="bg-red-300 text-white font-medium py-1 px-4 rounded-lg tracking-wide mr-1 hover:bg-red-200"
+                    className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
                     value="作成"
                     onClick={writeComment}
                   />
                 </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       ) : null}
       {/* 댓글 */}
