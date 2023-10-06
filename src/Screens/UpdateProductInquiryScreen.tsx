@@ -16,9 +16,6 @@ export default function UpdatePostScreen({ user }: UserProps) {
     content: "",
   });
 
-  let { id } = useParams();
-  console.log(id);
-
   const [file, setFile] = useState<File | null>(null);
   const navigate = useNavigate();
 
@@ -28,48 +25,49 @@ export default function UpdatePostScreen({ user }: UserProps) {
       e.preventDefault();
       if (form.secret) {
         if (form.password.length != 4) {
-          throw new Error("비밀번호를 양식(숫자 4글자)에 맞게 입력해주세요.");
+          throw new Error(
+            "パスワードをフォーム(数字4文字)に合わせて入力してください"
+          );
         }
       }
 
       if (form.title.length <= 0) {
-        throw new Error("제목을 입력해주세요.");
+        throw new Error("タイトルを入力してください");
       } else if (form.title.length < 2) {
-        throw new Error("제목은 최소 2글자 이상 입력해주세요.");
+        throw new Error("タイトルは2文字以上入力してください");
       }
       if (form.content.length <= 0) {
-        throw new Error("글의 내용을 입력해주세요.");
+        throw new Error("内容を入力してください");
       }
 
       // 전송할 부분 따로 변수로 관리
-      const url = `${API_URL}/post/update/${id}`;
+      const url = `${API_URL}/post/write_item_use`;
       const body = new FormData();
-      const token = getCookie("access-token");
-      const headers = {
-        "Content-Type": "Multipart/form-data",
-        Authorization: `Bearer ${token}`,
-      };
 
       if (file !== null) {
         body.append("file", file);
       }
-
       body.append("writer", JSON.stringify({ writer: form.writer }));
       body.append("title", JSON.stringify({ title: form.title }));
       body.append("secret", JSON.stringify({ secret: form.secret }));
       body.append("password", JSON.stringify({ password: form.password }));
       body.append("content", JSON.stringify({ content: form.content }));
 
-      const res = await axios.patch(url, body, { headers });
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "お問い合わせの修正が完了しました",
-        showConfirmButton: false,
-        timer: 1000,
+      const token = getCookie("access-token");
+      const res = await axios.patch(url, body, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      navigate("/productinquiry");
       if (res.status === 201) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "レビュー作成が完了しました",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        navigate("/productinquiry");
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -96,39 +94,49 @@ export default function UpdatePostScreen({ user }: UserProps) {
     <form onSubmit={submit}>
       <div className="min-h-screen md:px-20 pt-6 border">
         <div className=" bg-white rounded-md px-6 py-10 max-w-2xl mx-auto">
-          <h1 className="text-center text-2xl font-bold text-gray-500 mb-10">
-            お問い合わせの修正
+          <h1 className="text-center text-2xl font-bold mb-10 font-Line-bd">
+            修正
           </h1>
           <div className="space-y-4">
             <div>
-              <label className="text-lx">タイトル</label>
-              <input
-                type="text"
-                placeholder="タイトル"
-                id="title"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                onChange={(event) =>
-                  setForm({ ...form, title: event.target.value })
-                }
-              />
+              <div>
+                <label className="block mb-2 text-sm font-medium text-gray-900 font-Line-bd">
+                  タイトル
+                </label>
+                <input
+                  type="text"
+                  id="first_name"
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  placeholder="タイトル"
+                  onChange={(event) =>
+                    setForm({ ...form, title: event.target.value })
+                  }
+                  required
+                />
+              </div>
             </div>
             <div>
-              <label className="block mb-2 text-lg">内容</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900 font-Line-bd">
+                内容
+              </label>
               <textarea
-                id="content"
-                placeholder="こちらに作成してください"
-                className="w-full border-2 p-4 text-gray-600 outline-none rounded-md"
+                id="first_name"
+                className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-56"
+                placeholder="内容を記入してください"
                 onChange={(event) =>
                   setForm({ ...form, content: event.target.value })
                 }
+                required
               ></textarea>
             </div>
             <div>
-              <label className="text-lx">ファイル</label>
+              <label className="block mb-2 text-sm font-medium text-gray-900 font-Line-bd">
+                ファイル
+              </label>
               <input
                 type="file"
                 id="file"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
+                className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                   const target = event.currentTarget;
                   const files = (target.files as FileList)[0];
@@ -141,28 +149,36 @@ export default function UpdatePostScreen({ user }: UserProps) {
                 }}
               />
             </div>
-            <div>
-              秘密の有無
-              <input
-                type="checkbox"
-                onChange={(event) => {
-                  setForm({ ...form, secret: event.target.checked });
-                }}
-              />
+            <div className="flex w-full flex-col">
+              <div className="flex flex-row">
+                <label className="block text-sm font-medium text-gray-900 mr-2 mb-2 font-Line-bd">
+                  秘密文の有無
+                </label>
+                <input
+                  className="block text-lg mb-2"
+                  type="checkbox"
+                  onChange={(event) => {
+                    setForm({ ...form, secret: event.target.checked });
+                  }}
+                />
+              </div>
+              <div className="divider divider-horizontal"></div>
+              <div className="flex flex-row">
+                <label className="block text-sm font-medium text-gray-900 mt-2 mr-2 font-Line-bd">
+                  パスワード
+                </label>
+                <input
+                  type="password"
+                  placeholder="パスワード"
+                  id="password"
+                  className="font-Line-rg bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/4 p-2.5"
+                  onChange={(event) =>
+                    setForm({ ...form, password: event.target.value })
+                  }
+                />
+              </div>
             </div>
-            <div>
-              <label className="block mb-2 text-lg">暗証番号</label>
-              <input
-                type="password"
-                placeholder="暗証番号"
-                id="password"
-                className="ml-2 outline-none py-1 px-2 text-md border-2 rounded-md"
-                onChange={(event) =>
-                  setForm({ ...form, password: event.target.value })
-                }
-              />
-            </div>
-            <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-semibold text-indigo-100 bg-indigo-600  ">
+            <button className=" px-6 py-2 mx-auto block rounded-md text-lg font-Line-bd text-white bg-red-300 hover:bg-red-200">
               修正
             </button>
           </div>

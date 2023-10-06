@@ -53,7 +53,12 @@ const ViewPostScreen = ({ user }: UserProps) => {
     // 글 삭제 url
     const url_delete = `${API_URL}/post/delete_post?id=${id}`;
     try {
-      const res = await axios.delete(url_delete);
+      const token = getCookie("access-token");
+      const res = await axios.delete(url_delete, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.status === 200) {
         Swal.fire({
           position: "center",
@@ -107,6 +112,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 1000,
         });
+        window.location.reload();
       }
     } catch (error) {
       if (error instanceof AxiosError) {
@@ -117,6 +123,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
           showConfirmButton: false,
           timer: 10000,
         });
+        window.location.reload();
       }
     }
   };
@@ -125,7 +132,12 @@ const ViewPostScreen = ({ user }: UserProps) => {
   const deleteComment = async (id: number) => {
     const deleteUrl = `${API_URL}/comment/delete/${id}`;
     try {
-      const res = await axios.delete(deleteUrl);
+      const token = getCookie("access-token");
+      const res = await axios.delete(deleteUrl, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.status === 200) {
         Swal.fire({
           position: "center",
@@ -167,7 +179,16 @@ const ViewPostScreen = ({ user }: UserProps) => {
       content: text,
     };
     if (text) {
-      const res = await axios.patch(updateCommentUrl, body);
+      const token = getCookie("access-token");
+      const res = await axios.patch(
+        updateCommentUrl,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        } // config (3rd argument)
+      );
       if (res.status === 200) {
         Swal.fire({
           position: "center",
@@ -233,21 +254,8 @@ const ViewPostScreen = ({ user }: UserProps) => {
                     <span>{allComment.length}</span>
                   </div>
                   <div className="flex cursor-pointer items-center transition hover:text-slate-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="mr-1.5 h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                      />
-                    </svg>
-                    <span>4</span>
+                    <h1>HITS&nbsp;</h1>
+                    <span> {boardDetail.hit}</span>
                   </div>
                 </div>
                 <div className="flex justify-end mt-4">
