@@ -291,7 +291,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                 <div className="-mr-1">
                   <input
                     type="submit"
-                    className="bg-red-300 text-white font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-200"
+                    className="bg-red-300 text-white font-medium py-1 px-4 rounded-lg tracking-wide mr-1 hover:bg-red-200"
                     value="作成"
                     onClick={writeComment}
                   />
