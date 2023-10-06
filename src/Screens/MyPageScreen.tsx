@@ -98,7 +98,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                 <input
                   type="text"
                   defaultValue={user?.name}
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                  className="font-Line-rg mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                 />
               </div>
               <div className="mb-3">
@@ -108,7 +108,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                 <input
                   type="text"
                   defaultValue={user?.email}
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                  className="font-Line-rg mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                 />
               </div>
               <div className="mb-3">
@@ -118,7 +118,7 @@ const MyPageScreen = ({ user }: UserProps) => {
                 <input
                   type="text"
                   defaultValue={user?.phone}
-                  className="mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
+                  className="font-Line-rg mt-2 flex h-12 w-full items-center justify-center rounded-xl border p-3 text-sm outline-none border-gray-200"
                 />
               </div>
             </div>
@@ -179,10 +179,10 @@ const MyPageScreen = ({ user }: UserProps) => {
                                         />
                                       </div>
                                       <div className="ml-3">
-                                        <p className="text-gray-900 whitespace-no-wrap text-center text-l">
+                                        <p className="text-gray-900 whitespace-no-wrap text-center text-l font-Line-rg">
                                           {product?.product?.name}
                                         </p>
-                                        <p className="text-gray-900 whitespace-no-wrap text-center text-l">
+                                        <p className="text-gray-900 whitespace-no-wrap text-center text-l font-Line-rg">
                                           {product?.product?.price}円 /{" "}
                                           {product?.count}個
                                         </p>
