@@ -209,22 +209,20 @@ const ViewPostScreen = ({ user }: UserProps) => {
           <div className="rounded-xl border p-5 shadow-md w-9/12 bg-white">
             <div className="flex w-full items-center justify-between border-b pb-3">
               <div className="flex items-center space-x-3">
-                <div className="text-lg font-bold text-slate-700">
+                <div className="text-xl font-bold text-slate-700 font-Line-bd">
                   {boardDetail.title}
                 </div>
               </div>
               <div className="flex items-center space-x-8">
-                <div className="text-xs text-neutral-500">
-                  {boardDetail.user.name}
-                </div>
-                <div className="text-xs text-neutral-500">
+                <div className=" text-neutral-500">{boardDetail.user.name}</div>
+                <div className=" text-neutral-500">
                   {boardDetail.createdAt.substring(0, 10)}
                 </div>
               </div>
             </div>
 
             <div className="mt-4 mb-6">
-              <div className="mb-3 text-xl font-bold">{boardDetail.title}</div>
+              {/* <div className="mb-3 text-xl font-bold">{boardDetail.title}</div> */}
               <div className="text-sm text-neutral-600">
                 {boardDetail.content}
               </div>
@@ -237,24 +235,11 @@ const ViewPostScreen = ({ user }: UserProps) => {
               <div className="flex items-center justify-between text-slate-500">
                 <div className="flex space-x-4 md:space-x-8">
                   <div className="flex cursor-pointer items-center transition hover:text-slate-600">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="mr-1.5 h-5 w-5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      stroke-width="2"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"
-                      />
-                    </svg>
+                    <h1 className="font-Line-rg">コメント&nbsp;</h1>
                     <span>{allComment.length}</span>
                   </div>
                   <div className="flex cursor-pointer items-center transition hover:text-slate-600">
-                    <h1>HITS&nbsp;</h1>
+                    <h1 className="font-Line-rg">HITS&nbsp;</h1>
                     <span> {boardDetail.hit}</span>
                   </div>
                 </div>
