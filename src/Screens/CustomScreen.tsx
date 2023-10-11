@@ -285,11 +285,17 @@ export default function CustomScreen({ user }: UserProps) {
             ></div>
           ))}
         </div>
-        <FaShoppingCart
+        {/* <FaShoppingCart
           size={30}
           onClick={submit}
           color="#fff"
-        ></FaShoppingCart>
+        ></FaShoppingCart> */}
+        <input
+          type="submit"
+          className="bg-red-300 font-Line-bd text-white font-medium py-1 px-4 rounded-lg tracking-wide mr-1 hover:bg-red-200"
+          value="カートに追加"
+          onClick={submit}
+        />
       </div>
     );
   }
@@ -379,7 +385,7 @@ export default function CustomScreen({ user }: UserProps) {
       <Canvas
         style={{ zIndex: 0, position: "absolute", padding: 0, margin: 0 }}
       >
-        <color attach="background" args={["#000000"]} />
+        <color attach="background" args={["#ffffff"]} />
         <ambientLight intensity={0.5} />
         <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
         <pointLight position={[-10, -10, -10]} />
