@@ -203,9 +203,9 @@ const ViewPostScreen = ({ user }: UserProps) => {
   };
 
   return (
-    <>
-      <div className="py-4 px-8 bg-white shadow-lg rounded-lg my-20">
-        <div className="flex items-center justify-center">
+    <div className="grid place-items-center">
+      <div className="py-4 px-8 bg-white rounded-lg my-10 w-3/4">
+        <div className="flex items-center justify-center w-full">
           <div className="rounded-xl border p-5 shadow-md w-9/12 bg-white">
             <div className="flex w-full items-center justify-between border-b pb-3">
               <div className="flex items-center space-x-3">
@@ -223,7 +223,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
 
             <div className="mt-4 mb-6">
               {/* <div className="mb-3 text-xl font-bold">{boardDetail.title}</div> */}
-              <div className="text-sm text-neutral-600">
+              <div className="text-lg text-neutral-600">
                 {boardDetail.content}
               </div>
               <div>
@@ -235,12 +235,12 @@ const ViewPostScreen = ({ user }: UserProps) => {
               <div className="flex items-center justify-between text-slate-500">
                 <div className="flex space-x-4 md:space-x-8">
                   <div className="flex cursor-pointer items-center transition hover:text-slate-600">
-                    <h1 className="font-Line-rg">コメント&nbsp;</h1>
-                    <span>{allComment.length}</span>
+                    <h1 className="font-Line-rg text-sm">コメント&nbsp;</h1>
+                    <span className="text-sm">{allComment.length}</span>
                   </div>
                   <div className="flex cursor-pointer items-center transition hover:text-slate-600">
-                    <h1 className="font-Line-rg">HITS&nbsp;</h1>
-                    <span> {boardDetail.hit}</span>
+                    <h1 className="font-Line-rg text-sm">HITS&nbsp;</h1>
+                    <span className="text-sm"> {boardDetail.hit}</span>
                   </div>
                 </div>
                 <div className="flex justify-end mt-4">
@@ -266,88 +266,91 @@ const ViewPostScreen = ({ user }: UserProps) => {
           </div>
         </div>
       </div>
-      {/* 댓글 쓰기 */}
-      {user ? (
-        <div className="flex mx-auto items-center justify-center shadow-lg mb-4 max-w-lg">
-          <div className="w-full max-w-xl bg-white rounded-lg px-4 pt-2">
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <h2 className="px-4 pt-3 pb-2 text-gray-800 text-lg">
-                コメント作成
-              </h2>
-              <div className="w-full md:w-full px-3 mb-2 mt-2">
-                <textarea
-                  className="bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
-                  name="body"
-                  placeholder="コメントを記入してください"
-                  required
-                  onChange={(event) => setComment(event.target.value)}
-                ></textarea>
-              </div>
-              <div className="w-full md:w-full flex items-start px-3">
-                <div className="-mr-1">
-                  <input
-                    type="submit"
-                    className="bg-white text-gray-700 font-medium py-1 px-4 border border-gray-400 rounded-lg tracking-wide mr-1 hover:bg-gray-100"
-                    value="作成"
-                    onClick={writeComment}
-                  />
+      <h1 className="text-xl font-Line-bd mb-4 grid place-items-center">
+        コメント
+      </h1>
+      <div className="w-3/4 bg-gray-100 rounded-lg border p-4">
+        {/* 댓글 쓰기 */}
+        {user ? (
+          <div className="flex mx-auto items-center justify-center shadow-lg mb-4 max-w-lg">
+            <div className="w-full max-w-xl border bg-white rounded-lg px-4 pt-2">
+              <div className=" flex flex-wrap -mx-3 mb-6">
+                <h2 className="px-4 pt-3 pb-2 text-gray-800 text-lg font-Line-bd">
+                  コメント作成
+                </h2>
+                <div className="w-full md:w-full px-3 mb-2 mt-2">
+                  <textarea
+                    className="font-Line-rg bg-gray-100 rounded border border-gray-400 leading-normal resize-none w-full h-20 py-2 px-3 font-medium placeholder-gray-700 focus:outline-none focus:bg-white"
+                    name="body"
+                    placeholder="コメントを記入してください"
+                    required
+                    onChange={(event) => setComment(event.target.value)}
+                  ></textarea>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : null}
-      {/* 댓글 */}
-      {allComment.map((comments: Comment) => {
-        return (
-          <div
-            key={comments.id}
-            className="flex justify-center relative top-1/3"
-          >
-            <div className="relative grid grid-cols-1 gap-4 p-4 mb-8 border rounded-lg bg-white shadow-lg w-full max-w-xl">
-              <div className="relative flex gap-4">
-                <div className="flex flex-col w-full">
-                  <div className="flex flex-row justify-between">
-                    <p className="relative text-xl whitespace-nowrap truncate overflow-hidden">
-                      {comments.content}
-                    </p>
-                    <a className="text-gray-500 text-xl" href="#">
-                      <i className="fa-solid fa-trash"></i>
-                    </a>
+                <div className="w-full md:w-full flex items-end px-3">
+                  <div className="-mr-1">
+                    <input
+                      type="submit"
+                      className="bg-red-300 font-Line-bd text-white font-medium py-1 px-4 rounded-lg tracking-wide mr-1 hover:bg-red-200"
+                      value="作成"
+                      onClick={writeComment}
+                    />
                   </div>
-                  <p className="text-gray-400 text-sm">
-                    {comments.createdAt.substring(0, 10)}
-                  </p>
                 </div>
-              </div>
-              <p className="-mt-4 text-gray-500">作成者表示</p>
-              <div>
-                {user?.id === comments.writer ? (
-                  <>
-                    <button
-                      className="text-white bg-blue-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-blue-600"
-                      onClick={() => {
-                        updateComment(comments.id);
-                      }}
-                    >
-                      修正
-                    </button>
-                    <button
-                      className="text-white bg-red-500 font-medium py-1 px-4 border rounded-lg tracking-wide mr-1 hover:bg-red-600"
-                      onClick={() => {
-                        deleteComment(comments.id);
-                      }}
-                    >
-                      削除
-                    </button>
-                  </>
-                ) : null}
               </div>
             </div>
           </div>
-        );
-      })}
-    </>
+        ) : null}
+        {/* 댓글 */}
+        {allComment.map((comments: Comment) => {
+          return (
+            <>
+              <div className="flex bg-white shadow-lg rounded-lg mx-4 md:mx-auto mt-6 max-w-md md:max-w-2xl border">
+                <div className="flex items-start px-4 py-6 w-full">
+                  <div className="w-full">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-lg font-Line-bd text-gray-900 -mt-1">
+                        {comments.content}
+                      </h2>
+                      <small className="text-sm text-gray-700">
+                        {comments.createdAt.substring(0, 10)}
+                      </small>
+                    </div>
+                    <p className="mt-3 text-gray-700 text-sm font-Line-rg">
+                      作成者表示{" "}
+                    </p>
+                    <div className="mt-4 flex items-center">
+                      <div className="flex text-gray-700 text-sm mr-3">
+                        {user?.id === comments.writer ? (
+                          <>
+                            <button
+                              className="text-white bg-red-300 font-medium py-1 px-4 rounded-lg tracking-wide mr-1 hover:bg-red-200"
+                              onClick={() => {
+                                updateComment(comments.id);
+                              }}
+                            >
+                              修正
+                            </button>
+                            <button
+                              className="text-white bg-red-500 font-medium py-1 px-4 rounded-lg tracking-wide mr-1 hover:bg-red-400"
+                              onClick={() => {
+                                deleteComment(comments.id);
+                              }}
+                            >
+                              削除
+                            </button>
+                          </>
+                        ) : null}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </>
+          );
+        })}
+      </div>
+    </div>
   );
 };
 
