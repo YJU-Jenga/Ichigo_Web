@@ -155,7 +155,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                     <td className="px-4 py-3">
                       {board.createdAt.substring(0, 10)}
                     </td>
-                    <td className="px-4 py-3">{board.writer}</td>
+                    <td className="px-4 py-3">{board.user.name}</td>
                     <td className="px-4 py-3">{board.hit}</td>
                   </tr>
                 );
