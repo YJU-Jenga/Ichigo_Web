@@ -204,16 +204,16 @@ const ViewPostScreen = ({ user }: UserProps) => {
 
   return (
     <>
-      <section className="bg-gray-50  p-3 sm:p-5 h-screen">
+      <section className="bg-gray-50  p-3 sm:p-5 h-max">
         {/* <div className="grid place-items-center"> */}
         <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
           <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden p-3">
             <h1 className="text-gray-900 text-3xl title-font font-bold mb-1 ml-3 underline decoration-red-300">
               Q & A
             </h1>
-            <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 md:space-x-4 p-2">
-              <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0 "></div>
-              <div className="py-4 px-8 bg-white rounded-lg my-10 w-3/4">
+            <div className="flex flex-col md:flex-row items-center justify-center space-y-3 md:space-y-0 w-full">
+              {/* <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0 "></div> */}
+              <div className="py-4 bg-white rounded-lg my-10 w-full">
                 <div className="flex items-center justify-center w-full">
                   <div className="rounded-xl border p-5 shadow-md w-9/12 bg-white">
                     <div className="flex w-full items-center justify-between border-b pb-3">
@@ -241,11 +241,11 @@ const ViewPostScreen = ({ user }: UserProps) => {
                         <img src={BUCKET_URL + boardDetail.image} alt="" />
                       </div>
                     </div>
-
                     <div>
                       <div className="flex items-center justify-between text-slate-500">
                         <div className="flex space-x-4 md:space-x-8">
                           <div className="flex cursor-pointer items-center transition hover:text-slate-600">
+                            <div className="my-12 h-0.5 border-t-0 bg-gray-100 opacity-100 dark:opacity-50"></div>
                             <h1 className="font-Line-rg text-sm">
                               コメント&nbsp;
                             </h1>
@@ -280,6 +280,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                 </div>
               </div>
             </div>
+            <hr className="my-12 h-px border-t-0 bg-transparent bg-gradient-to-r from-transparent via-neutral-300 to-transparent opacity-25 dark:opacity-100" />
             <h1 className="text-xl font-Line-bd mb-4 grid place-items-center">
               コメント
             </h1>
