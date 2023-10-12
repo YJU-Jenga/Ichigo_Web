@@ -142,10 +142,17 @@ const MyPageScreen = ({ user }: UserProps) => {
           <>
             <div className="w-3/4 container mx-auto px-4 sm:px-8">
               <div className="py-8">
-                <div>
+                <div className="flex justify-between">
                   <h2 className="text-2xl font-Line-bd leading-tight underline decoration-red-300">
                     購入内訳
                   </h2>
+                  <div className="flex flex-row">
+                    <h1 className="font-Line-rg mt-2">ボタンが</h1>
+                    <h1 className="font-Line-rg mt-2 text-red-300">ピンク色</h1>
+                    <h1 className="font-Line-rg mt-2">
+                      の状況にレビューがかけます。
+                    </h1>
+                  </div>
                 </div>
                 <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                   <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
