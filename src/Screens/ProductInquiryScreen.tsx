@@ -100,7 +100,7 @@ const ProductInquiryScreen = ({ user }: UserProps) => {
                     alert("ログインしてください");
                   }}
                   to="/login"
-                  className="flex ml-auto text-white font-Line-rg bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-300 rounded"
+                  className="flex ml-auto text-white font-Line-bd bg-red-400 border-0 py-2 px-6 focus:outline-none hover:bg-red-300 rounded"
                 >
                   投稿
                 </NavLink>
