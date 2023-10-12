@@ -317,7 +317,7 @@ const ViewPostScreen = ({ user }: UserProps) => {
                       </small>
                     </div>
                     <p className="mt-3 text-gray-700 text-sm font-Line-rg">
-                      作成者表示{" "}
+                      {comments.user.name}{" "}
                     </p>
                     <div className="mt-4 flex items-center">
                       <div className="flex text-gray-700 text-sm mr-3">

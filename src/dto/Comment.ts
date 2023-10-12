@@ -5,4 +5,7 @@ export interface Comment {
   content: string;
   createdAt: string;
   updatedAt: string;
+  user: {
+    name: string;
+  };
 }
